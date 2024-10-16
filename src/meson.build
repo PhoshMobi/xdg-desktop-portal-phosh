@@ -49,6 +49,7 @@ pmp_deps = [
   glib_dep,
   gio_dep,
   gio_unix_dep,
+  gsettings_desktop_schemas_dep,
   gtk_dep,
   gtk_wayland_dep,
   gnome_bg_dep,

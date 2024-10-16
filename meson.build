@@ -29,7 +29,7 @@ gtk_ver = '4.12'
 gtk_ver_str = 'GDK_VERSION_@0@'.format(gtk_ver.replace('.','_'))
 gtk_ver_cmp = '>=@0@'.format(gtk_ver)
 
-adw_ver = '1.4'
+adw_ver = '1.6'
 adw_ver_str = 'ADW_VERSION_@0@'.format(adw_ver.replace('.','_'))
 adw_ver_cmp = '>=@0@'.format(adw_ver)
 
@@ -107,6 +107,7 @@ gio_unix_dep =  dependency('gio-unix-2.0', version: glib_ver_cmp)
 glib_dep = dependency('glib-2.0', version: glib_ver_cmp)
 gnome_bg_dep = dependency('gnome-bg-4', version: '>=43')
 gnome_desktop_dep = dependency('gnome-desktop-4', version: '>=43')
+gsettings_desktop_schemas_dep = dependency('gsettings-desktop-schemas', version: '>= 47')
 gtk_dep = dependency('gtk4', version: gtk_ver_cmp)
 gtk_wayland_dep = dependency('gtk4-wayland', version: gtk_ver_cmp)
 xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.14.0')
