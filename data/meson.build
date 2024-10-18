@@ -31,17 +31,11 @@ i18n.merge_file(
 )
 
 # Systemd user unit
-systemd = dependency('systemd', version: '>= 242')
-systemduserunitdir = systemd.get_variable(
-  pkgconfig: 'systemduserunitdir',
-  pkgconfig_define: ['prefix', get_option('prefix')]
-)
-
 configure_file(
   input: '@0@.service.in'.format(pmp_exe_name),
   output: '@0@.service'.format(pmp_exe_name),
   configuration: data_conf,
-  install_dir: systemduserunitdir,
+  install_dir: systemd_user_unit_dir,
 )
 
 # Portal conf

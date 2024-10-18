@@ -14,6 +14,7 @@ pmp_portals = [
 
 prefix = get_option('prefix')
 datadir = prefix / get_option('datadir')
+libdir = get_option('libdir')
 libexecdir = prefix / get_option('libexecdir')
 localedir = prefix / get_option('localedir')
 desktopdir = datadir / 'applications'
@@ -109,6 +110,16 @@ gnome_desktop_dep = dependency('gnome-desktop-4', version: '>=43')
 gtk_dep = dependency('gtk4', version: gtk_ver_cmp)
 gtk_wayland_dep = dependency('gtk4-wayland', version: gtk_ver_cmp)
 xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.14.0')
+
+systemd_user_unit_dir = get_option('systemd_user_unit_dir')
+systemd_dep = dependency('systemd', version: '>= 242', required: false)
+if systemd_user_unit_dir == ''
+  if systemd_dep.found()
+    systemd_user_unit_dir = systemd_dep.get_variable(pkgconfig: 'systemduserunitdir')
+  else
+    systemd_user_unit_dir = prefix / libdir / 'systemd' / 'user'
+  endif
+endif
 
 config_h = configuration_data()
 config_h.set_quoted('GETTEXT_PACKAGE', 'phosh-mobile-portal')
