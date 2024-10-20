@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends:
  debhelper-compat (= 13),
- gsettings-desktop-schemas-dev,
+ gsettings-desktop-schemas-dev (>= 47),
  libfontconfig-dev,
- libadwaita-1-dev (>= 1.4),
+ libadwaita-1-dev (>= 1.6),
  libglib2.0-dev (>= 2.74),
  libgtk-4-dev (>= 4.12),
  libgnome-bg-4-dev,
@@ -22,7 +22,7 @@ Package: xdg-desktop-portal-phosh
 Architecture: linux-any
 Depends:
  dbus-user-session | dbus-x11,
- gsettings-desktop-schemas,
+ gsettings-desktop-schemas (>= 47),
  xdg-desktop-portal (>= 1.17.0),
  ${misc:Depends},
  ${shlibs:Depends},

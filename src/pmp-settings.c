@@ -11,10 +11,12 @@
 
 #include "pmp-config.h"
 
+#include <adwaita.h>
 #include <time.h>
 #include <string.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
+#include <gdesktop-enums.h>
 
 #include "pmp-settings.h"
 #include "pmp-utils.h"
@@ -76,6 +78,48 @@ namespace_matches (const char         *namespace,
     return TRUE;
 
   return FALSE;
+}
+
+static GVariant *
+get_accent_color (void)
+{
+  SettingsBundle *bundle = g_hash_table_lookup (settings_hash, "org.gnome.desktop.interface");
+  AdwAccentColor color;
+  GdkRGBA color_rgba;
+
+  switch (g_settings_get_enum (bundle->settings, "accent-color")) {
+  case G_DESKTOP_ACCENT_COLOR_TEAL:
+    color = ADW_ACCENT_COLOR_TEAL;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_GREEN:
+    color = ADW_ACCENT_COLOR_GREEN;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_YELLOW:
+    color = ADW_ACCENT_COLOR_YELLOW;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_ORANGE:
+    color = ADW_ACCENT_COLOR_ORANGE;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_RED:
+    color = ADW_ACCENT_COLOR_RED;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_PINK:
+    color = ADW_ACCENT_COLOR_PINK;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_PURPLE:
+    color = ADW_ACCENT_COLOR_PURPLE;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_SLATE:
+    color = ADW_ACCENT_COLOR_SLATE;
+    break;
+  case G_DESKTOP_ACCENT_COLOR_BLUE:
+  default:
+    color = ADW_ACCENT_COLOR_BLUE;
+  }
+
+  adw_accent_color_to_rgba (color, &color_rgba);
+
+  return g_variant_new ("(ddd)", color_rgba.red, color_rgba.green, color_rgba.blue);
 }
 
 static GVariant *
@@ -185,6 +229,7 @@ settings_handle_read_all (PmpImplSettings       *object,
     GVariantDict dict;
 
     g_variant_dict_init (&dict, NULL);
+    g_variant_dict_insert_value (&dict, "accent-color", get_accent_color ());
     g_variant_dict_insert_value (&dict, "color-scheme", get_color_scheme ());
     g_variant_dict_insert_value (&dict, "contrast", get_contrast_value ());
 
@@ -221,6 +266,10 @@ settings_handle_read (PmpImplSettings       *object,
     } else if (strcmp (arg_key, "contrast") == 0) {
       g_dbus_method_invocation_return_value (invocation,
                                              g_variant_new ("(v)", get_contrast_value ()));
+      return TRUE;
+    } else if (strcmp (arg_key, "accent-color") == 0) {
+      g_dbus_method_invocation_return_value (invocation,
+                                             g_variant_new ("(v)", get_accent_color ()));
       return TRUE;
     }
   } else if (strcmp (arg_namespace, "org.gnome.desktop.interface") == 0 &&
@@ -290,6 +339,12 @@ on_settings_changed (GSettings             *settings,
     pmp_impl_settings_emit_setting_changed (user_data->self,
                                             user_data->namespace, key,
                                             g_variant_new ("v", new_value));
+
+  if (strcmp (user_data->namespace, "org.gnome.desktop.interface") == 0 &&
+      strcmp (key, "accent-color") == 0)
+    pmp_impl_settings_emit_setting_changed (user_data->self,
+                                            "org.freedesktop.appearance", key,
+                                            g_variant_new ("v", get_accent_color ()));
 
   if (strcmp (user_data->namespace, "org.gnome.desktop.interface") == 0 &&
       strcmp (key, "color-scheme") == 0)
