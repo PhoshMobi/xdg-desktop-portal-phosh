@@ -1,3 +1,27 @@
+xdg-desktop-portal-phosh (0.42.0) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * build: Use canonical name.
+  * build: Drop post install hooks.
+    We don't install schemas or icons and otherwise fail on empty /usr/local.
+  * build: Unset structured logging.  Needed to make --verbose work
+  * settings: Fix memory leak
+  * settings: Don't notify icon-theme on theme changes.
+  * settings: Add support for contrast value.
+
+  [ fossdd ]
+  * data: Add option for systemd_user_unit_dir.
+    So that systems without systemd-dev can still build the portal.
+
+  [ Eugenio Paolantonio (g7) ]
+  * settings: Add accent colour support.
+    Heavily based on the corresponding commit from xdg-desktop-portal-gnome
+    (d431d434726440be96f20d2a43efcc135d4d1cb6) by Jamie Murphy.
+  * build: Bump dependencies for accent colour support
+    gsettings-desktop-schemas >= 47, and libadwaita >= 1.6
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 20 Oct 2024 17:48:40 +0200
+
 xdg-desktop-portal-phosh (0.42~rc1) experimental; urgency=medium
 
   * Initial release.
