@@ -9,6 +9,7 @@ stages:
   - build
   - test
   - style-checks
+  - package
 
 default:
   # Protect CI infra from rogue jobs
@@ -88,3 +89,9 @@ sanity:
       junit: commit-message-junit-report.xml
   rules:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME'
+
+package:deb-debian-trixie:
+  stage: package
+  variables:
+    PHOSH_DOCKER_IMAGE: debian:trixie
+  extends: .phosh-build-debian-package
