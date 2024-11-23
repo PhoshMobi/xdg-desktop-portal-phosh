@@ -23,6 +23,7 @@
 
 #include "xdg-desktop-portal-dbus.h"
 
+#include "pmp-file-chooser.h"
 #include "pmp-request.h"
 #include "pmp-settings.h"
 #include "pmp-wallpaper.h"
@@ -75,6 +76,10 @@ on_bus_acquired (GDBusConnection *connection,
 {
   GError *error = NULL;
 
+  if (!pmp_file_chooser_init (connection, &error)) {
+    g_warning ("error: %s\n", error->message);
+    g_clear_error (&error);
+  }
   if (!pmp_settings_init (connection, &error)) {
     g_warning ("error: %s\n", error->message);
     g_clear_error (&error);

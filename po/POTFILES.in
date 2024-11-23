@@ -1,2 +1,3 @@
+src/pmp-file-chooser.c
 src/pmp-settings.c
 src/pmp-wallpaper-dialog.ui

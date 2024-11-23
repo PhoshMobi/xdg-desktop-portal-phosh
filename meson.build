@@ -8,6 +8,7 @@ project('xdg-desktop-portal-phosh', 'c',
 pmp_exe_name = 'xdg-desktop-portal-phosh'
 pmp_dbus_name = 'org.freedesktop.impl.portal.desktop.phosh'
 pmp_portals = [
+  'org.freedesktop.impl.portal.FileChooser',
   'org.freedesktop.impl.portal.Settings',
   'org.freedesktop.impl.portal.Wallpaper',
 ]
@@ -110,6 +111,12 @@ gnome_desktop_dep = dependency('gnome-desktop-4', version: '>=43')
 gsettings_desktop_schemas_dep = dependency('gsettings-desktop-schemas', version: '>= 47')
 gtk_dep = dependency('gtk4', version: gtk_ver_cmp)
 gtk_wayland_dep = dependency('gtk4-wayland', version: gtk_ver_cmp)
+libpfs_dep = dependency('libpfs-0', version: '>= 0',
+                        fallback: ['pfs', 'pfs_dep'],
+                        default_options:
+                          [ 'examples=false',
+                            'shared-lib=false',
+                          ])
 xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.14.0')
 
 systemd_user_unit_dir = get_option('systemd_user_unit_dir')

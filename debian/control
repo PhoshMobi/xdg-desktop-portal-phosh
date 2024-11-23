@@ -3,6 +3,7 @@ Section: gnome
 Priority: optional
 Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends:
+ cargo,
  debhelper-compat (= 13),
  gsettings-desktop-schemas-dev (>= 47),
  libfontconfig-dev,
@@ -12,6 +13,7 @@ Build-Depends:
  libgnome-bg-4-dev,
  libgnome-desktop-4-dev,
  meson,
+ rustc,
  systemd-dev,
  xdg-desktop-portal-dev (>= 1.14.0),
  xmlto,
