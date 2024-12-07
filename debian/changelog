@@ -1,3 +1,16 @@
+xdg-desktop-portal-phosh (0.44~dev) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * build: Use canonical portal name.
+    While pmp is our symbol prefix for the C side the portal is the "Phosh"
+    portal so name it accordingly.
+  * packaging: Conflict with older phosh.
+    This ensures we don't have a file conflict
+  * treewide: Bump versions.
+    This allows packaging relations to work
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 07 Dec 2024 23:47:31 +0100
+
 xdg-desktop-portal-phosh (0.42.0) experimental; urgency=medium
 
   [ Guido Günther ]
