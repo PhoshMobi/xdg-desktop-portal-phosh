@@ -39,11 +39,9 @@ configure_file(
 )
 
 # Portal conf
-# Phosh ships a phosh.portal for the Access portal
-# so use PhoshMobilePortal to avoid a name class
 configure_file(
-  input: 'pmp.portal.in',
-  output: 'pmp.portal',
+  input: 'phosh.portal.in',
+  output: 'phosh.portal',
   configuration: data_conf,
   install_dir: portaldir,
 )

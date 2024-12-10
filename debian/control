@@ -28,6 +28,10 @@ Depends:
  ${shlibs:Depends},
 Provides:
  xdg-desktop-portal-backend (= 1.14.0),
+Breaks:
+ phosh (<< 0.44~)
+Replaces:
+ phosh (<< 0.44~)
 Multi-Arch: foreign
 Description: Phosh portal backend for xdg-desktop-portal
  xdg-desktop-portal-phosh provides a GTK and Adwaita based implementation for
