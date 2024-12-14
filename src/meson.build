@@ -28,6 +28,8 @@ pmp_sources = files(
   'fc-monitor.h',
   'pmp-external-win.c',
   'pmp-external-win.h',
+  'pmp-file-chooser.c',
+  'pmp-file-chooser.h',
   'pmp-request.c',
   'pmp-request.h',
   'pmp-settings.c',
@@ -54,6 +56,7 @@ pmp_deps = [
   gtk_wayland_dep,
   gnome_bg_dep,
   gnome_desktop_dep,
+  libpfs_dep,
   xdg_desktop_portal_dep,
 ]
 

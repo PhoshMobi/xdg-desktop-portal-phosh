@@ -56,7 +56,7 @@ build:native-debian-trixie:
   image: ${DEBIAN_IMAGE}
   before_script:
     - apt-get -y update
-    - apt-get -y install eatmydata
+    - apt-get -y install eatmydata git
     - eatmydata apt-get -y build-dep .
   <<: *trixie_vars
   <<: *build_step

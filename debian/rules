@@ -5,6 +5,7 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 include /usr/share/dpkg/default.mk
 
 configure_options = \
+	--wrap-mode=default \
 	$(NULL)
 
 %:
