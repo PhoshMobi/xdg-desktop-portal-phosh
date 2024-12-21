@@ -1,3 +1,9 @@
+xdg-desktop-portal-phosh (0.44~rc2) experimental; urgency=medium
+
+  * Rebuild tarball with latest pfs
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 21 Dec 2024 18:53:54 +0100
+
 xdg-desktop-portal-phosh (0.44~rc1) experimental; urgency=medium
 
   * gitignore: Drop unused files and patterns. Users should gitignore their
