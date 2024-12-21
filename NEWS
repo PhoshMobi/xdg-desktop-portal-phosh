@@ -1,6 +1,10 @@
-xdg-desktop-portal-phosh 0.44~dev
+xdg-desktop-portal-phosh 0.44~rc1
 ---------------------------------
-In development
+Released Dezember 2024
+* New exprimental adaptive file chooser portal
+* Use 'phosh' as portal name rather than 'pmp'
+* Contributors:
+    * Guido Günther
 
 xdg-desktop-portal-phosh 0.42.0
 -------------------------------
