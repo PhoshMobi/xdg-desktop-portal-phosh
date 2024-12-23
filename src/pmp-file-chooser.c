@@ -35,6 +35,9 @@
 #include "pmp-external-win.h"
 
 
+#define PFS_READ_ONLY_KEY "x-pfs-read-only"
+
+
 typedef struct {
   PmpImplFileChooser    *impl;
   GDBusMethodInvocation *invocation;
@@ -149,16 +152,37 @@ send_response (FileDialogHandle *handle)
   }
   g_variant_builder_add (&opt_builder, "{sv}", "uris", g_variant_builder_end (&uri_builder));
 
-  g_variant_builder_add (&opt_builder, "{sv}", "writable",
-                         g_variant_new_boolean (handle->allow_write));
-
   if (handle->filter) {
     GVariant *current_filter_variant = gtk_file_filter_to_gvariant (handle->filter);
     g_variant_builder_add (&opt_builder, "{sv}", "current_filter", current_filter_variant);
   }
 
-  if (handle->selected_choices)
-    g_variant_builder_add (&opt_builder, "{sv}", "choices", handle->selected_choices);
+  if (handle->selected_choices) {
+    GVariantIter iter;
+    const char *key, *val;
+    GVariantBuilder choices_builder;
+
+    g_variant_builder_init (&choices_builder, G_VARIANT_TYPE ("a(ss)"));
+    g_variant_iter_init (&iter, handle->selected_choices);
+
+    /* Check for our r/o key and remove it from the returned choices */
+    while (g_variant_iter_next (&iter, "(&s&s)", &key, &val)) {
+      if (g_strcmp0 (key, PFS_READ_ONLY_KEY)) {
+        g_variant_builder_add (&choices_builder, "(ss)", key, val);
+        continue;
+      }
+
+      if (g_strcmp0 (val, "true") == 0)
+        handle->allow_write = FALSE;
+    }
+
+    if (g_variant_iter_n_children (&iter) > 1)
+      g_variant_builder_add (&opt_builder, "{sv}", "choices",
+                             g_variant_builder_end (&choices_builder));
+
+    g_variant_builder_add (&opt_builder, "{sv}", "writable",
+                           g_variant_new_boolean (handle->allow_write));
+  }
 
   if (handle->request->exported)
     request_unexport (handle->request);
@@ -397,6 +421,39 @@ on_handle_open_file (PmpImplFileChooser    *object,
 
   /* Additional choices */
   choices = g_variant_lookup_value (arg_options, "choices", G_VARIANT_TYPE ("a(ssa(ss)s)"));
+  /* r/o toggle */
+  if (mode == PFS_FILE_SELECTOR_MODE_OPEN_FILE) {
+    GVariantBuilder choices_builder;
+
+    g_variant_builder_init (&choices_builder, G_VARIANT_TYPE_ARRAY);
+    if (choices) {
+      GVariantIter choices_iter;
+      const char *choice_id, *label, *selected;
+      GVariant *list;
+
+      g_variant_iter_init (&choices_iter, choices);
+      /* Copy over supplied choices, we wrap the list to ease parsing in pfs */
+      while (g_variant_iter_next (&choices_iter, "(&s&s@a(ss)&s)",
+                                  &choice_id, &label, &list, &selected)) {
+        g_variant_builder_add (&choices_builder, "(ssvs)",
+                               choice_id,
+                               label,
+                               list,
+                               selected);
+        g_variant_unref (list);
+      }
+      g_variant_unref (choices);
+    }
+
+    g_variant_builder_add (&choices_builder,
+                           "(ssvs)",
+                           PFS_READ_ONLY_KEY,
+                           _("Open read-only"),
+                           g_variant_new ("a(ss)", NULL),
+                           "false");
+    choices = g_variant_ref_sink (g_variant_builder_end (&choices_builder));
+  }
+
   if (choices)
     g_object_set (file_selector, "choices", choices, NULL);
 
