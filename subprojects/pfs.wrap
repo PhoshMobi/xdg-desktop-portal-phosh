@@ -1,5 +1,5 @@
 [wrap-git]
 directory=pfs
 url=https://gitlab.gnome.org/guidog/pfs.git
-revision=387701f609bee0ceb53fb4f7c55d68e37b6e1b9c
+revision=v0.0.1
 depth=1
