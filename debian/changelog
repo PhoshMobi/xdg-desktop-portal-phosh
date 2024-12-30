@@ -1,3 +1,15 @@
+xdg-desktop-portal-phosh (0.44.0) experimental; urgency=medium
+
+  * pfs: Switch to 0.0.1 release.
+    A bit easier to follow than a commit hash
+  * file-chooser: Handle read only flag.
+    We add it to the choices and filter it out when getting the result.
+    While at that wrap passed in choices lists in a variant as that is
+    what pfs currently expects.
+    To test: gnome-text-editor sets a choices menu
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 29 Dec 2024 16:12:20 +0100
+
 xdg-desktop-portal-phosh (0.44~rc2) experimental; urgency=medium
 
   * Rebuild tarball with latest pfs
