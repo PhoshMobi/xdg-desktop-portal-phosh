@@ -111,7 +111,11 @@ static gboolean
 init_gtk (GError **error)
 {
   /* Avoid pointless and confusing recursion */
+#if GTK_CHECK_VERSION (4, 17, 1)
+  gtk_disable_portals ();
+#else
   g_unsetenv ("GTK_USE_PORTAL");
+#endif
 
   /* Don't let adwaita use portals, we're the one */
   if (!g_setenv ("ADW_DISABLE_PORTAL", "1", TRUE)) {
