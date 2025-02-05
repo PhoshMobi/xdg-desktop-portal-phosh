@@ -1,3 +1,13 @@
+xdg-desktop-portal-phosh (0.45.0) experimental; urgency=medium
+
+  * build: Drop GTK max version requirement for the moment.
+    This allows us to use older GTK but still build with 4.17
+  * portal: Use GTK's new portal avoidance.
+    It has to be invoked before gtk_init().
+    See GTK commit f28e94acfa058a048a35d50c2f1a6d35f097d8e5
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 05 Feb 2025 09:54:49 +0100
+
 xdg-desktop-portal-phosh (0.44.0) experimental; urgency=medium
 
   * pfs: Switch to 0.0.1 release.
