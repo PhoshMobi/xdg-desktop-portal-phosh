@@ -1,3 +1,10 @@
+xdg-desktop-portal-phosh 0.45.0
+-------------------------------
+Released February 2025
+* Use GTK 4.17's portal avoidance
+* Contributors:
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.44.0
 -------------------------------
 Released December 2024
