@@ -216,6 +216,7 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
   const char *dummy;
   g_autoptr (GVariant) buttons = NULL;
   const char *priority;
+  g_autoptr (GVariant) hints_value = NULL;
 
   if (fdo_notify_subscription == 0) {
     fdo_notify_subscription =
@@ -334,6 +335,16 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
     body = "";
   if (!g_variant_lookup (notification, "title", "&s", &title))
     title = "";
+
+  if (g_variant_lookup (notification, "display-hint", "@as", &hints_value)) {
+    const char * const *display_hints = g_variant_get_strv (hints_value, NULL);
+    if (display_hints) {
+      if (g_strv_contains ((const char *const *)display_hints, "transient"))
+        g_variant_builder_add (&hints_builder, "{sv}", "transient", g_variant_new_boolean (TRUE));
+      if (g_strv_contains ((const char *const *)display_hints, "persistent"))
+        g_variant_builder_add (&hints_builder, "{sv}", "resident", g_variant_new_boolean (TRUE));
+    }
+  }
 
   g_dbus_connection_call (connection,
                           "org.freedesktop.Notifications",
