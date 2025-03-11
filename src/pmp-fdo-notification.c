@@ -211,6 +211,7 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
   GVariant *icon;
   const char *body;
   const char *title;
+  const char *category;
   g_autofree char *icon_name = NULL;
   guchar urgency;
   const char *dummy;
@@ -335,6 +336,9 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
     body = "";
   if (!g_variant_lookup (notification, "title", "&s", &title))
     title = "";
+
+  if (g_variant_lookup (notification, "category", "&s", &category))
+    g_variant_builder_add (&hints_builder, "{sv}", "category", g_variant_new_string (category));
 
   if (g_variant_lookup (notification, "display-hint", "@as", &hints_value)) {
     const char * const *display_hints = g_variant_get_strv (hints_value, NULL);
