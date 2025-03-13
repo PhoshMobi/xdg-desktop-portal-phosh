@@ -26,6 +26,7 @@
 #include "pmp-wallpaper.h"
 
 #define BACKGROUND_SCHEMA "org.gnome.desktop.background"
+#define SCREENSAVER_SCHEMA "org.gnome.desktop.screensaver"
 
 typedef struct {
   PmpImplWallpaper      *impl;
@@ -36,6 +37,8 @@ typedef struct {
 
   guint                  response;
   gchar                 *picture_uri;
+  gboolean               on_lockscreen;
+  gboolean               on_background;
 } PmpWallpaperDialogHandle;
 
 static void
@@ -71,16 +74,29 @@ send_response (PmpWallpaperDialogHandle *handle)
 }
 
 static gboolean
-set_gsettings (gchar *schema, gchar *uri)
+set_desktop_gsettings (gchar *uri)
 {
   g_autoptr (GSettings) settings = NULL;
 
-  settings = g_settings_new (schema);
+  settings = g_settings_new (BACKGROUND_SCHEMA);
 
   return (g_settings_set_string (settings, "picture-uri", uri) &&
           g_settings_set_string (settings, "picture-uri-dark", uri) &&
           g_settings_set_enum (settings, "picture-options", G_DESKTOP_BACKGROUND_STYLE_ZOOM));
 }
+
+
+static gboolean
+set_screensaver_gsettings (gchar *uri)
+{
+  g_autoptr (GSettings) settings = NULL;
+
+  settings = g_settings_new (SCREENSAVER_SCHEMA);
+
+  return (g_settings_set_string (settings, "picture-uri", uri) &&
+          g_settings_set_enum (settings, "picture-options", G_DESKTOP_BACKGROUND_STYLE_ZOOM));
+}
+
 
 static void
 on_file_copy_cb (GObject      *source_object,
@@ -116,11 +132,11 @@ on_file_copy_cb (GObject      *source_object,
     goto out;
   }
 
-  if (set_gsettings (BACKGROUND_SCHEMA, handle->picture_uri))
-    handle->response = 0;
-  else
+  handle->response = 0;
+  if (handle->on_background && set_desktop_gsettings (handle->picture_uri))
     handle->response = 1;
-
+  if (handle->on_lockscreen && set_screensaver_gsettings (handle->picture_uri))
+    handle->response = 1;
 out:
   send_response (handle);
 }
@@ -131,8 +147,9 @@ set_wallpaper (PmpWallpaperDialogHandle *handle,
 {
   g_autoptr (GFile) source = NULL;
   g_autofree gchar *path = NULL;
+  const char *basename = handle->on_background ? "background" : "lockscreen";
 
-  path = g_build_filename (g_get_user_config_dir (), "background", NULL);
+  path = g_build_filename (g_get_user_config_dir (), basename, NULL);
   handle->picture_uri = g_filename_to_uri (path, NULL, NULL);
 
   source = g_file_new_for_uri (uri);
@@ -184,7 +201,7 @@ handle_set_wallpaper_uri (PmpImplWallpaper      *object,
   g_autoptr (Request) request = NULL;
   PmpWallpaperDialogHandle *handle;
   const char *sender, *set_on;
-  gboolean show_preview = FALSE, on_lockscreen = FALSE;
+  gboolean show_preview = FALSE;
   PmpExternalWin *external_parent = NULL;
   GdkSurface *surface;
   GtkWidget *fake_parent;
@@ -201,6 +218,13 @@ handle_set_wallpaper_uri (PmpImplWallpaper      *object,
   handle->invocation = invocation;
   handle->request = g_object_ref (request);
 
+  if (g_strcmp0 (set_on, "lockscreen") == 0)
+    handle->on_lockscreen = TRUE;
+  else if (g_strcmp0 (set_on, "background") == 0)
+    handle->on_background = TRUE;
+  else if (g_strcmp0 (set_on, "both") == 0)
+    handle->on_lockscreen = handle->on_background = TRUE;
+
   if (!show_preview) {
     set_wallpaper (handle, arg_uri);
     goto out;
@@ -215,10 +239,7 @@ handle_set_wallpaper_uri (PmpImplWallpaper      *object,
   fake_parent = g_object_new (GTK_TYPE_WINDOW, NULL);
   g_object_ref_sink (fake_parent);
 
-  if (g_strcmp0 (set_on, "lockscreen") == 0)
-      on_lockscreen = TRUE;
-
-  dialog = GTK_WINDOW (pmp_wallpaper_dialog_new (arg_uri, arg_app_id, on_lockscreen));
+  dialog = GTK_WINDOW (pmp_wallpaper_dialog_new (arg_uri, arg_app_id, handle->on_lockscreen));
   gtk_window_set_transient_for (dialog, GTK_WINDOW (fake_parent));
   handle->dialog = g_object_ref_sink (dialog);
 
