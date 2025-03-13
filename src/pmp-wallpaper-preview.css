@@ -4,6 +4,10 @@ box.desktop-preview {
   background-color: black;
 }
 
+.lockscreen box.desktop-preview {
+  background: none;
+}
+
 box.desktop-preview image {
   color: white;
 }
@@ -12,6 +16,19 @@ box.desktop-preview label {
   color: white;
   font-weight: bold;
   font-size: 6px;
+}
+
+label.lockscreen-clock {
+  font-weight: 300;
+  color: white;
+  font-feature-settings: "tnum";
+  font-size: 16px;
+}
+
+label.lockscreen-date {
+  font-weight: 400;
+  color: white;
+  font-size: 8px;
 }
 
 widget.window {

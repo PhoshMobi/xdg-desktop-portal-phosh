@@ -23,6 +23,14 @@
 
 
 enum {
+  PROP_0,
+  PROP_LOCKSCREEN,
+  PROP_LAST_PROP
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
+
+enum {
   RESPONSE,
   LAST_SIGNAL
 };
@@ -36,9 +44,49 @@ struct _PmpWallpaperDialog {
   PmpWallpaperPreview *desktop_preview;
 
   gchar               *picture_uri;
+  gboolean             lockscreen;
 };
 
 G_DEFINE_TYPE (PmpWallpaperDialog, pmp_wallpaper_dialog, ADW_TYPE_WINDOW)
+
+
+static void
+pmp_wallpaper_dialog_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  PmpWallpaperDialog *self = PMP_WALLPAPER_DIALOG (object);
+
+  switch (property_id) {
+  case PROP_LOCKSCREEN:
+    self->lockscreen = g_value_get_boolean (value);
+    break;
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
+pmp_wallpaper_dialog_get_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec)
+{
+  PmpWallpaperDialog *self = PMP_WALLPAPER_DIALOG (object);
+
+  switch (property_id) {
+  case PROP_LOCKSCREEN:
+    g_value_set_boolean (value, self->lockscreen);
+    break;
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
 
 static void
 pmp_wallpaper_dialog_apply (PmpWallpaperDialog *self)
@@ -62,11 +110,6 @@ pmp_wallpaper_dialog_finalize (GObject *object)
   G_OBJECT_CLASS (pmp_wallpaper_dialog_parent_class)->finalize (object);
 }
 
-static void
-pmp_wallpaper_dialog_init (PmpWallpaperDialog *self)
-{
-  gtk_widget_init_template (GTK_WIDGET (self));
-}
 
 static void
 pmp_wallpaper_dialog_class_init (PmpWallpaperDialogClass *klass)
@@ -75,6 +118,15 @@ pmp_wallpaper_dialog_class_init (PmpWallpaperDialogClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize = pmp_wallpaper_dialog_finalize;
+  object_class->get_property = pmp_wallpaper_dialog_get_property;
+  object_class->set_property = pmp_wallpaper_dialog_set_property;
+
+  props[PROP_LOCKSCREEN] =
+    g_param_spec_boolean ("lockscreen", "", "",
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   signals[RESPONSE] = g_signal_new ("response",
                                     G_TYPE_FROM_CLASS (klass),
@@ -94,6 +146,18 @@ pmp_wallpaper_dialog_class_init (PmpWallpaperDialogClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, pmp_wallpaper_dialog_cancel);
   gtk_widget_class_bind_template_callback (widget_class, pmp_wallpaper_dialog_apply);
 }
+
+
+static void
+pmp_wallpaper_dialog_init (PmpWallpaperDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_object_bind_property (self, "lockscreen",
+                          self->desktop_preview, "lockscreen",
+                          G_BINDING_DEFAULT);
+}
+
 
 static void
 on_image_loaded_cb (GObject      *source_object,
@@ -127,12 +191,14 @@ on_image_loaded_cb (GObject      *source_object,
 }
 
 PmpWallpaperDialog *
-pmp_wallpaper_dialog_new (const gchar *picture_uri, const gchar *app_id)
+pmp_wallpaper_dialog_new (const gchar *picture_uri, const gchar *app_id, gboolean lockscreen)
 {
   PmpWallpaperDialog *self;
   g_autoptr (GFile) image_file = g_file_new_for_uri (picture_uri);
 
-  self = g_object_new (PMP_WALLPAPER_TYPE_DIALOG, NULL);
+  self = g_object_new (PMP_WALLPAPER_TYPE_DIALOG,
+                       "lockscreen", lockscreen,
+                       NULL);
 
   g_file_load_contents_async (image_file,
                               NULL,

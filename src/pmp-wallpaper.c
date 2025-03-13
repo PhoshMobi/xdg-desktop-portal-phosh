@@ -183,8 +183,8 @@ handle_set_wallpaper_uri (PmpImplWallpaper      *object,
 {
   g_autoptr (Request) request = NULL;
   PmpWallpaperDialogHandle *handle;
-  const char *sender;
-  gboolean show_preview = FALSE;
+  const char *sender, *set_on;
+  gboolean show_preview = FALSE, on_lockscreen = FALSE;
   PmpExternalWin *external_parent = NULL;
   GdkSurface *surface;
   GtkWidget *fake_parent;
@@ -194,6 +194,7 @@ handle_set_wallpaper_uri (PmpImplWallpaper      *object,
   request = request_new (sender, arg_app_id, arg_handle);
 
   g_variant_lookup (arg_options, "show-preview", "b", &show_preview);
+  g_variant_lookup (arg_options, "set-on", "&s", &set_on);
 
   handle = g_new0 (PmpWallpaperDialogHandle, 1);
   handle->impl = object;
@@ -214,7 +215,10 @@ handle_set_wallpaper_uri (PmpImplWallpaper      *object,
   fake_parent = g_object_new (GTK_TYPE_WINDOW, NULL);
   g_object_ref_sink (fake_parent);
 
-  dialog = (GtkWindow *)pmp_wallpaper_dialog_new (arg_uri, arg_app_id);
+  if (g_strcmp0 (set_on, "lockscreen") == 0)
+      on_lockscreen = TRUE;
+
+  dialog = GTK_WINDOW (pmp_wallpaper_dialog_new (arg_uri, arg_app_id, on_lockscreen));
   gtk_window_set_transient_for (dialog, GTK_WINDOW (fake_parent));
   handle->dialog = g_object_ref_sink (dialog);
 
