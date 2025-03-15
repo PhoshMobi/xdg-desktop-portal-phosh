@@ -50,7 +50,7 @@ you can run it from the source tree:
 
 
 ```sh
-G_MESSAGES_DEBUG=all src/_build/xdg-desktop-portal-phosh
+G_MESSAGES_DEBUG=all _build/src/xdg-desktop-portal-phosh
 ```
 
 # Getting in Touch
