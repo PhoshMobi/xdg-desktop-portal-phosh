@@ -1,8 +1,10 @@
-project('xdg-desktop-portal-phosh', 'c',
-          version: '0.46.rc1',
-          license: 'GPL-3.0-or-later',
-    meson_version: '>= 1.0.0',
-  default_options: [ 'warning_level=1', 'buildtype=debugoptimized', 'c_std=gnu11' ],
+project(
+  'xdg-desktop-portal-phosh',
+  'c',
+  version: '0.46.rc1',
+  license: 'GPL-3.0-or-later',
+  meson_version: '>= 1.0.0',
+  default_options: ['warning_level=1', 'buildtype=debugoptimized', 'c_std=gnu11'],
 )
 
 pmp_exe_name = 'xdg-desktop-portal-phosh'
@@ -23,15 +25,15 @@ servicedir = datadir / 'dbus-1' / 'services'
 portaldir = datadir / 'xdg-desktop-portal' / 'portals'
 
 glib_ver = '2.74'
-glib_ver_str = 'GLIB_VERSION_@0@'.format(glib_ver.replace('.','_'))
+glib_ver_str = 'GLIB_VERSION_@0@'.format(glib_ver.replace('.', '_'))
 glib_ver_cmp = '>=@0@'.format(glib_ver)
 
 gtk_ver = '4.12'
-gtk_ver_str = 'GDK_VERSION_@0@'.format(gtk_ver.replace('.','_'))
+gtk_ver_str = 'GDK_VERSION_@0@'.format(gtk_ver.replace('.', '_'))
 gtk_ver_cmp = '>=@0@'.format(gtk_ver)
 
 adw_ver = '1.6'
-adw_ver_str = 'ADW_VERSION_@0@'.format(adw_ver.replace('.','_'))
+adw_ver_str = 'ADW_VERSION_@0@'.format(adw_ver.replace('.', '_'))
 adw_ver_cmp = '>=@0@'.format(adw_ver)
 
 root_inc = include_directories('.')
@@ -79,7 +81,7 @@ if get_option('buildtype') != 'plain'
   test_c_args += '-fstack-protector-strong'
 endif
 
-foreach arg: test_c_args
+foreach arg : test_c_args
   if cc.has_multi_arguments(arg)
     global_c_args += arg
   endif
@@ -98,25 +100,25 @@ add_project_arguments(
 )
 
 gnome = import('gnome')
-i18n  = import('i18n')
-pkgconfig = import ('pkgconfig')
+i18n = import('i18n')
+pkgconfig = import('pkgconfig')
 
 adwaita_dep = dependency('libadwaita-1', version: adw_ver_cmp)
 fontconfig_dep = dependency('fontconfig')
 gio_dep = dependency('gio-2.0', version: glib_ver_cmp)
-gio_unix_dep =  dependency('gio-unix-2.0', version: glib_ver_cmp)
+gio_unix_dep = dependency('gio-unix-2.0', version: glib_ver_cmp)
 glib_dep = dependency('glib-2.0', version: glib_ver_cmp)
 gnome_bg_dep = dependency('gnome-bg-4', version: '>=43')
 gnome_desktop_dep = dependency('gnome-desktop-4', version: '>=43')
 gsettings_desktop_schemas_dep = dependency('gsettings-desktop-schemas', version: '>= 47')
 gtk_dep = dependency('gtk4', version: gtk_ver_cmp)
 gtk_wayland_dep = dependency('gtk4-wayland', version: gtk_ver_cmp)
-libpfs_dep = dependency('libpfs-0', version: '>= 0',
-                        fallback: ['pfs', 'pfs_dep'],
-                        default_options:
-                          [ 'examples=false',
-                            'shared-lib=false',
-                          ])
+libpfs_dep = dependency(
+  'libpfs-0',
+  version: '>= 0',
+  fallback: ['pfs', 'pfs_dep'],
+  default_options: ['examples=false', 'shared-lib=false'],
+)
 xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.14.0')
 
 systemd_user_unit_dir = get_option('systemd_user_unit_dir')
@@ -132,13 +134,13 @@ endif
 config_h = configuration_data()
 config_h.set_quoted('GETTEXT_PACKAGE', 'phosh-mobile-portal')
 config_h.set_quoted('LOCALEDIR', localedir)
-config_h.set_quoted('PACKAGE_STRING', '@0@ @1@'.format(meson.project_name(), meson.project_version()))
+config_h.set_quoted(
+  'PACKAGE_STRING',
+  '@0@ @1@'.format(meson.project_name(), meson.project_version()),
+)
 config_h.set_quoted('PMP_DBUS_NAME', pmp_dbus_name)
 
-configure_file(
-  output: 'pmp-config.h',
-  configuration: config_h,
-)
+configure_file(output: 'pmp-config.h', configuration: config_h)
 
 
 subdir('data')
