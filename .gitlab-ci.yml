@@ -77,6 +77,12 @@ check-format:
   extends: .phosh-format-check
   allow_failure: true
 
+check-meson:
+  stage: style-checks
+  image: ${PHOSH_DOCKER_IMAGE}
+  extends:
+    - .phosh-check-meson
+
 sanity:
   extends:
     - .fdo.ci-fairy
