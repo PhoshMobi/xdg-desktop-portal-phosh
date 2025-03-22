@@ -11,6 +11,7 @@ pmp_exe_name = 'xdg-desktop-portal-phosh'
 pmp_dbus_name = 'org.freedesktop.impl.portal.desktop.phosh'
 pmp_portals = [
   'org.freedesktop.impl.portal.FileChooser',
+  'org.freedesktop.impl.portal.Notification',
   'org.freedesktop.impl.portal.Settings',
   'org.freedesktop.impl.portal.Wallpaper',
 ]
