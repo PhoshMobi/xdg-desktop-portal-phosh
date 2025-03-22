@@ -119,7 +119,7 @@ libpfs_dep = dependency(
   fallback: ['pfs', 'pfs_dep'],
   default_options: ['examples=false', 'shared-lib=false'],
 )
-xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.14.0')
+xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.19.1')
 
 systemd_user_unit_dir = get_option('systemd_user_unit_dir')
 systemd_dep = dependency('systemd', version: '>= 242', required: false)
