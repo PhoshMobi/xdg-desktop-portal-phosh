@@ -1,3 +1,21 @@
+xdg-desktop-portal-phosh (0.46~rc1) experimental; urgency=medium
+
+  [ Gotam Gorabh ]
+  * docs: Fix running command path
+
+  [ Guido Günther ]
+  * build: Update dot files from meta-phosh
+  * wallpaper-preview: Use center box for top panel.
+    Improves layout, especially when we hide the clock
+  * wallpaper: Add lockscreen wallpaper preview.
+    Add a dedicated preview for the lockscreen wallpaper.
+  * wallpaper: Actually set the lockscreen wallpaper.
+    Until now the `set-on` flag was completely ignored. Handle `lockscreen`
+    to set the lockscreen wallpaper.
+  * pfs: Bump to 0.0.2
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 22 Mar 2025 09:11:45 +0100
+
 xdg-desktop-portal-phosh (0.45.0) experimental; urgency=medium
 
   * build: Drop GTK max version requirement for the moment.
