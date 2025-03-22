@@ -173,6 +173,8 @@ pmp_notification_init (GDBusConnection *bus, GError **error)
                     "signal::handle-remove-notification", handle_remove_notification, NULL,
                     NULL);
 
+  pmp_impl_notification_set_version (PMP_IMPL_NOTIFICATION (helper), 2);
+
   if (!g_dbus_interface_skeleton_export (helper,
                                          bus,
                                          DESKTOP_PORTAL_OBJECT_PATH,
