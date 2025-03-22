@@ -218,6 +218,7 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
   g_autoptr (GVariant) buttons = NULL;
   const char *priority;
   g_autoptr (GVariant) hints_value = NULL;
+  g_autoptr (GVariant) sound = NULL;
 
   if (fdo_notify_subscription == 0) {
     fdo_notify_subscription =
@@ -347,6 +348,18 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
         g_variant_builder_add (&hints_builder, "{sv}", "transient", g_variant_new_boolean (TRUE));
       if (g_strv_contains ((const char *const *)display_hints, "persistent"))
         g_variant_builder_add (&hints_builder, "{sv}", "resident", g_variant_new_boolean (TRUE));
+    }
+  }
+
+  if (g_variant_lookup (notification, "sound", "v", &sound)) {
+    if (g_variant_is_of_type (sound, G_VARIANT_TYPE_STRING)) {
+      const char *key = g_variant_get_string (sound, NULL);
+      if (g_strcmp0 (key, "silent") == 0) {
+        g_variant_builder_add (&hints_builder,
+                               "{sv}",
+                               "suppress-sound",
+                               g_variant_new_boolean (TRUE));
+      }
     }
   }
 
