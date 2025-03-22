@@ -42,8 +42,9 @@
                       <class name="desktop-preview"/>
                     </style>
                     <child>
-                      <object class="GtkBox">
-                        <child>
+                      <object class="GtkCenterBox">
+                        <property name="hexpand">1</property>
+                        <child type="start">
                           <object class="GtkBox">
                             <property name="spacing">4</property>
                             <child>
@@ -75,9 +76,11 @@
                           <object class="GtkLabel" id="desktop_clock_label">
                             <property name="hexpand">1</property>
                             <property name="label">01 Jan 00:00</property>
+                            <property name="visible" bind-source="PmpWallpaperPreview"
+                                      bind-property="lockscreen" bind-flags="sync-create|invert-boolean"/>
                           </object>
                         </child>
-                        <child>
+                        <child type="end">
                           <object class="GtkBox">
                             <property name="spacing">4</property>
                             <child>
@@ -99,6 +102,8 @@
                     <property name="halign">center</property>
                     <property name="valign">center</property>
                     <property name="overflow">hidden</property>
+                    <property name="visible" bind-source="PmpWallpaperPreview"
+                              bind-property="lockscreen" bind-flags="sync-create|invert-boolean"/>
                     <style>
                       <class name="window"/>
                     </style>
@@ -119,6 +124,8 @@
                     <property name="halign">center</property>
                     <property name="valign">center</property>
                     <property name="overflow">hidden</property>
+                    <property name="visible" bind-source="PmpWallpaperPreview"
+                              bind-property="lockscreen" bind-flags="sync-create|invert-boolean"/>
                     <style>
                       <class name="window"/>
                       <class name="front"/>
@@ -129,6 +136,41 @@
                           <class name="header-bar"/>
                         </style>
                         <property name="valign">start</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- Lockscreen Clock -->
+                <child type="overlay">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="visible" bind-source="PmpWallpaperPreview"
+                              bind-property="lockscreen" bind-flags="sync-create"/>
+                    <property name="valign">center</property>
+                    <property name="vexpand">1</property>
+                    <property name="spacing">5</property>
+                    <property name="margin-bottom">16</property>
+                    <child>
+                      <object class="GtkLabel" id="lockscreen_clock_label">
+                        <property name="name">phosh-lockscreen-clock</property>
+                        <property name="valign">center</property>
+                        <property name="hexpand">1</property>
+                        <property name="label">00:00</property>
+                        <property name="single-line-mode">1</property>
+                        <style>
+                          <class name="lockscreen-clock"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lockscreen_date_label">
+                        <property name="name">phosh-lockscreen-date</property>
+                        <property name="valign">center</property>
+                        <property name="label">01 Jan 00:00</property>
+                        <style>
+                          <class name="lockscreen-date"/>
+                        </style>
                       </object>
                     </child>
                   </object>

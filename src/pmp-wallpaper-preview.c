@@ -1,6 +1,6 @@
 /*
  * Copyright © 2019 Red Hat, Inc
- *             2023-2024 The Phosh Developers
+ *             2023-2025 The Phosh Developers
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
@@ -25,6 +25,14 @@
 
 #include "pmp-wallpaper-preview.h"
 
+enum {
+  PROP_0,
+  PROP_LOCKSCREEN,
+  PROP_LAST_PROP
+};
+static GParamSpec *props[PROP_LAST_PROP];
+
+
 struct _PmpWallpaperPreview {
   GtkBox                        parent;
 
@@ -32,6 +40,8 @@ struct _PmpWallpaperPreview {
   GtkWidget                    *desktop_preview;
   GtkWidget                    *animated_background_icon;
   GtkLabel                     *desktop_clock_label;
+  GtkLabel                     *lockscreen_clock_label;
+  GtkLabel                     *lockscreen_date_label;
   GtkWidget                    *drawing_area;
 
   GnomeDesktopThumbnailFactory *thumbnail_factory;
@@ -41,9 +51,61 @@ struct _PmpWallpaperPreview {
   gboolean                      is_24h_format;
   GDateTime                    *previous_time;
   guint                         clock_time_timeout_id;
+  gboolean                      lockscreen;
 };
 
 G_DEFINE_FINAL_TYPE (PmpWallpaperPreview, pmp_wallpaper_preview, GTK_TYPE_BOX)
+
+
+static void
+set_lockscreen (PmpWallpaperPreview *self, gboolean lockscreen)
+{
+  self->lockscreen = lockscreen;
+
+  if (self->lockscreen)
+    gtk_widget_add_css_class (GTK_WIDGET (self), "lockscreen");
+  else
+    gtk_widget_remove_css_class (GTK_WIDGET (self), "lockscreen");
+}
+
+
+static void
+pmp_wallpaper_preview_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
+{
+  PmpWallpaperPreview *self = PMP_WALLPAPER_PREVIEW (object);
+
+  switch (property_id) {
+  case PROP_LOCKSCREEN:
+    set_lockscreen (self, g_value_get_boolean (value));
+    break;
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
+
+static void
+pmp_wallpaper_preview_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
+{
+  PmpWallpaperPreview *self = PMP_WALLPAPER_PREVIEW (object);
+
+  switch (property_id) {
+  case PROP_LOCKSCREEN:
+    g_value_set_boolean (value, self->lockscreen);
+    break;
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    break;
+  }
+}
+
 
 static void
 draw_preview_func (GtkDrawingArea *drawing_area,
@@ -78,7 +140,8 @@ update_clock_label (PmpWallpaperPreview *self,
                     gboolean             force)
 {
   g_autoptr (GDateTime) now = NULL;
-  g_autofree gchar *label = NULL;
+  g_autofree gchar *clock_label = NULL;
+  g_autofree gchar *date_label = NULL;
 
   now = g_date_time_new_now_local ();
 
@@ -88,11 +151,15 @@ update_clock_label (PmpWallpaperPreview *self,
     return;
 
   if (self->is_24h_format)
-    label = g_date_time_format (now, "%R");
+    clock_label = g_date_time_format (now, "%R");
   else
-    label = g_date_time_format (now, "%I:%M %p");
+    clock_label = g_date_time_format (now, "%I:%M %p");
 
-  gtk_label_set_label (self->desktop_clock_label, label);
+  gtk_label_set_label (self->desktop_clock_label, clock_label);
+  gtk_label_set_label (self->lockscreen_clock_label, clock_label);
+
+  date_label = g_date_time_format (now, "%x");
+  gtk_label_set_label (self->lockscreen_date_label, date_label);
 
   g_clear_pointer (&self->previous_time, g_date_time_unref);
   self->previous_time = g_steal_pointer (&now);
@@ -172,6 +239,15 @@ pmp_wallpaper_preview_class_init (PmpWallpaperPreviewClass *klass)
   g_autoptr (GtkCssProvider) provider = gtk_css_provider_new ();
 
   object_class->finalize = pmp_wallpaper_preview_finalize;
+  object_class->get_property = pmp_wallpaper_preview_get_property;
+  object_class->set_property = pmp_wallpaper_preview_set_property;
+
+  props[PROP_LOCKSCREEN] =
+    g_param_spec_boolean ("lockscreen", "", "",
+                          FALSE,
+                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, PROP_LAST_PROP, props);
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/mobi/phosh/portal/pmp-wallpaper-preview.ui");
@@ -181,6 +257,8 @@ pmp_wallpaper_preview_class_init (PmpWallpaperPreviewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, PmpWallpaperPreview, animated_background_icon);
   gtk_widget_class_bind_template_child (widget_class, PmpWallpaperPreview, drawing_area);
   gtk_widget_class_bind_template_child (widget_class, PmpWallpaperPreview, desktop_clock_label);
+  gtk_widget_class_bind_template_child (widget_class, PmpWallpaperPreview, lockscreen_clock_label);
+  gtk_widget_class_bind_template_child (widget_class, PmpWallpaperPreview, lockscreen_date_label);
 
 
   gtk_css_provider_load_from_resource (provider, "/mobi/phosh/portal/pmp-wallpaper-preview.css");
