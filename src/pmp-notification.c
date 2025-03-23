@@ -162,10 +162,31 @@ handle_remove_notification (PmpImplNotification   *object,
 }
 
 
+static GVariant *
+build_options (void)
+{
+  GVariantBuilder options_builder;
+  const char *const categories[] = {
+    "im.received",
+    "call.unanswered",
+    NULL,
+  };
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE ("a{sv}"));
+  g_variant_builder_add (&options_builder,
+                         "{sv}",
+                         "category",
+                         g_variant_new_strv (categories, -1));
+
+  return g_variant_builder_end (&options_builder);
+}
+
+
 gboolean
 pmp_notification_init (GDBusConnection *bus, GError **error)
 {
   GDBusInterfaceSkeleton *helper;
+  GVariant *options = build_options ();
 
   helper = G_DBUS_INTERFACE_SKELETON (pmp_impl_notification_skeleton_new ());
   g_object_connect (helper,
@@ -174,6 +195,7 @@ pmp_notification_init (GDBusConnection *bus, GError **error)
                     NULL);
 
   pmp_impl_notification_set_version (PMP_IMPL_NOTIFICATION (helper), 2);
+  pmp_impl_notification_set_supported_options (PMP_IMPL_NOTIFICATION (helper), options);
 
   if (!g_dbus_interface_skeleton_export (helper,
                                          bus,
