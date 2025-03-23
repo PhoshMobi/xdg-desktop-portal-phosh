@@ -1,7 +1,7 @@
 ---
 include:
   - project: 'guidog/meta-phosh'
-    ref: 'ebb7aef58c96e3d586157f265e14d386ad8766fc'
+    ref: 'a9fef9ad314e8b387fb9b293b9f064527ac0c023'
     file: '/ci/phosh-common-jobs.yml'
   - remote: 'https://gitlab.freedesktop.org/freedesktop/ci-templates/-/raw/6a40df92957c8ce9ee741aaccc5daaaf70545b1e/templates/ci-fairy.yml'
 
@@ -76,6 +76,12 @@ check-format:
   stage: style-checks
   extends: .phosh-format-check
   allow_failure: true
+
+check-meson:
+  stage: style-checks
+  image: ${PHOSH_DOCKER_IMAGE}
+  extends:
+    - .phosh-check-meson
 
 sanity:
   extends:

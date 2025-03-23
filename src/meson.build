@@ -17,11 +17,7 @@ generated_sources = gnome.gdbus_codegen(
   namespace: 'PmpImpl',
 )
 
-generated_sources += gnome.compile_resources(
-   'pmp-resources',
-   'pmp.gresources.xml',
-   c_name: 'pmp',
-)
+generated_sources += gnome.compile_resources('pmp-resources', 'pmp.gresources.xml', c_name: 'pmp')
 
 pmp_sources = files(
   'fc-monitor.c',
@@ -36,10 +32,10 @@ pmp_sources = files(
   'pmp-settings.h',
   'pmp-utils.c',
   'pmp-utils.h',
-  'pmp-wallpaper-preview.c',
-  'pmp-wallpaper-preview.h',
   'pmp-wallpaper-dialog.c',
   'pmp-wallpaper-dialog.h',
+  'pmp-wallpaper-preview.c',
+  'pmp-wallpaper-preview.h',
   'pmp-wallpaper.c',
   'pmp-wallpaper.h',
   'xdg-desktop-portal-phosh.c',
@@ -63,10 +59,13 @@ pmp_deps = [
 pmp_dep = declare_dependency(
   sources: generated_sources,
   include_directories: root_inc,
-  dependencies: pmp_deps)
+  dependencies: pmp_deps,
+)
 
-pmp = executable('xdg-desktop-portal-phosh',
+pmp = executable(
+  'xdg-desktop-portal-phosh',
   pmp_sources,
   dependencies: pmp_dep,
   install: true,
-  install_dir: libexecdir)
+  install_dir: libexecdir,
+)
