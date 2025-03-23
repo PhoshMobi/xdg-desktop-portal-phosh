@@ -134,8 +134,7 @@ notify_signal (GDBusConnection *connection,
                           n->id,
                           n->default_action,
                           n->default_action_target,
-                          n->activation_token,
-                          n->data);
+                          n->activation_token);
     } else {
       char *name;
       GVariant *target;
@@ -146,8 +145,7 @@ notify_signal (GDBusConnection *connection,
                             n->id,
                             name,
                             target,
-                            n->activation_token,
-                            n->data);
+                            n->activation_token);
         g_free (name);
         if (target)
           g_variant_unref (target);
@@ -399,8 +397,7 @@ pmp_fdo_add_notification (GDBusConnection *connection,
                           const char      *app_id,
                           const char      *id,
                           GVariant        *notification,
-                          ActivateAction   activate_action,
-                          gpointer         data)
+                          ActivateAction   activate_action)
 {
   PmpFdoNotification *n;
 
@@ -412,7 +409,6 @@ pmp_fdo_add_notification (GDBusConnection *connection,
     n->notify_id = 0;
     n->activate_action = activate_action;
     n->activation_token = NULL;
-    n->data = data;
 
     fdo_notifications = g_slist_prepend (fdo_notifications, n);
   } else {

@@ -18,15 +18,13 @@ typedef void (*ActivateAction) (GDBusConnection *connection,
                                 const char      *id,
                                 const char      *name,
                                 GVariant        *parameter,
-                                const char      *activation_token,
-                                gpointer         data);
+                                const char      *activation_token);
 
 void                     pmp_fdo_add_notification                (GDBusConnection *connection,
                                                                   const char      *app_id,
                                                                   const char      *id,
                                                                   GVariant        *notification,
-                                                                  ActivateAction   activate,
-                                                                  gpointer         data);
+                                                                  ActivateAction   activate);
 gboolean                 pmp_fdo_remove_notification             (GDBusConnection *connection,
                                                                   const char      *app_id,
                                                                   const char      *id);

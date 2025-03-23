@@ -60,8 +60,7 @@ activate_action (GDBusConnection *connection,
                  const char      *id,
                  const char      *name,
                  GVariant        *parameter,
-                 const char      *activation_token,
-                 gpointer         data)
+                 const char      *activation_token)
 {
   g_autofree char *object_path = NULL;
   GVariantBuilder pdata, parms;
@@ -137,8 +136,7 @@ handle_add_notification (PmpImplNotification   *object,
                             arg_app_id,
                             arg_id,
                             arg_notification,
-                            activate_action,
-                            NULL);
+                            activate_action);
 
   pmp_impl_notification_complete_add_notification (object, invocation, NULL);
 
