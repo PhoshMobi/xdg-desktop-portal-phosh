@@ -24,7 +24,7 @@ desktopdir = datadir / 'applications'
 servicedir = datadir / 'dbus-1' / 'services'
 portaldir = datadir / 'xdg-desktop-portal' / 'portals'
 
-glib_ver = '2.74'
+glib_ver = '2.76'
 glib_ver_str = 'GLIB_VERSION_@0@'.format(glib_ver.replace('.', '_'))
 glib_ver_cmp = '>=@0@'.format(glib_ver)
 
