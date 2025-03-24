@@ -292,8 +292,8 @@ on_handle_open_file (PmpImplFileChooser    *object,
                      GVariant              *arg_options)
 {
   g_autoptr (Request) request = NULL;
-  const gchar *method_name;
-  const gchar *sender;
+  const char *method_name;
+  const char *sender;
   PfsFileSelectorMode mode;
   gboolean multiple = FALSE;
   gboolean directory = FALSE;
