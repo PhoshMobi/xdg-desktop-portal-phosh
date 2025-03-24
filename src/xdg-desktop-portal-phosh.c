@@ -45,9 +45,9 @@ static GOptionEntry entries[] = {
 };
 
 static void
-message_handler (const gchar   *log_domain,
+message_handler (const char    *log_domain,
                  GLogLevelFlags log_level,
-                 const gchar   *message,
+                 const char    *message,
                  gpointer       user_data)
 {
   /* Make this look like normal console output */
@@ -58,7 +58,7 @@ message_handler (const gchar   *log_domain,
 }
 
 static void
-printerr_handler (const gchar *string)
+printerr_handler (const char *string)
 {
   int is_tty = isatty (1);
   const char *prefix = "";
@@ -72,7 +72,7 @@ printerr_handler (const gchar *string)
 
 static void
 on_bus_acquired (GDBusConnection *connection,
-                 const gchar     *name,
+                 const char      *name,
                  gpointer         user_data)
 {
   GError *error = NULL;
@@ -97,7 +97,7 @@ on_bus_acquired (GDBusConnection *connection,
 
 static void
 on_name_acquired (GDBusConnection *connection,
-                  const gchar     *name,
+                  const char      *name,
                   gpointer         user_data)
 {
   g_debug (PMP_DBUS_NAME " acquired");
@@ -105,7 +105,7 @@ on_name_acquired (GDBusConnection *connection,
 
 static void
 on_name_lost (GDBusConnection *connection,
-              const gchar     *name,
+              const char      *name,
               gpointer         user_data)
 {
   g_main_loop_quit (loop);
