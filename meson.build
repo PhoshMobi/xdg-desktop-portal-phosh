@@ -11,6 +11,7 @@ pmp_exe_name = 'xdg-desktop-portal-phosh'
 pmp_dbus_name = 'org.freedesktop.impl.portal.desktop.phosh'
 pmp_portals = [
   'org.freedesktop.impl.portal.FileChooser',
+  'org.freedesktop.impl.portal.Notification',
   'org.freedesktop.impl.portal.Settings',
   'org.freedesktop.impl.portal.Wallpaper',
 ]
@@ -24,7 +25,7 @@ desktopdir = datadir / 'applications'
 servicedir = datadir / 'dbus-1' / 'services'
 portaldir = datadir / 'xdg-desktop-portal' / 'portals'
 
-glib_ver = '2.74'
+glib_ver = '2.76'
 glib_ver_str = 'GLIB_VERSION_@0@'.format(glib_ver.replace('.', '_'))
 glib_ver_cmp = '>=@0@'.format(glib_ver)
 
@@ -119,7 +120,7 @@ libpfs_dep = dependency(
   fallback: ['pfs', 'pfs_dep'],
   default_options: ['examples=false', 'shared-lib=false'],
 )
-xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.14.0')
+xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.19.1')
 
 systemd_user_unit_dir = get_option('systemd_user_unit_dir')
 systemd_dep = dependency('systemd', version: '>= 242', required: false)
