@@ -338,8 +338,17 @@ call_notify (GDBusConnection *connection, PmpFdoNotification *fdo, GVariant *not
   if (!g_variant_lookup (notification, "title", "&s", &title))
     title = "";
 
-  if (g_variant_lookup (notification, "category", "&s", &category))
+  if (g_variant_lookup (notification, "category", "&s", &category)) {
+    g_autofree char *phosh_category;
+
+    /* Can be dropped if https://gitlab.freedesktop.org/xdg/xdg-specs/-/merge_requests/91 lands */
+    if (category && g_str_has_prefix (category, "cellbroadcast."))
+      phosh_category = g_strdup_printf ("x-phosh-%s", category);
+    else
+      phosh_category = g_strdup (category);
+
     g_variant_builder_add (&hints_builder, "{sv}", "category", g_variant_new_string (category));
+  }
 
   if (g_variant_lookup (notification, "display-hint", "@as", &hints_value)) {
     const char * const *display_hints = g_variant_get_strv (hints_value, NULL);

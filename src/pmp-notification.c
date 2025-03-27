@@ -169,6 +169,10 @@ build_options (void)
   const char *const categories[] = {
     "im.received",
     "call.unanswered",
+    "cellbroadcast.amber-alert",
+    "cellbroadcast.danger.extreme",
+    "cellbroadcast.danger.severe",
+    "cellbroadcast.test",
     NULL,
   };
 
