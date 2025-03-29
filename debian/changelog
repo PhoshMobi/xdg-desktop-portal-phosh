@@ -1,3 +1,29 @@
+xdg-desktop-portal-phosh (0.46.0) experimental; urgency=medium
+
+  * treewide: Format meson files
+  * ci: Update shared scripts to a9fef9a
+  * ci: Check meson format
+  * build: Bump dependency on xdg-desktop-portal
+  * build: Bump glib dependency.
+    Useful for g_autofd
+  * notification: Add new portal.
+    This is based on GTK's impleentation. We add our own implementation
+    so we can add portal v2 features:
+        https://github.com/flatpak/xdg-desktop-portal-gtk/pull/516
+  * notification: Drop unused data argument
+  * portal: Enable the notification portal
+  * notification: Support markup-body
+  * notification: Support transient and resident display hint.
+    These can be mapped to fdo hints right away.
+  * notification: Support category.
+    This is part of v2 of the notification spec
+  * notification: Support "silent" sound hint
+  * notification: Advertise v2 support
+  * notification: Provide supported-options.
+    We add the categories we handle in phosh atm.
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 29 Mar 2025 12:39:46 +0100
+
 xdg-desktop-portal-phosh (0.46~rc1) experimental; urgency=medium
 
   [ Gotam Gorabh ]
