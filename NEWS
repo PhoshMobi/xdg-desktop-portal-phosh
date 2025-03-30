@@ -1,8 +1,11 @@
-xdg-desktop-portal-phosh 0.46~rc1
----------------------------------
-Released März 2025
+xdg-desktop-portal-phosh 0.46.0
+-------------------------------
+Released March 2025
+* Add notification portal with initial v2 support. This allows notification
+  features like categories (`im.received`) or body markup in flatpaks
+  to be delivered to the user.
 * Support setting lockscreen wallpaper
-* Update to pfs 0.0.2
+* Update to pfs 0.0.2 so support search and other improvements
 * Contributors:
     * Gotam Gorabh
     * Guido Günther
