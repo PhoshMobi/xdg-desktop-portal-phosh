@@ -43,7 +43,7 @@ struct _PmpWallpaperDialog {
   GtkWidget           *stack;
   PmpWallpaperPreview *desktop_preview;
 
-  gchar               *picture_uri;
+  char                *picture_uri;
   gboolean             lockscreen;
 };
 
@@ -169,7 +169,7 @@ on_image_loaded_cb (GObject      *source_object,
   GFile *image_file = G_FILE (source_object);
   g_autoptr (GFile) tmp = g_file_new_tmp ("XXXXXX", &stream, NULL);
   g_autoptr (GError) error = NULL;
-  gchar *contents = NULL;
+  char *contents = NULL;
   gsize length = 0;
 
   g_object_unref (stream);
@@ -191,7 +191,7 @@ on_image_loaded_cb (GObject      *source_object,
 }
 
 PmpWallpaperDialog *
-pmp_wallpaper_dialog_new (const gchar *picture_uri, const gchar *app_id, gboolean lockscreen)
+pmp_wallpaper_dialog_new (const char *picture_uri, const char *app_id, gboolean lockscreen)
 {
   PmpWallpaperDialog *self;
   g_autoptr (GFile) image_file = g_file_new_for_uri (picture_uri);
@@ -208,7 +208,7 @@ pmp_wallpaper_dialog_new (const gchar *picture_uri, const gchar *app_id, gboolea
   return self;
 }
 
-const gchar *
+const char *
 pmp_wallpaper_dialog_get_uri (PmpWallpaperDialog *dialog)
 {
   return dialog->picture_uri;

@@ -140,8 +140,8 @@ update_clock_label (PmpWallpaperPreview *self,
                     gboolean             force)
 {
   g_autoptr (GDateTime) now = NULL;
-  g_autofree gchar *clock_label = NULL;
-  g_autofree gchar *date_label = NULL;
+  g_autofree char *clock_label = NULL;
+  g_autofree char *date_label = NULL;
 
   now = g_date_time_new_now_local ();
 
@@ -168,7 +168,7 @@ update_clock_label (PmpWallpaperPreview *self,
 static void
 update_clock_format (PmpWallpaperPreview *self)
 {
-  g_autofree gchar *clock_format = NULL;
+  g_autofree char *clock_format = NULL;
   gboolean is_24h_format;
 
   clock_format = g_settings_get_string (self->desktop_settings, "clock-format");
@@ -275,7 +275,7 @@ pmp_wallpaper_preview_new (void)
 
 void
 pmp_wallpaper_preview_set_image (PmpWallpaperPreview *self,
-                                 const gchar         *image_uri)
+                                 const char          *image_uri)
 {
   g_autofree char *path = NULL;
   g_autoptr (GFile) image_file = NULL;

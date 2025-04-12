@@ -36,7 +36,7 @@ typedef struct {
   PmpExternalWin        *external_parent;
 
   guint                  response;
-  gchar                 *picture_uri;
+  char                  *picture_uri;
   gboolean               on_lockscreen;
   gboolean               on_background;
 } PmpWallpaperDialogHandle;
@@ -74,7 +74,7 @@ send_response (PmpWallpaperDialogHandle *handle)
 }
 
 static gboolean
-set_desktop_gsettings (gchar *uri)
+set_desktop_gsettings (char *uri)
 {
   g_autoptr (GSettings) settings = NULL;
 
@@ -87,7 +87,7 @@ set_desktop_gsettings (gchar *uri)
 
 
 static gboolean
-set_screensaver_gsettings (gchar *uri)
+set_screensaver_gsettings (char *uri)
 {
   g_autoptr (GSettings) settings = NULL;
 
@@ -107,8 +107,8 @@ on_file_copy_cb (GObject      *source_object,
   g_autoptr (GFile) destination = NULL;
   GFile *picture_file = G_FILE (source_object);
   g_autoptr (GError) error = NULL;
-  g_autofree gchar *uri = NULL;
-  gchar *contents = NULL;
+  g_autofree char *uri = NULL;
+  char *contents = NULL;
   gsize length = 0;
 
   handle->response = 2;
@@ -143,10 +143,10 @@ out:
 
 static void
 set_wallpaper (PmpWallpaperDialogHandle *handle,
-               const gchar              *uri)
+               const  char              *uri)
 {
   g_autoptr (GFile) source = NULL;
-  g_autofree gchar *path = NULL;
+  g_autofree char *path = NULL;
   const char *basename = handle->on_background ? "background" : "lockscreen";
 
   path = g_build_filename (g_get_user_config_dir (), basename, NULL);
