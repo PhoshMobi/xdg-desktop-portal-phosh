@@ -1,3 +1,11 @@
+xdg-desktop-portal-phosh (0.47.0) experimental; urgency=medium
+
+  * treewise: Prefer char* over gchar*
+  * notification: Support cellbroadcast categories
+  * Update pfs to 0.0.3
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 17 May 2025 11:48:04 +0200
+
 xdg-desktop-portal-phosh (0.46.0) experimental; urgency=medium
 
   * treewide: Format meson files
