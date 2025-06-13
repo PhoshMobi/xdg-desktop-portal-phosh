@@ -1,0 +1,4 @@
+[portal]
+DBusName=@DBUS_NAME@
+Interfaces=@INTERFACES@;
+UseIn=phosh

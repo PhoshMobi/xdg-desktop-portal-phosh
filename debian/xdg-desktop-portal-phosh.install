@@ -1,6 +1,9 @@
 usr/lib/systemd/user
 usr/libexec/xdg-desktop-portal-phosh
+usr/libexec/xdg-desktop-portal-phrosh
 usr/share/applications/xdg-desktop-portal-phosh.desktop
+usr/share/applications/xdg-desktop-portal-phrosh.desktop
 usr/share/dbus-1/services
 usr/share/glib-2.0/schemas/
 usr/share/xdg-desktop-portal/portals/phosh.portal
+usr/share/xdg-desktop-portal/portals/phrosh.portal

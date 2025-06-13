@@ -1,3 +1,4 @@
+.cache/
 debian/files
 debian/*.substvars
 debian/*debhelper*
@@ -7,4 +8,7 @@ po/messages.mo
 po/missing
 po/notexist
 po/phosh-mobile-portal.pot
+src/lib_config.rs
+src/bin_config.rs
 subprojects/pfs
+target/

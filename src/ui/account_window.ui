@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="XdppAccountWindow" parent="AdwWindow">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-start-title-buttons">0</property>
+            <property name="show-end-title-buttons">0</property>
+            <property name="title-widget">
+              <object class="AdwWindowTitle">
+                <property name="title" translatable="1">Share Details?</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="1">Cancel</property>
+                <signal name="clicked" handler="on_cancel_clicked" swapped="1"/>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton">
+                <property name="label" translatable="1">Share</property>
+                <signal name="clicked" handler="on_share_clicked" swapped="1"/>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox">
+            <property name="spacing">6</property>
+            <property name="orientation">vertical</property>
+            <property name="margin-start">6</property>
+            <property name="margin-top">6</property>
+            <property name="margin-end">6</property>
+            <property name="margin-bottom">6</property>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="GtkOverlay">
+                    <property name="halign">center</property>
+                    <child>
+                      <object class="AdwAvatar" id="avatar">
+                        <property name="show-initials">1</property>
+                        <property name="size">120</property>
+                      </object>
+                    </child>
+                    <child type="overlay">
+                      <object class="GtkButton" id="del_btn">
+                        <property name="icon-name">user-trash-symbolic</property>
+                        <property name="halign">start</property>
+                        <property name="valign">end</property>
+                        <signal name="clicked" handler="on_del_avatar_clicked" swapped="1"/>
+                        <style>
+                          <class name="circular"/>
+                          <class name="opaque"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child type="overlay">
+                      <object class="GtkButton">
+                        <property name="icon-name">document-edit-symbolic</property>
+                        <property name="halign">end</property>
+                        <property name="valign">end</property>
+                        <style>
+                          <class name="circular"/>
+                          <class name="opaque"/>
+                        </style>
+                        <signal name="clicked" handler="on_edit_avatar_clicked" swapped="1"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwActionRow" id="desc_row"/>
+                </child>
+                <child>
+                  <object class="AdwActionRow" id="reason_row">
+                    <property name="title" translatable="1">Reason</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="username_row">
+                    <property name="title" translatable="1">Username</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="name_row">
+                    <property name="title" translatable="1">Name</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <object class="GtkFileDialog" id="file_dialog">
+    <property name="title" translatable="1">Choose profile picture</property>
+    <property name="modal">1</property>
+    <property name="default-filter">
+      <object class="GtkFileFilter">
+        <property name="name" translatable="1">Images</property>
+        <mime-types>
+          <mime-type>image/*</mime-type>
+        </mime-types>
+      </object>
+    </property>
+  </object>
+</interface>

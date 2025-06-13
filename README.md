@@ -3,6 +3,11 @@
 A backend implementation for [xdg-desktop-portal](http://github.com/flatpak/xdg-desktop-portal) that
 is using GTK/GNOME/Phosh to provide interfaces that aren't provided by the GTK portal.
 
+There is also a Rust implementation under the binary name `xdg-desktop-portal-phrosh` and D-BUS name
+`org.freedesktop.impl.portal.desktop.phrosh`. Currently it provides the following interfaces:
+
+- `org.freedesktop.impl.portal.Account`
+
 ## License
 
 xdg-desktop-portal-phosh is licensed under the GPL-3.0-or-later license.
@@ -46,12 +51,14 @@ After making sure `xdg-desktop-portal-phosh` isn't already running in your use s
 
 ```sh
 systemctl stop --user xdg-desktop-portal-phosh.service
+systemctl stop --user xdg-desktop-portal-phrosh.service # For Phrosh
 ```
 
 you can run it from the source tree:
 
 ```sh
 G_MESSAGES_DEBUG=all _build/src/xdg-desktop-portal-phosh
+G_MESSAGES_DEBUG=all _build/src/xdg-desktop-portal-phrosh # For Phrosh
 ```
 
 # Getting in Touch

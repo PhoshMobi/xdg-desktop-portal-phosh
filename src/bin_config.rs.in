@@ -1,0 +1,16 @@
+/*
+ * Copyright (C) 2025 The Phosh Developers
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Author: Arun Mani J <arun.mani@tether.to>
+ */
+
+/*
+ * Binary specific configuration. For library specific configuration, use `lib_config.rs.in`.
+ */
+
+pub const DBUS_NAME: &str = @DBUS_NAME@;
+pub const MPSC_BUFFER: usize = 32;
+
+pub const ACCOUNT: bool = true;

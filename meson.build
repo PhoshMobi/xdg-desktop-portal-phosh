@@ -16,6 +16,10 @@ pmp_portals = [
   'org.freedesktop.impl.portal.Wallpaper',
 ]
 
+phrosh_exe_name = 'xdg-desktop-portal-phrosh'
+phrosh_dbus_name = 'org.freedesktop.impl.portal.desktop.phrosh'
+phrosh_interfaces = ['org.freedesktop.impl.portal.Account']
+
 prefix = get_option('prefix')
 datadir = prefix / get_option('datadir')
 libdir = get_option('libdir')
