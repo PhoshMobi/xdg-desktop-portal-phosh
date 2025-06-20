@@ -7,5 +7,7 @@
  */
 
 mod account_window;
+mod app_chooser;
 
 pub use account_window::AccountWindow;
+pub use app_chooser::AppChooserWindow;

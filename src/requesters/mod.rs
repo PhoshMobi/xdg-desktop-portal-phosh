@@ -7,5 +7,7 @@
  */
 
 mod account;
+mod app_chooser;
 
 pub use account::Account;
+pub use app_chooser::AppChooser;

@@ -18,7 +18,10 @@ pmp_portals = [
 
 phrosh_exe_name = 'xdg-desktop-portal-phrosh'
 phrosh_dbus_name = 'org.freedesktop.impl.portal.desktop.phrosh'
-phrosh_interfaces = ['org.freedesktop.impl.portal.Account']
+phrosh_interfaces = [
+  'org.freedesktop.impl.portal.Account',
+  'org.freedesktop.impl.portal.AppChooser',
+]
 
 prefix = get_option('prefix')
 datadir = prefix / get_option('datadir')

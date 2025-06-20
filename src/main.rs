@@ -80,6 +80,22 @@ fn main() {
                             options: _,
                             sender: _,
                         } => Some(Box::new(responders::AccountWindow::new())),
+                        Request::AppChooserChooseApplication {
+                            application: _,
+                            choices: _,
+                            options: _,
+                            sender: _,
+                        } => Some(Box::new(responders::AppChooserWindow::new())),
+                        Request::AppChooserUpdateChoices {
+                            choices: _,
+                            sender: _,
+                        } => {
+                            let responder = map.remove(&request_id);
+                            if responder.is_none() {
+                                glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}")
+                            }
+                            responder
+                        }
                     };
 
                     if let Some(responder) = responder {
@@ -102,6 +118,13 @@ async fn ashpd_main(sender: mpsc::Sender<Message>) -> ashpd::Result<()> {
     builder = if bin_config::ACCOUNT {
         glib::g_debug!(LOG_DOMAIN, "Adding interface: Account");
         builder.account(requesters::Account::new(sender.clone()))
+    } else {
+        builder
+    };
+
+    builder = if bin_config::APP_CHOOSER {
+        glib::g_debug!(LOG_DOMAIN, "Adding interface: AppChooser");
+        builder.app_chooser(requesters::AppChooser::new(sender.clone()))
     } else {
         builder
     };

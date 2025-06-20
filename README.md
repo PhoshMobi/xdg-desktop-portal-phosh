@@ -7,6 +7,7 @@ There is also a Rust implementation under the binary name `xdg-desktop-portal-ph
 `org.freedesktop.impl.portal.desktop.phrosh`. Currently it provides the following interfaces:
 
 - `org.freedesktop.impl.portal.Account`
+- `org.freedesktop.impl.portal.AppChooser`
 
 ## License
 

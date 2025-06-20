@@ -7,6 +7,7 @@
  */
 
 use ashpd::backend::account::UserInformationOptions;
+use ashpd::backend::app_chooser::{Choice, ChooserOptions, DesktopID};
 use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
 use ashpd::{AppID, WindowIdentifierType};
@@ -27,5 +28,15 @@ pub enum Request {
         application: Application,
         options: UserInformationOptions,
         sender: Sender<Result<UserInformation>>,
+    },
+    AppChooserChooseApplication {
+        application: Application,
+        choices: Vec<DesktopID>,
+        options: ChooserOptions,
+        sender: Sender<Result<Choice>>,
+    },
+    AppChooserUpdateChoices {
+        choices: Vec<DesktopID>,
+        sender: Sender<Result<()>>,
     },
 }

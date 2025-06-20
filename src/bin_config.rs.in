@@ -14,3 +14,4 @@ pub const DBUS_NAME: &str = @DBUS_NAME@;
 pub const MPSC_BUFFER: usize = 32;
 
 pub const ACCOUNT: bool = true;
+pub const APP_CHOOSER: bool = true;
