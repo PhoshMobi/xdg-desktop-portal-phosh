@@ -1,7 +1,16 @@
+xdg-desktop-portal-phosh 0.48~rc1
+---------------------------------
+Released June 2025
+* Update to pfs 0.0.4 to fix the empty state when the initially
+  opened directory is empty
+* Contributors:
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.47.0
 -------------------------------
 Released May 2025
 * notification-portal: Handle cellbroadcast categories
+* Update to pfs 0.0.3
 * Contributors:
     * Guido Günther
 

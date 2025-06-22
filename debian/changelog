@@ -1,3 +1,11 @@
+xdg-desktop-portal-phosh (0.48~rc1) experimental; urgency=medium
+
+  * pfs: Bump to 0.0.4.
+    This fixes the empty state when the opened directoy
+    is empty.
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 22 Jun 2025 10:49:54 +0200
+
 xdg-desktop-portal-phosh (0.47.0) experimental; urgency=medium
 
   * treewise: Prefer char* over gchar*
