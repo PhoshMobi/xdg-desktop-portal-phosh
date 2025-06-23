@@ -1,4 +1,4 @@
-xdg-desktop-portal-phosh 0.48~rc1
+xdg-desktop-portal-phosh 0.48~rc2
 ---------------------------------
 Released June 2025
 * Update to pfs 0.0.4 to fix the empty state when the initially

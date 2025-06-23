@@ -1,3 +1,9 @@
+xdg-desktop-portal-phosh (0.48~rc2) experimental; urgency=medium
+
+  * Update subproject in tarball too
+
+ -- Guido Günther <agx@sigxcpu.org>  Mon, 23 Jun 2025 15:25:22 +0200
+
 xdg-desktop-portal-phosh (0.48~rc1) experimental; urgency=medium
 
   * pfs: Bump to 0.0.4.
