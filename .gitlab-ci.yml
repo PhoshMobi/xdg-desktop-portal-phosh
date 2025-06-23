@@ -44,6 +44,7 @@ variables:
   variables:
     DIST: trixie
     BUILD_OPTS: ${COMMON_BUILD_OPTS}
+    EXPERIMENTAL_PKGS: rustc
 
 .build_step: &build_step
   script:
@@ -58,6 +59,11 @@ build:native-debian-trixie:
     - apt-get -y update
     - apt-get -y install eatmydata git
     - eatmydata apt-get -y build-dep .
+    - if [ -n "$EXPERIMENTAL_PKGS" ]; then
+        echo "deb http://deb.debian.org/debian/ experimental main" >> /etc/apt/sources.list.d/experimental.list;
+        eatmydata apt-get -y update;
+        apt -t experimental -y install $EXPERIMENTAL_PKGS;
+      fi
   <<: *trixie_vars
   <<: *build_step
   artifacts:
@@ -100,4 +106,11 @@ package:deb-debian-trixie:
   stage: package
   variables:
     PHOSH_DOCKER_IMAGE: debian:trixie
+    EXPERIMENTAL_PKGS: build-essential rustc
+  before_script:
+    - if [ -n "$EXPERIMENTAL_PKGS" ]; then
+        echo "deb http://deb.debian.org/debian/ experimental main" >> /etc/apt/sources.list.d/experimental.list;
+        apt-get -y update;
+        apt -t experimental -y install $EXPERIMENTAL_PKGS;
+      fi
   extends: .phosh-build-debian-package
