@@ -1,3 +1,9 @@
+xdg-desktop-portal-phosh (0.48.0) experimental; urgency=medium
+
+  * No changes over rc2
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 29 Jun 2025 12:56:10 +0200
+
 xdg-desktop-portal-phosh (0.48~rc2) experimental; urgency=medium
 
   * Update subproject in tarball too
