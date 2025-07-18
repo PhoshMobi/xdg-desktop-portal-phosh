@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="XdppAppChooserWindow" parent="AdwWindow">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-start-title-buttons">0</property>
+            <property name="show-end-title-buttons">0</property>
+            <property name="title-widget">
+              <object class="AdwWindowTitle">
+                <property name="title" translatable="1">Open With…</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="1">Cancel</property>
+                <signal name="clicked" handler="on_cancel_clicked" swapped="1"/>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="open_but">
+                <property name="label" translatable="1">Open</property>
+                <signal name="clicked" handler="on_open_clicked" swapped="1"/>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkStack" id="stack">
+            <property name="margin-start">6</property>
+            <property name="margin-top">6</property>
+            <property name="margin-end">6</property>
+            <property name="margin-bottom">6</property>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">list</property>
+                <property name="child">
+                  <object class="AdwPreferencesPage">
+                    <child>
+                      <object class="AdwPreferencesGroup" id="prefs_group">
+                        <child>
+                          <object class="GtkListBox" id="list_box">
+                            <property name="activate-on-single-click">0</property>
+                            <signal name="row-activated" handler="on_row_activated" swapped="1"/>
+                            <signal name="row-selected" handler="on_row_selected" swapped="1"/>
+                            <style>
+                              <class name="boxed-list"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">empty</property>
+                <property name="child">
+                  <object class="AdwStatusPage" id="status_page">
+                    <property name="icon-name">org.gnome.Software-symbolic</property>
+                    <property name="title" translatable="1">No Apps Found</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label" translatable="1">Open Software</property>
+                        <signal name="clicked" handler="on_open_software_clicked" swapped="1"/>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>

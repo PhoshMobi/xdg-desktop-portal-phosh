@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gresources>
+  <gresource prefix="/mobi/phosh/xdpp">
+    <file compressed="true" preprocess="xml-stripblanks">ui/account_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/app_chooser_row.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/app_chooser_window.ui</file>
+  </gresource>
+</gresources>

@@ -73,3 +73,68 @@ pmp = executable(
   install: true,
   install_dir: libexecdir,
 )
+
+resources = gnome.compile_resources(
+  '@0@'.format(phrosh_exe_name),
+  '@0@.gresource.xml'.format(phrosh_exe_name),
+  gresource_bundle: true,
+)
+
+conf = configuration_data()
+conf.set_quoted('GETTEXT_PACKAGE', 'phosh-mobile-portal')
+conf.set_quoted('LOCALE_DIR', get_option('prefix') / get_option('localedir'))
+conf.set_quoted('DBUS_NAME', phrosh_dbus_name)
+
+configure_file(input: 'lib_config.rs.in', output: 'lib_config.rs', configuration: conf)
+
+run_command(
+  'cp',
+  meson.project_build_root() / 'src' / 'lib_config.rs',
+  meson.project_source_root() / 'src' / 'lib_config.rs',
+  check: true,
+)
+
+configure_file(input: 'bin_config.rs.in', output: 'bin_config.rs', configuration: conf)
+
+run_command(
+  'cp',
+  meson.project_build_root() / 'src' / 'bin_config.rs',
+  meson.project_source_root() / 'src' / 'bin_config.rs',
+  check: true,
+)
+
+cargo_bin = find_program('cargo')
+
+cargo_opt = ['--manifest-path', meson.project_source_root() / 'Cargo.toml']
+cargo_opt += ['--target-dir', meson.project_build_root() / 'src']
+
+if get_option('buildtype') == 'release'
+  cargo_opt += ['--release']
+  cargo_target = 'release'
+else
+  cargo_target = 'debug'
+endif
+
+cargo_env = environment()
+cargo_env.set('CARGO_HOME', meson.project_build_root() / 'cargo')
+cargo_env.set('RESOURCES_DIR', meson.current_build_dir())
+
+custom_target(
+  'executable',
+  build_by_default: true,
+  build_always_stale: true,
+  console: true,
+  install: true,
+  install_dir: libexecdir,
+  env: cargo_env,
+  output: phrosh_exe_name,
+  command: [
+    cargo_bin,
+    'build',
+    cargo_opt,
+    '&&',
+    'cp',
+    meson.project_build_root() / 'src' / cargo_target / pmp_exe_name,
+    '@OUTPUT@',
+  ],
+)

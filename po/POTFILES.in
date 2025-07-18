@@ -1,3 +1,6 @@
+data/xdg-desktop-portal-phrosh.desktop.in.in
 src/pmp-file-chooser.c
 src/pmp-settings.c
 src/pmp-wallpaper-dialog.ui
+src/responders/account_window.rs
+src/ui/account_window.ui
