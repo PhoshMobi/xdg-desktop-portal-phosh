@@ -1668,7 +1668,6 @@ version = "0.1.0"
 dependencies = [
  "ashpd",
  "futures-util",
- "gdk4-wayland",
  "gettext-rs",
  "gtk4",
  "libadwaita",

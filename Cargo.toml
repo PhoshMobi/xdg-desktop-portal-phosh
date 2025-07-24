@@ -7,7 +7,6 @@ edition = "2021"
 adw = { version = "0.7.2", package = "libadwaita", features = ["v1_5"] }
 ashpd = { git = "https://github.com/bilelmoussaoui/ashpd.git", rev = "c57d6f81d7240775b7c60a0ead97ee555599ead0", features = ["backend", "gtk4_wayland", "gtk4_x11"] }
 futures-util = "0.3.31"
-gdk4-wayland = "0.9.6"
 gettext-rs = { version = "0.7.2", features = ["gettext-system"] }
 gtk = { version = "0.9.6", package = "gtk4", features = ["gnome_47"] }
 tokio = { version = "1.44.2", features = ["macros", "rt-multi-thread"] }
