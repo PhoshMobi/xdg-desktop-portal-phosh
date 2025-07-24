@@ -23,7 +23,7 @@ package = "gettext-rs"
 version = "0.7"
 
 [dependencies.gtk]
-features = ["gnome_47"]
+features = ["v4_18"]
 package = "gtk4"
 version = "0.9"
 
