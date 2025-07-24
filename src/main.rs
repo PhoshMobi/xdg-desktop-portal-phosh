@@ -6,15 +6,14 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
-use futures_util::future::pending;
-use gtk::glib;
 use std::boxed::Box;
 use std::collections::HashMap;
+
+use futures_util::future::pending;
+use gtk::glib;
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc;
-use xdg_desktop_portal_phosh::requesters;
-use xdg_desktop_portal_phosh::responders;
-use xdg_desktop_portal_phosh::{Message, Request, Requester, Responder};
+use xdg_desktop_portal_phosh::{requesters, responders, Message, Request, Requester, Responder};
 
 mod bin_config;
 

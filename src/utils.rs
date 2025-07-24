@@ -6,10 +6,11 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
-use crate::Application;
 use gettextrs::gettext;
 use gio::prelude::*;
 use gtk::gio;
+
+use crate::Application;
 
 /*
  * Utility functions that are used in more than one place.

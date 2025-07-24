@@ -6,14 +6,13 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
+use std::cell::RefCell;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gtk::gio;
-use gtk::glib;
 use gtk::glib::subclass::*;
 use gtk::glib::Properties;
-use gtk::{CompositeTemplate, TemplateChild};
-use std::cell::RefCell;
+use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 
 /*
  * `AppChooserRow` is used by `AppChooserWindow` to display an application representing given

@@ -6,6 +6,9 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
+use std::collections::HashMap;
+use std::sync::RwLock;
+
 use ashpd::async_trait::async_trait;
 use ashpd::backend::account::{AccountImpl, UserInformationOptions};
 use ashpd::backend::request::RequestImpl;
@@ -13,8 +16,6 @@ use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
 use ashpd::desktop::HandleToken;
 use ashpd::{AppID, WindowIdentifierType};
-use std::collections::HashMap;
-use std::sync::RwLock;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
 

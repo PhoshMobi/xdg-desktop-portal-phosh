@@ -6,8 +6,9 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
-use crate::Request;
 use std::sync::atomic::{AtomicUsize, Ordering};
+
+use crate::Request;
 
 static REQUEST_ID: AtomicUsize = AtomicUsize::new(1);
 
