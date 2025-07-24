@@ -8,6 +8,9 @@
 
 use ashpd::backend::account::UserInformationOptions;
 use ashpd::backend::app_chooser::{Choice, ChooserOptions, DesktopID};
+use ashpd::backend::file_chooser::{
+    OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
+};
 use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
 use ashpd::{AppID, WindowIdentifierType};
@@ -38,5 +41,23 @@ pub enum Request {
     AppChooserUpdateChoices {
         choices: Vec<DesktopID>,
         sender: Sender<Result<()>>,
+    },
+    FileChooserOpenFile {
+        application: Application,
+        title: String,
+        options: OpenFileOptions,
+        sender: Sender<Result<SelectedFiles>>,
+    },
+    FileChooserSaveFile {
+        application: Application,
+        title: String,
+        options: SaveFileOptions,
+        sender: Sender<Result<SelectedFiles>>,
+    },
+    FileChooserSaveFiles {
+        application: Application,
+        title: String,
+        options: SaveFilesOptions,
+        sender: Sender<Result<SelectedFiles>>,
     },
 }

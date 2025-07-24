@@ -3,6 +3,17 @@
 version = 4
 
 [[package]]
+name = "PhoshFileSelector"
+version = "0.0.3"
+source = "git+https://gitlab.gnome.org/guidog/pfs.git?rev=e0152cd1e695f54fd6751b1d018ce5384956f6a2#e0152cd1e695f54fd6751b1d018ce5384956f6a2"
+dependencies = [
+ "gettext-rs",
+ "glib-macros",
+ "gtk4",
+ "libadwaita",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.24.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1738,6 +1749,7 @@ dependencies = [
 name = "xdg-desktop-portal-phosh"
 version = "0.1.0"
 dependencies = [
+ "PhoshFileSelector",
  "ashpd",
  "futures-util",
  "gettext-rs",
