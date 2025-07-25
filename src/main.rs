@@ -42,6 +42,7 @@ A backend implementation of XDG Desktop Portal for Phosh environment in Rust.
 
   -h, --help\t\tPrint this help and exit.
   -r, --replace\t\tReplace existing instance.
+  -v, --verbose\t\tPrint debug information.
   --version\t\tPrint version information and exit.
 
 XDG Desktop Portal allow Flatpak apps, and other desktop containment frameworks, to interact with
@@ -54,11 +55,15 @@ Please report issues at https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh
 
 struct Options {
     pub replace: bool,
+    pub verbose: bool,
 }
 
 impl Options {
     pub fn new() -> Self {
-        Options { replace: false }
+        Options {
+            replace: false,
+            verbose: false,
+        }
     }
 }
 
@@ -81,6 +86,9 @@ fn handle_cli() -> Result<Options, ExitCode> {
             "-r" | "--replace" => {
                 options.replace = true;
             }
+            "-v" | "--verbose" => {
+                options.verbose = true;
+            }
             "--version" => {
                 println!(env!("CARGO_PKG_VERSION"));
                 return Err(ExitCode::SUCCESS);
@@ -96,6 +104,16 @@ fn handle_cli() -> Result<Options, ExitCode> {
     Ok(options)
 }
 
+fn message_handler(domain: Option<&str>, level: glib::LogLevel, message: &str) {
+    let mut new_level = level;
+
+    if level == glib::LogLevel::Debug && domain.unwrap_or("").starts_with(LOG_DOMAIN) {
+        new_level = glib::LogLevel::Message;
+    }
+
+    glib::log_default_handler(domain, new_level, Some(message));
+}
+
 fn main() -> ExitCode {
     xdg_desktop_portal_phosh::i18n_init();
 
@@ -103,6 +121,10 @@ fn main() -> ExitCode {
         Ok(options) => options,
         Err(code) => return code,
     };
+
+    if options.verbose {
+        glib::log_set_default_handler(message_handler);
+    }
 
     xdg_desktop_portal_phosh::init();
 
