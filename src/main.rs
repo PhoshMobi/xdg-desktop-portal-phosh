@@ -8,11 +8,13 @@
 
 use std::boxed::Box;
 use std::collections::HashMap;
+use std::process::ExitCode;
 
 use futures_util::future::pending;
 use gtk::glib;
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc;
+use xdg_desktop_portal_phosh::utils::gettextf;
 use xdg_desktop_portal_phosh::{requesters, responders, Message, Request, Requester, Responder};
 
 mod bin_config;
@@ -32,7 +34,69 @@ mod bin_config;
 
 const LOG_DOMAIN: &str = "xdpp";
 
-fn main() {
+const HELP: &str = "Usage:
+  {} [OPTION…]
+
+A backend implementation of XDG Desktop Portal for Phosh environment in Rust.
+
+  -h, --help\t\tPrint this help and exit.
+  --version\t\tPrint version information and exit.
+
+XDG Desktop Portal allow Flatpak apps, and other desktop containment frameworks, to interact with
+the system in a secure and well defined way.
+{} provides D-Bus interfaces to be used by XDG Desktop Portal.
+Please see https://flatpak.github.io/xdg-desktop-portal/docs/index.html for more details about
+portals and their purpose.
+
+Please report issues at https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/issues.";
+
+struct Options {}
+
+impl Options {
+    pub fn new() -> Self {
+        Options {}
+    }
+}
+
+fn handle_cli() -> Result<Options, ExitCode> {
+    let mut args = std::env::args().into_iter();
+
+    let mut options = Options::new();
+
+    let Some(name) = args.next() else {
+        return Ok(options);
+    };
+
+    for arg in args {
+        match &arg[..] {
+            "-h" | "--help" => {
+                let help = gettextf(HELP, &[&name, &name]);
+                println!("{help}");
+                return Err(ExitCode::SUCCESS);
+            }
+            "--version" => {
+                println!(env!("CARGO_PKG_VERSION"));
+                return Err(ExitCode::SUCCESS);
+            }
+            arg => {
+                let error = gettextf("Unknown argument: {}", &[arg]);
+                eprintln!("{error}");
+                return Err(ExitCode::FAILURE);
+            }
+        }
+    }
+
+    Ok(options)
+}
+
+fn main() -> ExitCode {
+    xdg_desktop_portal_phosh::i18n_init();
+
+    let options = match handle_cli() {
+        Ok(options) => options,
+        Err(code) => return code,
+    };
+
     xdg_desktop_portal_phosh::init();
 
     let main_loop = glib::MainLoop::new(None, false);
@@ -109,6 +173,8 @@ fn main() {
     glib::g_message!(LOG_DOMAIN, "Running main loop");
 
     main_loop.run();
+
+    ExitCode::SUCCESS
 }
 
 async fn ashpd_main(sender: mpsc::Sender<Message>) -> ashpd::Result<()> {
