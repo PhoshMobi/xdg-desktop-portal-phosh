@@ -10,6 +10,7 @@ use std::boxed::Box;
 use std::collections::HashMap;
 use std::process::ExitCode;
 
+use ashpd::zbus::fdo::RequestNameFlags;
 use futures_util::future::pending;
 use gtk::glib;
 use tokio::runtime::Runtime;
@@ -40,6 +41,7 @@ const HELP: &str = "Usage:
 A backend implementation of XDG Desktop Portal for Phosh environment in Rust.
 
   -h, --help\t\tPrint this help and exit.
+  -r, --replace\t\tReplace existing instance.
   --version\t\tPrint version information and exit.
 
 XDG Desktop Portal allow Flatpak apps, and other desktop containment frameworks, to interact with
@@ -50,11 +52,13 @@ portals and their purpose.
 
 Please report issues at https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/issues.";
 
-struct Options {}
+struct Options {
+    pub replace: bool,
+}
 
 impl Options {
     pub fn new() -> Self {
-        Options {}
+        Options { replace: false }
     }
 }
 
@@ -73,6 +77,9 @@ fn handle_cli() -> Result<Options, ExitCode> {
                 let help = gettextf(HELP, &[&name, &name]);
                 println!("{help}");
                 return Err(ExitCode::SUCCESS);
+            }
+            "-r" | "--replace" => {
+                options.replace = true;
             }
             "--version" => {
                 println!(env!("CARGO_PKG_VERSION"));
@@ -110,7 +117,7 @@ fn main() -> ExitCode {
         #[strong]
         main_loop,
         async move {
-            let result = ashpd_main(sender).await;
+            let result = ashpd_main(&options, sender).await;
             if let Err(error) = result {
                 glib::g_critical!(LOG_DOMAIN, "ashpd server failed: {error}");
                 main_loop.quit();
@@ -177,8 +184,15 @@ fn main() -> ExitCode {
     ExitCode::SUCCESS
 }
 
-async fn ashpd_main(sender: mpsc::Sender<Message>) -> ashpd::Result<()> {
+async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>) -> ashpd::Result<()> {
     let mut builder = ashpd::backend::Builder::new(bin_config::DBUS_NAME)?;
+
+    builder = if options.replace {
+        glib::g_debug!(LOG_DOMAIN, "Replacing existing instance");
+        builder.with_flags(RequestNameFlags::ReplaceExisting.into())
+    } else {
+        builder
+    };
 
     builder = if bin_config::ACCOUNT {
         glib::g_debug!(LOG_DOMAIN, "Adding interface: Account");
