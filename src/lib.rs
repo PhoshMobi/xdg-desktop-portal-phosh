@@ -16,7 +16,7 @@ mod responder;
 pub mod responders;
 pub mod utils;
 
-pub use init::init;
+pub use init::{i18n_init, init};
 pub use message::Message;
 pub use request::{Application, Request};
 pub use requester::Requester;

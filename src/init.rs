@@ -19,14 +19,30 @@ use crate::lib_config::{GETTEXT_PACKAGE, LOCALE_DIR};
  *
  * The `init` function initializes the library. It disables portals, initializes Adwaita, sets up
  * the `gettext` domain and registers resources.
+ *
+ * `i18n_init` can be used to exclusively set up the `gettext` domain.
  */
 
-static INITIALIZED: AtomicBool = AtomicBool::new(false);
+static LIB_INITIALIZED: AtomicBool = AtomicBool::new(false);
+static I18N_INITIALIZED: AtomicBool = AtomicBool::new(false);
 
-pub fn init() {
-    if INITIALIZED.load(Ordering::Acquire) {
+pub fn i18n_init() {
+    if I18N_INITIALIZED.load(Ordering::Acquire) {
         return;
     }
+
+    bindtextdomain(GETTEXT_PACKAGE, LOCALE_DIR).unwrap();
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8").unwrap();
+
+    I18N_INITIALIZED.store(true, Ordering::Release);
+}
+
+pub fn init() {
+    if LIB_INITIALIZED.load(Ordering::Acquire) {
+        return;
+    }
+
+    i18n_init();
 
     gtk::disable_portals();
 
@@ -36,9 +52,6 @@ pub fn init() {
 
     adw::init().unwrap();
 
-    bindtextdomain(GETTEXT_PACKAGE, LOCALE_DIR).unwrap();
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8").unwrap();
-
     gio::resources_register_include_impl(include_bytes!(concat!(
         env!("RESOURCES_DIR"),
         "/",
@@ -46,5 +59,5 @@ pub fn init() {
     )))
     .unwrap();
 
-    INITIALIZED.store(true, Ordering::Release);
+    LIB_INITIALIZED.store(true, Ordering::Release);
 }
