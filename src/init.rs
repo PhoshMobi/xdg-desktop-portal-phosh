@@ -6,6 +6,7 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
+use std::env;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use gettextrs::{bind_textdomain_codeset, bindtextdomain};
@@ -16,21 +17,40 @@ use crate::lib_config::{GETTEXT_PACKAGE, LOCALE_DIR};
 /*
  * The entry-point to the backend library.
  *
- * The `init` function initializes the library. It initializes Adwaita, sets up the `gettext` domain
- * and registers resources.
+ * The `init` function initializes the library. It disables portals, initializes Adwaita, sets up
+ * the `gettext` domain and registers resources.
+ *
+ * `i18n_init` can be used to exclusively set up the `gettext` domain.
  */
 
-static INITIALIZED: AtomicBool = AtomicBool::new(false);
+static LIB_INITIALIZED: AtomicBool = AtomicBool::new(false);
+static I18N_INITIALIZED: AtomicBool = AtomicBool::new(false);
 
-pub fn init() {
-    if INITIALIZED.load(Ordering::Acquire) {
+pub fn i18n_init() {
+    if I18N_INITIALIZED.load(Ordering::Acquire) {
         return;
     }
 
-    adw::init().unwrap();
-
     bindtextdomain(GETTEXT_PACKAGE, LOCALE_DIR).unwrap();
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8").unwrap();
+
+    I18N_INITIALIZED.store(true, Ordering::Release);
+}
+
+pub fn init() {
+    if LIB_INITIALIZED.load(Ordering::Acquire) {
+        return;
+    }
+
+    i18n_init();
+
+    gtk::disable_portals();
+
+    unsafe {
+        env::set_var("ADW_DISABLE_PORTAL", "1");
+    }
+
+    adw::init().unwrap();
 
     gio::resources_register_include_impl(include_bytes!(concat!(
         env!("RESOURCES_DIR"),
@@ -39,5 +59,5 @@ pub fn init() {
     )))
     .unwrap();
 
-    INITIALIZED.store(true, Ordering::Release);
+    LIB_INITIALIZED.store(true, Ordering::Release);
 }

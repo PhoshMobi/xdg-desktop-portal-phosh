@@ -5,16 +5,18 @@
  *
  * Author: Arun Mani J <arun.mani@tether.to>
  */
-use crate::{Message, Request};
+use std::collections::HashMap;
+use std::sync::RwLock;
+
 use ashpd::async_trait::async_trait;
 use ashpd::backend::Result;
 use ashpd::desktop::HandleToken;
 use ashpd::PortalError;
 use gtk::glib;
-use std::collections::HashMap;
-use std::sync::RwLock;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot::Receiver;
+
+use crate::{Message, Request};
 
 const LOG_DOMAIN: &str = "xdpp-requester";
 

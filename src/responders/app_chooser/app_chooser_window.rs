@@ -7,19 +7,16 @@
  */
 
 use std::cell::{Cell, RefCell};
+use std::ffi::OsStr;
+use std::str::FromStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use ashpd::backend::app_chooser::{Choice, DesktopID};
 use ashpd::backend::Result;
-use ashpd::AppID;
-use ashpd::PortalError;
-use gtk::gio;
-use gtk::glib;
+use ashpd::{AppID, PortalError};
 use gtk::glib::subclass::*;
-use gtk::{CompositeTemplate, TemplateChild};
-use std::ffi::OsStr;
-use std::str::FromStr;
+use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
 use super::AppChooserRow;

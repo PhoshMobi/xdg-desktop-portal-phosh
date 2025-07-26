@@ -14,11 +14,8 @@ use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
 use ashpd::url::Url;
 use ashpd::PortalError;
-use gtk::gdk;
-use gtk::gio;
-use gtk::glib;
 use gtk::glib::subclass::*;
-use gtk::{CompositeTemplate, TemplateChild};
+use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
 use crate::utils::{get_application_name, gettextf};
