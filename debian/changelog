@@ -1,3 +1,37 @@
+xdg-desktop-portal-phosh (0.49~rc1) experimental; urgency=medium
+
+  [ Arun Mani J ]
+  * tree: Fix typos and reformat `README.md`
+  * ci: Install Rust from Experimental.
+    Rust >= 1.86 is required by ASHPD in the upcoming Phrosh portal.
+    Also add `build-essential` to resolve conflicts while building
+    the `.deb` package.
+  * phrosh: Bootstrap with `Account` interface
+  * phrosh: Add `AppChooser` interface
+  * phrosh: Drop `gdk4-wayland` dependency
+  * phrosh: Drop `tokio-macros` dependency
+  * phrosh: Use tabular dependencies format
+  * phrosh: Use semver and latest `tokio`
+  * phrosh: Force grouped imports in all Rust files
+  * phrosh: Prevent GTK from using portals.
+    Closes: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/9
+  * phrosh: Provide way to initialize i18n separately
+  * phrosh: Handle CLI options
+  * phrosh: Add `--replace` option
+  * phrosh: Add `--verbose` option.
+    Closes: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/10
+
+  [ Guido Günther ]
+  * ci: Update shared scripts to 7e4c544
+  * ci: Use common job.
+    The common job properly extends the sources.list *before*
+    installing build-deps so that we can have the build-deps
+    correct in the control file.
+  * packaging: Bump rustc dependency.
+    Let's rather fail upfront than failing the build much later.
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 08 Aug 2025 20:00:13 +0200
+
 xdg-desktop-portal-phosh (0.48.0) experimental; urgency=medium
 
   * No changes over rc2

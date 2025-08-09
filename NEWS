@@ -1,3 +1,15 @@
+xdg-desktop-portal-phosh 0.49~rc1
+---------------------------------
+Released August 2025
+* Add new (rust based) account portal implementation
+* Add new (rust based) app chooser portal implementation
+* Issues fixed:
+    * https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/9
+    * https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/10
+* Contributors:
+    * Arun Mani J
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.48.0
 -------------------------------
 Released June 2025
