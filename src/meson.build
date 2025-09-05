@@ -121,7 +121,7 @@ cargo_env.set('RESOURCES_DIR', meson.current_build_dir())
 
 if get_option('rust-portal')
   custom_target(
-    'executable',
+    phrosh_exe_name,
     build_by_default: true,
     build_always_stale: true,
     console: true,
@@ -139,4 +139,7 @@ if get_option('rust-portal')
       '@OUTPUT@',
     ],
   )
+
+  cargo_opt = ['test'] + cargo_opt
+  test(phrosh_exe_name, cargo_bin, args: cargo_opt, env: cargo_env)
 endif
