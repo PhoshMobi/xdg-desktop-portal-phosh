@@ -37,13 +37,13 @@ workflow:
 variables:
   # For ci-fairy
   FDO_UPSTREAM_REPO: guidog/xdg-desktop-portal-phosh
-  DEBIAN_IMAGE: debian:trixie
+  DEBIAN_IMAGE: debian:forky
   COMMON_BUILD_OPTS: --werror
-  PHOSH_ADDITIONAL_EXPERIMENTAL_PKGS: rustc build-essential
+  PHOSH_DOCKER_IMAGE: debian:forky
 
-.trixie_vars: &trixie_vars
+.forky_vars: &forky_vars
   variables:
-    DIST: trixie
+    DIST: forky
     BUILD_OPTS: ${COMMON_BUILD_OPTS}
     PHOSH_ADDITIONAL_PKGS: git
 
@@ -55,10 +55,10 @@ variables:
     - meson ${BUILD_OPTS} . _build
     - meson compile -C _build
 
-build:native-debian-trixie:
+build:native-debian-forky:
   stage: build
   image: ${DEBIAN_IMAGE}
-  <<: *trixie_vars
+  <<: *forky_vars
   <<: *build_step
   artifacts:
     paths:
@@ -96,8 +96,6 @@ sanity:
   rules:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME'
 
-package:deb-debian-trixie:
+package:deb-debian-forky:
   stage: package
-  variables:
-    PHOSH_DOCKER_IMAGE: debian:trixie
   extends: .phosh-build-debian-package
