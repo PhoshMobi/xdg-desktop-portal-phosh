@@ -6,12 +6,12 @@ edition = "2021"
 [dependencies.adw]
 features = ["v1_5"]
 package = "libadwaita"
-version = "0.7"
+version = "0.8"
 
 [dependencies.ashpd]
 features = ["backend", "gtk4_wayland", "gtk4_x11"]
 git = "https://github.com/bilelmoussaoui/ashpd.git"
-rev = "c57d6f81d7240775b7c60a0ead97ee555599ead0"
+rev = "a18a07466ea113d74fbd73229dfb9f7bd4aed10e"
 
 [dependencies.futures_util]
 package = "futures-util"
@@ -25,7 +25,7 @@ version = "0.7"
 [dependencies.gtk]
 features = ["v4_18"]
 package = "gtk4"
-version = "0.9"
+version = "0.10"
 
 [dependencies.tokio]
 features = ["rt-multi-thread"]
