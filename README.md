@@ -1,10 +1,13 @@
 # xdg-desktop-portal-phosh
 
-A backend implementation for [xdg-desktop-portal](http://github.com/flatpak/xdg-desktop-portal) that
-is using GTK/GNOME/Phosh to provide interfaces that aren't provided by the GTK portal.
+A backend implementation for [xdg-desktop-portal][] that is using
+GTK/GNOME/Phosh to provide interfaces that aren't provided by the GTK
+portal.
 
-There is also a Rust implementation under the binary name `xdg-desktop-portal-phrosh` and D-BUS name
-`org.freedesktop.impl.portal.desktop.phrosh`. Currently it provides the following interfaces:
+There is also a Rust implementation under the binary name
+`xdg-desktop-portal-phrosh` and D-BUS name
+`org.freedesktop.impl.portal.desktop.phrosh`. Currently it provides
+the following interfaces:
 
 - `org.freedesktop.impl.portal.Account`
 - `org.freedesktop.impl.portal.AppChooser`
@@ -62,11 +65,12 @@ G_MESSAGES_DEBUG=all _build/src/xdg-desktop-portal-phosh
 G_MESSAGES_DEBUG=all _build/src/xdg-desktop-portal-phrosh # For Phrosh
 ```
 
-# Getting in Touch
+## Getting in Touch
 
-- Issue tracker: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/issues
-- Matrix: https://im.puri.sm/#/room/#phosh:talk.puri.sm
+- Issue tracker: <https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/issues>
+- Matrix: <https://matrix.to/#/#phosh:phosh.mobi>
 
 [main]: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/tree/main
 [.gitlab-ci.yml]: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/blob/main/.gitlab-ci.yml
 [debian/control]: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/blob/main/debian/control
+[xdg-desktop-portal]: http://github.com/flatpak/xdg-desktop-portal
