@@ -1,3 +1,17 @@
+xdg-desktop-portal-phosh (0.50~rc1) experimental; urgency=medium
+
+  [ Arun Mani J ]
+  * xdp-phrosh: Move to `gtk-rs` `0.10`
+    Closes: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/11
+  * ci: Use `forky` image
+
+  [ Guido Günther ]
+  * doc: Use a matrix.to link.
+  * pfs: Update to 0.0.5.
+    Closes: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/11
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 21 Sep 2025 17:59:09 +0200
+
 xdg-desktop-portal-phosh (0.49.0) experimental; urgency=medium
 
   * No changes over rc1
