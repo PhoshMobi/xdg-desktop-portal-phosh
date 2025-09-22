@@ -119,22 +119,24 @@ cargo_env = environment()
 cargo_env.set('CARGO_HOME', meson.project_build_root() / 'cargo')
 cargo_env.set('RESOURCES_DIR', meson.current_build_dir())
 
-custom_target(
-  'executable',
-  build_by_default: true,
-  build_always_stale: true,
-  console: true,
-  install: true,
-  install_dir: libexecdir,
-  env: cargo_env,
-  output: phrosh_exe_name,
-  command: [
-    cargo_bin,
-    'build',
-    cargo_opt,
-    '&&',
-    'cp',
-    meson.project_build_root() / 'src' / cargo_target / pmp_exe_name,
-    '@OUTPUT@',
-  ],
-)
+if get_option('rust-portal')
+  custom_target(
+    'executable',
+    build_by_default: true,
+    build_always_stale: true,
+    console: true,
+    install: true,
+    install_dir: libexecdir,
+    env: cargo_env,
+    output: phrosh_exe_name,
+    command: [
+      cargo_bin,
+      'build',
+      cargo_opt,
+      '&&',
+      'cp',
+      meson.project_build_root() / 'src' / cargo_target / pmp_exe_name,
+      '@OUTPUT@',
+    ],
+  )
+endif
