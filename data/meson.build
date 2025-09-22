@@ -20,13 +20,15 @@ configure_file(
   install_dir: servicedir,
 )
 
-configure_file(
-  input: '@0@.service.in'.format(phrosh_dbus_name),
-  output: '@0@.service'.format(phrosh_dbus_name),
-  configuration: phrosh_conf,
-  install: true,
-  install_dir: servicedir,
-)
+if get_option('rust-portal')
+  configure_file(
+    input: '@0@.service.in'.format(phrosh_dbus_name),
+    output: '@0@.service'.format(phrosh_dbus_name),
+    configuration: phrosh_conf,
+    install: true,
+    install_dir: servicedir,
+  )
+endif
 
 # Desktop file
 desktop_in = configure_file(
@@ -44,18 +46,20 @@ i18n.merge_file(
   install_dir: desktopdir,
 )
 
-i18n.merge_file(
-  type: 'desktop',
-  input: configure_file(
-    input: '@0@.desktop.in.in'.format(phrosh_exe_name),
-    output: '@0@.desktop.in'.format(phrosh_exe_name),
-    configuration: phrosh_conf,
-  ),
-  output: '@0@.desktop'.format(phrosh_exe_name),
-  po_dir: meson.project_source_root() / 'po',
-  install: true,
-  install_dir: desktopdir,
-)
+if get_option('rust-portal')
+  i18n.merge_file(
+    type: 'desktop',
+    input: configure_file(
+      input: '@0@.desktop.in.in'.format(phrosh_exe_name),
+      output: '@0@.desktop.in'.format(phrosh_exe_name),
+      configuration: phrosh_conf,
+    ),
+    output: '@0@.desktop'.format(phrosh_exe_name),
+    po_dir: meson.project_source_root() / 'po',
+    install: true,
+    install_dir: desktopdir,
+  )
+endif
 
 # Systemd user unit
 configure_file(
@@ -65,13 +69,15 @@ configure_file(
   install_dir: systemd_user_unit_dir,
 )
 
-configure_file(
-  input: '@0@.service.in'.format(phrosh_exe_name),
-  output: '@0@.service'.format(phrosh_exe_name),
-  configuration: phrosh_conf,
-  install: true,
-  install_dir: systemd_user_unit_dir,
-)
+if get_option('rust-portal')
+  configure_file(
+    input: '@0@.service.in'.format(phrosh_exe_name),
+    output: '@0@.service'.format(phrosh_exe_name),
+    configuration: phrosh_conf,
+    install: true,
+    install_dir: systemd_user_unit_dir,
+  )
+endif
 
 # Portal conf
 configure_file(
@@ -81,10 +87,12 @@ configure_file(
   install_dir: portaldir,
 )
 
-configure_file(
-  input: 'phrosh.portal.in',
-  output: 'phrosh.portal',
-  configuration: phrosh_conf,
-  install: true,
-  install_dir: portaldir,
-)
+if get_option('rust-portal')
+  configure_file(
+    input: 'phrosh.portal.in',
+    output: 'phrosh.portal',
+    configuration: phrosh_conf,
+    install: true,
+    install_dir: portaldir,
+  )
+endif

@@ -1,3 +1,5 @@
 option('systemd_user_unit_dir',
        type: 'string', value: '',
        description: 'Directory for systemd user units')
+option('rust-portal', type: 'boolean', value: true,
+       description: 'Whether to build the Rust based portal')
