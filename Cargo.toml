@@ -10,8 +10,7 @@ version = "0.8"
 
 [dependencies.ashpd]
 features = ["backend", "gtk4_wayland", "gtk4_x11"]
-git = "https://github.com/bilelmoussaoui/ashpd.git"
-rev = "a18a07466ea113d74fbd73229dfb9f7bd4aed10e"
+version = "0.12"
 
 [dependencies.futures_util]
 package = "futures-util"
