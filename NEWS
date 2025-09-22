@@ -1,3 +1,14 @@
+xdg-desktop-portal-phosh 0.50~rc1
+---------------------------------
+Released September 2025
+* xdp-phrosh: Move to `gtk-rs` `0.10`
+* pfs: Update to 0.0.5.
+* Issues fixed:
+    * https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/11
+* Contributors:
+    * Arun Mani J
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.49.0
 -------------------------------
 Released August 2025
