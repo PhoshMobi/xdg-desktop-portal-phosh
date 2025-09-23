@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="@OBJECT_PATH@">
+  <interface name="@INTERFACE_NAME@">
+    <method name="ThumbnailDirectory">
+      <arg name="directory" type="s" direction="in"/>
+      <arg direction="in" name="options" type="a{sv}"/>
+    </method>
+    <method name="ThumbnailFiles">
+      <arg name="files" type="as" direction="in"/>
+      <arg direction="in" name="options" type="a{sv}"/>
+    </method>
+    <method name="StopThumbnailing">
+      <arg direction="in" name="options" type="a{sv}"/>
+    </method>
+  </interface>
+</node>

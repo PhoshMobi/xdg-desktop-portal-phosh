@@ -143,3 +143,5 @@ if get_option('rust-portal')
   cargo_opt = ['test'] + cargo_opt
   test(phrosh_exe_name, cargo_bin, args: cargo_opt, env: cargo_env)
 endif
+
+subdir('thumbnailer')

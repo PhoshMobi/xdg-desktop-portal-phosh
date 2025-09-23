@@ -24,12 +24,19 @@ phrosh_interfaces = [
   'org.freedesktop.impl.portal.FileChooser',
 ]
 
+pt_service_exe_name = 'phosh-thumbnailer'
+pt_service_dbus_name = 'mobi.phosh.Thumbnailer'
+pt_service_object_path = '/mobi/phosh/Thumbnailer'
+pt_cli_exe_name = 'ptcli'
+
 prefix = get_option('prefix')
+bindir = prefix / get_option('bindir')
 datadir = prefix / get_option('datadir')
 libdir = get_option('libdir')
 libexecdir = prefix / get_option('libexecdir')
 localedir = prefix / get_option('localedir')
 desktopdir = datadir / 'applications'
+interfacedir = datadir / 'dbus-1' / 'interfaces'
 servicedir = datadir / 'dbus-1' / 'services'
 portaldir = datadir / 'xdg-desktop-portal' / 'portals'
 
@@ -153,5 +160,6 @@ configure_file(output: 'pmp-config.h', configuration: config_h)
 
 
 subdir('data')
+subdir('doc')
 subdir('po')
 subdir('src')

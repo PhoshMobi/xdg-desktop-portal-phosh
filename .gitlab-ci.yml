@@ -45,7 +45,7 @@ variables:
   variables:
     DIST: forky
     BUILD_OPTS: ${COMMON_BUILD_OPTS}
-    PHOSH_ADDITIONAL_PKGS: git
+    PHOSH_ADDITIONAL_PKGS: docutils-common git
 
 .build_step: &build_step
   script:
@@ -130,4 +130,6 @@ sanity:
 
 package:deb-debian-forky:
   stage: package
+  variables:
+    PHOSH_ADDITIONAL_PKGS: docutils-common
   extends: .phosh-build-debian-package

@@ -12,6 +12,13 @@ phrosh_conf.set('EXE_NAME', phrosh_exe_name)
 phrosh_conf.set('INTERFACES', ';'.join(phrosh_interfaces))
 phrosh_conf.set('LIBEXEC_DIR', libexecdir)
 
+pt_conf = configuration_data()
+pt_conf.set('DBUS_NAME', pt_service_dbus_name)
+pt_conf.set('INTERFACE_NAME', pt_service_dbus_name)
+pt_conf.set('OBJECT_PATH', pt_service_object_path)
+pt_conf.set('EXE_NAME', pt_service_exe_name)
+pt_conf.set('LIBEXEC_DIR', libexecdir)
+
 # DBus service file
 configure_file(
   input: '@0@.service.in'.format(pmp_dbus_name),
@@ -29,6 +36,23 @@ if get_option('rust-portal')
     install_dir: servicedir,
   )
 endif
+
+configure_file(
+  input: '@0@.service.in'.format(pt_service_dbus_name),
+  output: '@0@.service'.format(pt_service_dbus_name),
+  configuration: pt_conf,
+  install: true,
+  install_dir: servicedir,
+)
+
+# D-Bus interface file
+configure_file(
+  input: '@0@.xml.in'.format(pt_service_dbus_name),
+  output: '@0@.xml'.format(pt_service_dbus_name),
+  configuration: pt_conf,
+  install: true,
+  install_dir: interfacedir,
+)
 
 # Desktop file
 desktop_in = configure_file(
@@ -78,6 +102,14 @@ if get_option('rust-portal')
     install_dir: systemd_user_unit_dir,
   )
 endif
+
+configure_file(
+  input: '@0@.service.in'.format(pt_service_exe_name),
+  output: '@0@.service'.format(pt_service_exe_name),
+  configuration: pt_conf,
+  install: true,
+  install_dir: systemd_user_unit_dir,
+)
 
 # Portal conf
 configure_file(

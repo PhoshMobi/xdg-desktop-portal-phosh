@@ -1,0 +1,10 @@
+[Unit]
+Description=A thumbnailer service for Phosh.
+PartOf=graphical-session.target
+After=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=dbus
+BusName=@DBUS_NAME@
+ExecStart=@LIBEXEC_DIR@/@EXE_NAME@
