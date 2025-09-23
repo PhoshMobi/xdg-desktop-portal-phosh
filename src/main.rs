@@ -188,6 +188,24 @@ fn main() -> ExitCode {
                             }
                             responder
                         }
+                        Request::FileChooserOpenFile {
+                            application: _,
+                            title: _,
+                            options: _,
+                            sender: _,
+                        } => Some(Box::new(responders::FileChooser::new())),
+                        Request::FileChooserSaveFile {
+                            application: _,
+                            title: _,
+                            options: _,
+                            sender: _,
+                        } => Some(Box::new(responders::FileChooser::new())),
+                        Request::FileChooserSaveFiles {
+                            application: _,
+                            title: _,
+                            options: _,
+                            sender: _,
+                        } => Some(Box::new(responders::FileChooser::new())),
                     };
 
                     if let Some(responder) = responder {
@@ -226,6 +244,13 @@ async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>) -> ashpd::
     builder = if bin_config::APP_CHOOSER {
         glib::g_debug!(LOG_DOMAIN, "Adding interface: AppChooser");
         builder.app_chooser(requesters::AppChooser::new(sender.clone()))
+    } else {
+        builder
+    };
+
+    builder = if bin_config::FILE_CHOOSER {
+        glib::g_debug!(LOG_DOMAIN, "Add interface: FileChooser");
+        builder.file_chooser(requesters::FileChooser::new(sender.clone()))
     } else {
         builder
     };

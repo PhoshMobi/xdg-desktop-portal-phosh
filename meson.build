@@ -21,6 +21,7 @@ phrosh_dbus_name = 'org.freedesktop.impl.portal.desktop.phrosh'
 phrosh_interfaces = [
   'org.freedesktop.impl.portal.Account',
   'org.freedesktop.impl.portal.AppChooser',
+  'org.freedesktop.impl.portal.FileChooser',
 ]
 
 prefix = get_option('prefix')
