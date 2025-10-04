@@ -1747,7 +1747,7 @@ dependencies = [
 
 [[package]]
 name = "xdg-desktop-portal-phosh"
-version = "0.1.0"
+version = "0.50.0"
 dependencies = [
  "PhoshFileSelector",
  "ashpd",

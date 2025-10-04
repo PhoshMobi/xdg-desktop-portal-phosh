@@ -1,3 +1,21 @@
+xdg-desktop-portal-phosh (0.50.0) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * build: Allow to disable the Rust portal. Not all distros can ship it yet.
+    Gbp-Pq: Name Allow-to-disable-the-Rust-portal.patch
+  * build: Use ashpd 0.12.
+    According to `git describe` the needed commit is part of 0.12
+
+  [ Arun Mani J ]
+  * po: Add missing files.
+    Fixes: d0d3948 ("phrosh: Handle CLI options") and cb73059 ("phrosh: Add `AppChooser` interface")
+  * responders: Remove `Default` implementation.
+    Mistakenly copied from outdated examples.
+  * xdp-phrosh: Add test support
+  * xdp-phrosh: Add `FileChooser` interface
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 04 Oct 2025 11:11:10 +0200
+
 xdg-desktop-portal-phosh (0.50~rc1) experimental; urgency=medium
 
   [ Arun Mani J ]
