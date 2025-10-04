@@ -1,6 +1,7 @@
-xdg-desktop-portal-phosh 0.50~rc1
----------------------------------
+xdg-desktop-portal-phosh 0.50.0
+-------------------------------
 Released September 2025
+* xdg-phrosh: Add filechooser interface
 * xdp-phrosh: Move to `gtk-rs` `0.10`
 * pfs: Update to 0.0.5.
 * Issues fixed:
