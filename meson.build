@@ -22,6 +22,7 @@ phrosh_interfaces = [
   'org.freedesktop.impl.portal.Account',
   'org.freedesktop.impl.portal.AppChooser',
   'org.freedesktop.impl.portal.FileChooser',
+  'org.freedesktop.impl.portal.Wallpaper',
 ]
 
 pt_service_exe_name = 'phosh-thumbnailer'

@@ -12,6 +12,7 @@ the following interfaces:
 - `org.freedesktop.impl.portal.Account`
 - `org.freedesktop.impl.portal.AppChooser`
 - `org.freedesktop.impl.portal.FileChooser`
+- `org.freedesktop.impl.portal.Wallpaper`
 
 This project also contains [`thumbnailer`](/thumbnailer) which builds two executables:
 

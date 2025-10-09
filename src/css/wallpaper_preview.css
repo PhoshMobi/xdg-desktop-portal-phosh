@@ -1,0 +1,36 @@
+xdpp-wallpaper-preview image {
+  color: white;
+}
+
+xdpp-wallpaper-preview label {
+  color: white;
+  font-weight: bold;
+  font-size: 6px;
+}
+
+xdpp-wallpaper-preview .panel {
+  padding: 0 3px;
+}
+
+xdpp-wallpaper-preview .panel label {
+  text-shadow: 1px 1px 1.1px rgba(0, 0, 0, 0.3);
+}
+
+xdpp-wallpaper-preview .panel image {
+  -gtk-icon-shadow: 1px 1px 1.1px rgba(0, 0, 0, 0.3);
+}
+
+xdpp-wallpaper-preview .lockscreen-time {
+  font-weight: 300;
+  color: white;
+  font-feature-settings: "tnum";
+  font-size: 16px;
+  text-shadow: 1px 1px 1.1px rgba(0, 0, 0, 0.3);
+}
+
+xdpp-wallpaper-preview .lockscreen-date {
+  font-weight: 400;
+  color: white;
+  font-size: 8px;
+  text-shadow: 1px 1px 1.1px rgba(0, 0, 0, 0.3);
+}

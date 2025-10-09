@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="XdppWallpaperWindow" parent="AdwWindow">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-start-title-buttons">0</property>
+            <property name="show-end-title-buttons">0</property>
+            <property name="title-widget">
+              <object class="AdwWindowTitle">
+                <property name="title" translatable="1">Change Wallpaper?</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="1">Cancel</property>
+                <signal name="clicked" handler="on_cancel_clicked" swapped="1"/>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton">
+                <property name="label" translatable="1">Change</property>
+                <signal name="clicked" handler="on_change_clicked" swapped="1"/>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox">
+            <property name="spacing">6</property>
+            <property name="orientation">vertical</property>
+            <property name="margin-start">6</property>
+            <property name="margin-top">6</property>
+            <property name="margin-end">6</property>
+            <property name="margin-bottom">6</property>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwActionRow" id="desc_row"/>
+                </child>
+                <child>
+                  <object class="AdwComboRow" id="set_on_row">
+                    <property name="title" translatable="1">Set on</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="1">Lockscreen</item>
+                          <item translatable="1">Background</item>
+                          <item translatable="1">Both</item>
+                        </items>
+                      </object>
+                    </property>
+                    <signal name="notify::selected" handler="on_selected_changed" swapped="1"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwCarousel" id="carousel"/>
+            </child>
+            <child>
+              <object class="AdwCarouselIndicatorLines" id="indicator">
+                <property name="carousel">carousel</property>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>

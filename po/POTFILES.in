@@ -6,7 +6,9 @@ src/main.rs
 src/responders/account_window.rs
 src/responders/app_chooser/app_chooser_window.rs
 src/responders/file_chooser.rs
+src/responders/wallpaper/wallpaper_window.rs
 src/thumbnailer/application.c
 src/thumbnailer/cli.c
 src/ui/account_window.ui
 src/ui/app_chooser_window.ui
+src/ui/wallpaper_window.ui
