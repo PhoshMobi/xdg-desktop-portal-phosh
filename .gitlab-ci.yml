@@ -72,6 +72,17 @@ check-consistency:
   stage: test
   extends: .phosh-check-consistency
 
+run-clippy:
+  stage: test
+  image: ${DEBIAN_IMAGE}
+  needs: []
+  <<: *forky_vars
+  script:
+    # Clippy will compile the project, so needs real files with all dependencies.
+    - !reference [.build_step, script]
+    - eatmydata apt-get install -y rust-clippy
+    - CARGO_HOME=_build/cargo RESOURCES_DIR=$PWD/_build/src cargo clippy --no-deps -- -Dclippy::pedantic
+
 check-format:
   stage: style-checks
   extends: .phosh-format-check
