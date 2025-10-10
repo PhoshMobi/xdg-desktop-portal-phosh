@@ -26,10 +26,12 @@ pub enum Message {
 }
 
 impl Message {
+    #[must_use]
     pub fn cancel(request_id: usize) -> Self {
         Self::Cancel { request_id }
     }
 
+    #[must_use]
     pub fn done(request_id: usize) -> Self {
         Self::Done { request_id }
     }
@@ -43,6 +45,7 @@ impl Message {
         (request_id, message)
     }
 
+    #[must_use]
     pub fn request_with_id(request_id: usize, request: Request) -> Self {
         Self::Request {
             request_id,

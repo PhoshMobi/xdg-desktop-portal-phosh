@@ -208,6 +208,7 @@ glib::wrapper! {
 }
 
 impl AppChooserWindow {
+    #[must_use]
     pub fn new() -> Self {
         glib::Object::builder().build()
     }

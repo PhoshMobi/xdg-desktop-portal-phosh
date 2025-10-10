@@ -18,6 +18,7 @@ use crate::Application;
 
 // Thanks to Pika Backup.
 // https://gitlab.gnome.org/World/pika-backup/-/blob/81a9b0eefbd5099296b1655cc7a7eb8849153795/src/prelude.rs#L15
+#[must_use]
 pub fn gettextf(format: &str, args: &[&str]) -> String {
     let mut s = gettext(format);
 
@@ -27,6 +28,7 @@ pub fn gettextf(format: &str, args: &[&str]) -> String {
     s
 }
 
+#[must_use]
 pub fn get_application_name(application: &Application) -> Option<String> {
     let app_id = application.app_id.as_ref()?;
     let app_info = app_id.app_info()?;

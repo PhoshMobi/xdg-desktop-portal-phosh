@@ -230,6 +230,7 @@ pub struct FileChooser(ObjectSubclass<imp::FileChooser>);
 }
 
 impl FileChooser {
+    #[must_use]
     pub fn new() -> Self {
         pfs::init::init();
         glib::Object::builder().build()

@@ -166,6 +166,7 @@ glib::wrapper! {
 }
 
 impl AccountWindow {
+    #[must_use]
     pub fn new() -> Self {
         glib::Object::builder().build()
     }
