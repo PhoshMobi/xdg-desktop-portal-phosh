@@ -13,6 +13,7 @@ use crate::Request;
 static REQUEST_ID: AtomicUsize = AtomicUsize::new(1);
 
 /// A message to the `GLib` world from the ASHPD world.
+#[allow(clippy::large_enum_variant)]
 #[derive(Debug)]
 pub enum Message {
     /// User has the cancelled the request of given ID.
