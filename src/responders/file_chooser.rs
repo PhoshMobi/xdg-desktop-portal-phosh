@@ -418,7 +418,7 @@ impl Responder for FileChooser {
         let imp = self.imp();
         let window = imp.window.take();
         if let Some(window) = window {
-            window.close()
+            window.close();
         } else {
             glib::g_critical!(LOG_DOMAIN, "No window available to close");
         }

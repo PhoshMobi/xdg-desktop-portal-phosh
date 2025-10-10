@@ -154,9 +154,9 @@ fn main() -> ExitCode {
             match message {
                 Message::Cancel { request_id } => {
                     if let Some(responder) = map.remove(&request_id) {
-                        responder.cancel()
+                        responder.cancel();
                     } else {
-                        glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}")
+                        glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}");
                     }
                 }
                 Message::Done { request_id } => {
@@ -184,7 +184,10 @@ fn main() -> ExitCode {
                         } => {
                             let responder = map.remove(&request_id);
                             if responder.is_none() {
-                                glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}")
+                                glib::g_critical!(
+                                    LOG_DOMAIN,
+                                    "No responder found for {request_id}"
+                                );
                             }
                             responder
                         }

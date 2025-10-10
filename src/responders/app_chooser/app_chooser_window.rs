@@ -101,12 +101,12 @@ mod imp {
 
         #[template_callback]
         fn on_open_clicked(&self, _button: &gtk::Button) {
-            self.send_app_id()
+            self.send_app_id();
         }
 
         #[template_callback]
         fn on_row_activated(&self, _row: &gtk::ListBoxRow, _list_box: &gtk::ListBox) {
-            self.send_app_id()
+            self.send_app_id();
         }
 
         #[template_callback]
