@@ -14,7 +14,7 @@ use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
 use ashpd::url::Url;
 use ashpd::PortalError;
-use gtk::glib::subclass::*;
+use gtk::glib::subclass::InitializingObject;
 use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
@@ -33,6 +33,7 @@ const LOG_DOMAIN: &str = "xdpp-account-window";
 const FACE_FILE: &str = ".face";
 
 mod imp {
+    #[allow(clippy::wildcard_imports)]
     use super::*;
 
     #[derive(CompositeTemplate, Default)]

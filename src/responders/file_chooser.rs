@@ -122,6 +122,7 @@ fn convert_choices(choices: &[Choice]) -> glib::Variant {
 }
 
 mod imp {
+    #[allow(clippy::wildcard_imports)]
     use super::*;
 
     #[derive(Default)]

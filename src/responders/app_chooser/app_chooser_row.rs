@@ -10,7 +10,7 @@ use std::cell::RefCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gtk::glib::subclass::*;
+use gtk::glib::subclass::InitializingObject;
 use gtk::glib::Properties;
 use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 
@@ -22,6 +22,7 @@ use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 const LOG_DOMAIN: &str = "xdpp-app-chooser-row";
 
 mod imp {
+    #[allow(clippy::wildcard_imports)]
     use super::*;
 
     #[derive(CompositeTemplate, Default, Properties)]

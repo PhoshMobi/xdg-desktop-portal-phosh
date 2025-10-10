@@ -15,7 +15,7 @@ use adw::subclass::prelude::*;
 use ashpd::backend::app_chooser::{Choice, DesktopID};
 use ashpd::backend::Result;
 use ashpd::{AppID, PortalError};
-use gtk::glib::subclass::*;
+use gtk::glib::subclass::InitializingObject;
 use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
@@ -44,6 +44,7 @@ fn ellipsize_middle(text: &str, length: usize) -> String {
 }
 
 mod imp {
+    #[allow(clippy::wildcard_imports)]
     use super::*;
 
     #[derive(CompositeTemplate, Default)]
