@@ -193,14 +193,14 @@ fn main() -> ExitCode {
                             title: _,
                             options: _,
                             sender: _,
-                        } => Some(Box::new(responders::FileChooser::new())),
-                        Request::FileChooserSaveFile {
+                        }
+                        | Request::FileChooserSaveFile {
                             application: _,
                             title: _,
                             options: _,
                             sender: _,
-                        } => Some(Box::new(responders::FileChooser::new())),
-                        Request::FileChooserSaveFiles {
+                        }
+                        | Request::FileChooserSaveFiles {
                             application: _,
                             title: _,
                             options: _,
