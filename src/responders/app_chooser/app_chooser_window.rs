@@ -186,15 +186,12 @@ mod imp {
                 self.list_box.append(&row);
             }
 
-            let page_name = match self.list_box.row_at_index(0) {
-                Some(row) => {
-                    self.list_box.select_row(Some(&row));
-                    "list"
-                }
-                None => {
-                    self.open_but.set_sensitive(false);
-                    "empty"
-                }
+            let page_name = if let Some(row) = self.list_box.row_at_index(0) {
+                self.list_box.select_row(Some(&row));
+                "list"
+            } else {
+                self.open_but.set_sensitive(false);
+                "empty"
             };
             self.stack.set_visible_child_name(page_name);
         }

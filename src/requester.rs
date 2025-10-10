@@ -110,15 +110,14 @@ pub trait Requester {
         let message;
         {
             let map = self.map().read().unwrap();
-            message = match map.get(token) {
-                Some(request_id) => Message::Request {
+            message = if let Some(request_id) = map.get(token) {
+                Message::Request {
                     request_id: *request_id,
                     request,
-                },
-                None => {
-                    glib::g_critical!(LOG_DOMAIN, "Unknown request");
-                    return Err(PortalError::Failed(String::from("Unknown error")));
                 }
+            } else {
+                glib::g_critical!(LOG_DOMAIN, "Unknown request");
+                return Err(PortalError::Failed(String::from("Unknown error")));
             }
         }
 
