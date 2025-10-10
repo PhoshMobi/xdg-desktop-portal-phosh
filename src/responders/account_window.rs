@@ -120,8 +120,8 @@ mod imp {
             self.del_btn.set_visible(false);
         }
 
-        pub fn load_avatar_from_file(&self, file: gio::File) {
-            let texture = gdk::Texture::from_file(&file).ok();
+        pub fn load_avatar_from_file(&self, file: &gio::File) {
+            let texture = gdk::Texture::from_file(file).ok();
             self.avatar.set_custom_image(texture.as_ref());
             self.del_btn.set_visible(texture.is_some());
         }
@@ -140,7 +140,7 @@ mod imp {
                         }
 
                         let file = result.unwrap();
-                        this.load_avatar_from_file(file);
+                        this.load_avatar_from_file(&file);
                     },
                 ),
             );
@@ -185,7 +185,7 @@ impl Responder for AccountWindow {
 
             let mut home = glib::home_dir();
             home.push(FACE_FILE);
-            imp.load_avatar_from_file(gio::File::for_path(home.as_path()));
+            imp.load_avatar_from_file(&gio::File::for_path(home.as_path()));
             imp.avatar.set_text(glib::real_name().as_os_str().to_str());
 
             let app_name = get_application_name(&application);
