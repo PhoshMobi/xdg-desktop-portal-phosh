@@ -212,6 +212,12 @@ impl AppChooserWindow {
     }
 }
 
+impl Default for AppChooserWindow {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Responder for AppChooserWindow {
     fn respond(&self, request: Request) {
         if let Request::AppChooserChooseApplication {

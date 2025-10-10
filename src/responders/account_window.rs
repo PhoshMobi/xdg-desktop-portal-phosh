@@ -173,6 +173,12 @@ impl AccountWindow {
     }
 }
 
+impl Default for AccountWindow {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Responder for AccountWindow {
     fn respond(&self, request: Request) {
         if let Request::AccountGetUserInformation {

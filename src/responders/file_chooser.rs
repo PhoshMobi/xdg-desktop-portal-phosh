@@ -238,6 +238,12 @@ impl FileChooser {
     }
 }
 
+impl Default for FileChooser {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Responder for FileChooser {
     fn respond(&self, request: Request) {
         let application;

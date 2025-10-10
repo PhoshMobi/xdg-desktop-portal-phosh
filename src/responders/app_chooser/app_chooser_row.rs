@@ -102,6 +102,12 @@ impl AppChooserRow {
     }
 }
 
+impl Default for AppChooserRow {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl AppChooserRow {
     pub fn from_app_id(app_id: &str) -> Self {
         glib::Object::builder().property("app-id", app_id).build()
