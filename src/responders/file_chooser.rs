@@ -9,7 +9,9 @@
 use std::cell::Cell;
 use std::path::PathBuf;
 
-use ashpd::backend::file_chooser::SelectedFiles;
+use ashpd::backend::file_chooser::{
+    OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
+};
 use ashpd::backend::Result;
 use ashpd::desktop::file_chooser::{Choice, FileFilter};
 use ashpd::url::Url;
@@ -119,6 +121,100 @@ fn convert_choices(choices: &[Choice]) -> glib::Variant {
         ));
     }
     choices_vec.to_variant()
+}
+
+fn handle_open_file(
+    options: &OpenFileOptions,
+    props: &mut Vec<(&str, glib::Value)>,
+    filters: &mut Vec<FileFilter>,
+) {
+    if let Some(accept_label) = options.accept_label() {
+        props.push(("accept-label", accept_label.into()));
+    } else {
+        props.push(("accept-label", gettextf("Open", &[]).into()));
+    }
+
+    props.push(("directory", options.directory().unwrap_or(false).into()));
+
+    let (current_filter, file_filters) =
+        convert_filters(options.current_filter(), options.filters());
+    props.push(("current_filter", current_filter.into()));
+    props.push(("filters", file_filters.into()));
+    filters.extend(options.filters().iter().map(|filter| filter.to_owned()));
+
+    let choices = convert_choices(options.choices());
+    props.push(("choices", choices.into()));
+
+    if let Some(current_folder_path) = options.current_folder() {
+        let current_folder = gio::File::for_path(current_folder_path);
+        props.push(("current-folder", current_folder.into()));
+    } else {
+        let current_folder = gio::File::for_path(glib::home_dir());
+        props.push(("current-folder", current_folder.into()));
+    }
+}
+
+fn handle_save_file(
+    options: &SaveFileOptions,
+    props: &mut Vec<(&str, glib::Value)>,
+    filters: &mut Vec<FileFilter>,
+) {
+    if let Some(accept_label) = options.accept_label() {
+        props.push(("accept-label", accept_label.into()));
+    } else {
+        props.push(("accept-label", gettextf("Save", &[]).into()));
+    }
+
+    let (current_filter, file_filters) =
+        convert_filters(options.current_filter(), options.filters());
+    props.push(("current_filter", current_filter.into()));
+    props.push(("filters", file_filters.into()));
+    filters.extend(options.filters().iter().map(|filter| filter.to_owned()));
+
+    let choices = convert_choices(options.choices());
+    props.push(("choices", choices.into()));
+
+    if let Some(current_file_path) = options.current_file() {
+        let current_file = gio::File::for_path(current_file_path);
+        let current_folder = current_file.parent();
+        let current_name = current_file.basename();
+        props.push(("current-folder", current_folder.into()));
+        props.push(("filename", current_name.into()));
+    } else if let Some(current_folder_path) = options.current_folder() {
+        let current_folder = gio::File::for_path(current_folder_path);
+        props.push(("current-folder", current_folder.into()));
+        props.push(("filename", options.current_name().unwrap_or("").into()));
+    } else {
+        let current_folder = gio::File::for_path(glib::home_dir());
+        props.push(("current-folder", current_folder.into()));
+    }
+}
+
+fn handle_save_files(
+    options: &SaveFilesOptions,
+    props: &mut Vec<(&str, glib::Value)>,
+    files: &mut Vec<PathBuf>,
+) {
+    if let Some(accept_label) = options.accept_label() {
+        props.push(("accept-label", accept_label.into()));
+    } else {
+        props.push(("accept-label", gettextf("Save", &[]).into()));
+    }
+
+    if let Some(current_folder_path) = options.current_folder() {
+        let current_folder = gio::File::for_path(current_folder_path);
+        props.push(("current-folder", current_folder.into()));
+    } else {
+        let current_folder = gio::File::for_path(glib::home_dir());
+        props.push(("current-folder", current_folder.into()));
+    }
+
+    files.extend(
+        options
+            .files()
+            .iter()
+            .map(|path| PathBuf::from(path.as_ref())),
+    );
 }
 
 mod imp {
@@ -249,10 +345,10 @@ impl Responder for FileChooser {
         let application;
         let sender;
         let mode;
-        let mut filters = Vec::new();
-        let mut files = Vec::new();
         let modal;
         let mut props = Vec::new();
+        let mut filters = Vec::new();
+        let mut files = Vec::new();
 
         if let Request::FileChooserOpenFile {
             application: application_in,
@@ -263,38 +359,11 @@ impl Responder for FileChooser {
         {
             application = application_in;
             sender = sender_in;
-
             mode = FileSelectorMode::OpenFile;
             props.push(("mode", mode.into()));
-
             props.push(("title", title.into()));
-
-            if let Some(accept_label) = options.accept_label() {
-                props.push(("accept-label", accept_label.into()));
-            } else {
-                props.push(("accept-label", gettextf("Open", &[]).into()));
-            }
-
             modal = options.modal().unwrap_or(true);
-
-            props.push(("directory", options.directory().unwrap_or(false).into()));
-
-            let (current_filter, file_filters) =
-                convert_filters(options.current_filter(), options.filters());
-            props.push(("current_filter", current_filter.into()));
-            props.push(("filters", file_filters.into()));
-            filters.extend(options.filters().iter().map(|filter| filter.to_owned()));
-
-            let choices = convert_choices(options.choices());
-            props.push(("choices", choices.into()));
-
-            if let Some(current_folder_path) = options.current_folder() {
-                let current_folder = gio::File::for_path(current_folder_path);
-                props.push(("current-folder", current_folder.into()));
-            } else {
-                let current_folder = gio::File::for_path(glib::home_dir());
-                props.push(("current-folder", current_folder.into()));
-            }
+            handle_open_file(&options, &mut props, &mut filters);
         } else if let Request::FileChooserSaveFile {
             application: application_in,
             title,
@@ -304,43 +373,11 @@ impl Responder for FileChooser {
         {
             application = application_in;
             sender = sender_in;
-
             mode = FileSelectorMode::SaveFile;
             props.push(("mode", mode.into()));
-
             props.push(("title", title.into()));
-
-            if let Some(accept_label) = options.accept_label() {
-                props.push(("accept-label", accept_label.into()));
-            } else {
-                props.push(("accept-label", gettextf("Save", &[]).into()));
-            }
-
             modal = options.modal().unwrap_or(true);
-
-            let (current_filter, file_filters) =
-                convert_filters(options.current_filter(), options.filters());
-            props.push(("current_filter", current_filter.into()));
-            props.push(("filters", file_filters.into()));
-            filters.extend(options.filters().iter().map(|filter| filter.to_owned()));
-
-            let choices = convert_choices(options.choices());
-            props.push(("choices", choices.into()));
-
-            if let Some(current_file_path) = options.current_file() {
-                let current_file = gio::File::for_path(current_file_path);
-                let current_folder = current_file.parent();
-                let current_name = current_file.basename();
-                props.push(("current-folder", current_folder.into()));
-                props.push(("filename", current_name.into()));
-            } else if let Some(current_folder_path) = options.current_folder() {
-                let current_folder = gio::File::for_path(current_folder_path);
-                props.push(("current-folder", current_folder.into()));
-                props.push(("filename", options.current_name().unwrap_or("").into()));
-            } else {
-                let current_folder = gio::File::for_path(glib::home_dir());
-                props.push(("current-folder", current_folder.into()));
-            }
+            handle_save_file(&options, &mut props, &mut filters);
         } else if let Request::FileChooserSaveFiles {
             application: application_in,
             title,
@@ -350,34 +387,11 @@ impl Responder for FileChooser {
         {
             application = application_in;
             sender = sender_in;
-
             mode = FileSelectorMode::SaveFiles;
             props.push(("mode", mode.into()));
-
             props.push(("title", title.into()));
-
-            if let Some(accept_label) = options.accept_label() {
-                props.push(("accept-label", accept_label.into()));
-            } else {
-                props.push(("accept-label", gettextf("Save", &[]).into()));
-            }
-
             modal = options.modal().unwrap_or(true);
-
-            if let Some(current_folder_path) = options.current_folder() {
-                let current_folder = gio::File::for_path(current_folder_path);
-                props.push(("current-folder", current_folder.into()));
-            } else {
-                let current_folder = gio::File::for_path(glib::home_dir());
-                props.push(("current-folder", current_folder.into()));
-            }
-
-            files.extend(
-                options
-                    .files()
-                    .iter()
-                    .map(|path| PathBuf::from(path.as_ref())),
-            );
+            handle_save_files(&options, &mut props, &mut files);
         } else {
             glib::g_critical!(LOG_DOMAIN, "Unknown request {request:#?}");
             panic!();
