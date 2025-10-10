@@ -68,7 +68,7 @@ impl Options {
 }
 
 fn handle_cli() -> Result<Options, ExitCode> {
-    let mut args = std::env::args().into_iter();
+    let mut args = std::env::args();
 
     let mut options = Options::new();
 

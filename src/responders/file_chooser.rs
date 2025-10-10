@@ -92,7 +92,7 @@ fn convert_filters(
     let model = gio::ListStore::with_type(gtk::FileFilter::static_type());
     let mut current_filter_pos = gtk::INVALID_LIST_POSITION;
 
-    for (i, filter) in filters.into_iter().enumerate() {
+    for (i, filter) in filters.iter().enumerate() {
         model.append(&convert_file_filter(filter));
         if current_filter.is_some() && current_filter.unwrap() == filter {
             current_filter_pos = i.try_into().unwrap();
