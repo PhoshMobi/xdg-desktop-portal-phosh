@@ -214,9 +214,9 @@ fn main() -> ExitCode {
                     if let Some(responder) = responder {
                         responder.respond(request);
                         map.insert(request_id, responder);
-                    };
+                    }
                 }
-            };
+            }
         }
     });
 

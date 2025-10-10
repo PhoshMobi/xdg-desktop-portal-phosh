@@ -247,7 +247,7 @@ impl Responder for AppChooserWindow {
                 ));
                 if sender.send(Err(error)).is_err() {
                     glib::g_critical!(LOG_DOMAIN, "Unable to send response through sender");
-                };
+                }
                 return;
             }
             imp.prefs_group.set_description(Some(&prefs_desc));
@@ -273,7 +273,7 @@ impl Responder for AppChooserWindow {
             imp.update_choices(choices);
             if sender.send(Ok(())).is_err() {
                 glib::g_critical!(LOG_DOMAIN, "Unable to send response through sender");
-            };
+            }
         } else {
             glib::g_critical!(LOG_DOMAIN, "Unknown request {request:#?}");
             panic!();
