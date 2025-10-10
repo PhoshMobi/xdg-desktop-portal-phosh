@@ -99,7 +99,7 @@ fn convert_filters(
         }
     }
 
-    if current_filter.is_some() && filters.len() == 0 {
+    if current_filter.is_some() && filters.is_empty() {
         let current_filter = current_filter.unwrap();
         model.append(&convert_file_filter(current_filter));
         current_filter_pos = 0;
@@ -164,7 +164,7 @@ mod imp {
                 return;
             };
 
-            if uris.len() == 0 {
+            if uris.is_empty() {
                 let error = PortalError::Cancelled(String::from("Cancelled by user"));
                 self.send_response(Err(error));
                 return;
