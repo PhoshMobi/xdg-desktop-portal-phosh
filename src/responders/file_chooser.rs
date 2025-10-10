@@ -140,7 +140,7 @@ fn handle_open_file(
         convert_filters(options.current_filter(), options.filters());
     props.push(("current_filter", current_filter.into()));
     props.push(("filters", file_filters.into()));
-    filters.extend(options.filters().iter().map(|filter| filter.to_owned()));
+    filters.extend(options.filters().iter().map(std::borrow::ToOwned::to_owned));
 
     let choices = convert_choices(options.choices());
     props.push(("choices", choices.into()));
@@ -169,7 +169,7 @@ fn handle_save_file(
         convert_filters(options.current_filter(), options.filters());
     props.push(("current_filter", current_filter.into()));
     props.push(("filters", file_filters.into()));
-    filters.extend(options.filters().iter().map(|filter| filter.to_owned()));
+    filters.extend(options.filters().iter().map(std::borrow::ToOwned::to_owned));
 
     let choices = convert_choices(options.choices());
     props.push(("choices", choices.into()));
