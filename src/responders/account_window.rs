@@ -14,7 +14,7 @@ use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
 use ashpd::url::Url;
 use ashpd::PortalError;
-use gtk::glib::subclass::*;
+use gtk::glib::subclass::InitializingObject;
 use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
@@ -33,6 +33,7 @@ const LOG_DOMAIN: &str = "xdpp-account-window";
 const FACE_FILE: &str = ".face";
 
 mod imp {
+    #[allow(clippy::wildcard_imports)]
     use super::*;
 
     #[derive(CompositeTemplate, Default)]
@@ -119,8 +120,8 @@ mod imp {
             self.del_btn.set_visible(false);
         }
 
-        pub fn load_avatar_from_file(&self, file: gio::File) {
-            let texture = gdk::Texture::from_file(&file).ok();
+        pub fn load_avatar_from_file(&self, file: &gio::File) {
+            let texture = gdk::Texture::from_file(file).ok();
             self.avatar.set_custom_image(texture.as_ref());
             self.del_btn.set_visible(texture.is_some());
         }
@@ -139,7 +140,7 @@ mod imp {
                         }
 
                         let file = result.unwrap();
-                        this.load_avatar_from_file(file);
+                        this.load_avatar_from_file(&file);
                     },
                 ),
             );
@@ -166,8 +167,15 @@ glib::wrapper! {
 }
 
 impl AccountWindow {
+    #[must_use]
     pub fn new() -> Self {
         glib::Object::builder().build()
+    }
+}
+
+impl Default for AccountWindow {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -183,7 +191,7 @@ impl Responder for AccountWindow {
 
             let mut home = glib::home_dir();
             home.push(FACE_FILE);
-            imp.load_avatar_from_file(gio::File::for_path(home.as_path()));
+            imp.load_avatar_from_file(&gio::File::for_path(home.as_path()));
             imp.avatar.set_text(glib::real_name().as_os_str().to_str());
 
             let app_name = get_application_name(&application);

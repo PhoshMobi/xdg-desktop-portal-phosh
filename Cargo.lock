@@ -4,8 +4,7 @@ version = 4
 
 [[package]]
 name = "PhoshFileSelector"
-version = "0.0.3"
-source = "git+https://gitlab.gnome.org/guidog/pfs.git?rev=e0152cd1e695f54fd6751b1d018ce5384956f6a2#e0152cd1e695f54fd6751b1d018ce5384956f6a2"
+version = "0.0.5"
 dependencies = [
  "gettext-rs",
  "glib-macros",

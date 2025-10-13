@@ -68,7 +68,7 @@ impl Options {
 }
 
 fn handle_cli() -> Result<Options, ExitCode> {
-    let mut args = std::env::args().into_iter();
+    let mut args = std::env::args();
 
     let mut options = Options::new();
 
@@ -154,9 +154,9 @@ fn main() -> ExitCode {
             match message {
                 Message::Cancel { request_id } => {
                     if let Some(responder) = map.remove(&request_id) {
-                        responder.cancel()
+                        responder.cancel();
                     } else {
-                        glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}")
+                        glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}");
                     }
                 }
                 Message::Done { request_id } => {
@@ -184,7 +184,10 @@ fn main() -> ExitCode {
                         } => {
                             let responder = map.remove(&request_id);
                             if responder.is_none() {
-                                glib::g_critical!(LOG_DOMAIN, "No responder found for {request_id}")
+                                glib::g_critical!(
+                                    LOG_DOMAIN,
+                                    "No responder found for {request_id}"
+                                );
                             }
                             responder
                         }
@@ -193,14 +196,14 @@ fn main() -> ExitCode {
                             title: _,
                             options: _,
                             sender: _,
-                        } => Some(Box::new(responders::FileChooser::new())),
-                        Request::FileChooserSaveFile {
+                        }
+                        | Request::FileChooserSaveFile {
                             application: _,
                             title: _,
                             options: _,
                             sender: _,
-                        } => Some(Box::new(responders::FileChooser::new())),
-                        Request::FileChooserSaveFiles {
+                        }
+                        | Request::FileChooserSaveFiles {
                             application: _,
                             title: _,
                             options: _,
@@ -211,9 +214,9 @@ fn main() -> ExitCode {
                     if let Some(responder) = responder {
                         responder.respond(request);
                         map.insert(request_id, responder);
-                    };
+                    }
                 }
-            };
+            }
         }
     });
 

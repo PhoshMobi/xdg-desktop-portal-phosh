@@ -26,6 +26,7 @@ use crate::lib_config::{GETTEXT_PACKAGE, LOCALE_DIR};
 static LIB_INITIALIZED: AtomicBool = AtomicBool::new(false);
 static I18N_INITIALIZED: AtomicBool = AtomicBool::new(false);
 
+#[allow(clippy::missing_panics_doc)]
 pub fn i18n_init() {
     if I18N_INITIALIZED.load(Ordering::Acquire) {
         return;
@@ -37,6 +38,7 @@ pub fn i18n_init() {
     I18N_INITIALIZED.store(true, Ordering::Release);
 }
 
+#[allow(clippy::missing_panics_doc)]
 pub fn init() {
     if LIB_INITIALIZED.load(Ordering::Acquire) {
         return;

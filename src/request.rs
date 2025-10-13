@@ -23,7 +23,7 @@ pub struct Application {
     pub window_identifier: Option<WindowIdentifierType>,
 }
 
-/// Different types of portal requests. The GLib world picks the matching responder and passes the
+/// Different types of portal requests. The `GLib` world picks the matching responder and passes the
 /// request to it. Each request has a `sender` through which the responder will send the reply.
 #[derive(Debug)]
 pub enum Request {

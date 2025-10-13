@@ -12,7 +12,8 @@ use crate::Request;
 
 static REQUEST_ID: AtomicUsize = AtomicUsize::new(1);
 
-/// A message to the GLib world from the ASHPD world.
+/// A message to the `GLib` world from the ASHPD world.
+#[allow(clippy::large_enum_variant)]
 #[derive(Debug)]
 pub enum Message {
     /// User has the cancelled the request of given ID.
@@ -25,10 +26,12 @@ pub enum Message {
 }
 
 impl Message {
+    #[must_use]
     pub fn cancel(request_id: usize) -> Self {
         Self::Cancel { request_id }
     }
 
+    #[must_use]
     pub fn done(request_id: usize) -> Self {
         Self::Done { request_id }
     }
@@ -42,6 +45,7 @@ impl Message {
         (request_id, message)
     }
 
+    #[must_use]
     pub fn request_with_id(request_id: usize, request: Request) -> Self {
         Self::Request {
             request_id,

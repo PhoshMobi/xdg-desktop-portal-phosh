@@ -15,7 +15,7 @@ use adw::subclass::prelude::*;
 use ashpd::backend::app_chooser::{Choice, DesktopID};
 use ashpd::backend::Result;
 use ashpd::{AppID, PortalError};
-use gtk::glib::subclass::*;
+use gtk::glib::subclass::InitializingObject;
 use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
@@ -44,6 +44,7 @@ fn ellipsize_middle(text: &str, length: usize) -> String {
 }
 
 mod imp {
+    #[allow(clippy::wildcard_imports)]
     use super::*;
 
     #[derive(CompositeTemplate, Default)]
@@ -100,12 +101,12 @@ mod imp {
 
         #[template_callback]
         fn on_open_clicked(&self, _button: &gtk::Button) {
-            self.send_app_id()
+            self.send_app_id();
         }
 
         #[template_callback]
         fn on_row_activated(&self, _row: &gtk::ListBoxRow, _list_box: &gtk::ListBox) {
-            self.send_app_id()
+            self.send_app_id();
         }
 
         #[template_callback]
@@ -186,15 +187,12 @@ mod imp {
                 self.list_box.append(&row);
             }
 
-            let page_name = match self.list_box.row_at_index(0) {
-                Some(row) => {
-                    self.list_box.select_row(Some(&row));
-                    "list"
-                }
-                None => {
-                    self.open_but.set_sensitive(false);
-                    "empty"
-                }
+            let page_name = if let Some(row) = self.list_box.row_at_index(0) {
+                self.list_box.select_row(Some(&row));
+                "list"
+            } else {
+                self.open_but.set_sensitive(false);
+                "empty"
             };
             self.stack.set_visible_child_name(page_name);
         }
@@ -208,8 +206,15 @@ glib::wrapper! {
 }
 
 impl AppChooserWindow {
+    #[must_use]
     pub fn new() -> Self {
         glib::Object::builder().build()
+    }
+}
+
+impl Default for AppChooserWindow {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -242,7 +247,7 @@ impl Responder for AppChooserWindow {
                 ));
                 if sender.send(Err(error)).is_err() {
                     glib::g_critical!(LOG_DOMAIN, "Unable to send response through sender");
-                };
+                }
                 return;
             }
             imp.prefs_group.set_description(Some(&prefs_desc));
@@ -268,7 +273,7 @@ impl Responder for AppChooserWindow {
             imp.update_choices(choices);
             if sender.send(Ok(())).is_err() {
                 glib::g_critical!(LOG_DOMAIN, "Unable to send response through sender");
-            };
+            }
         } else {
             glib::g_critical!(LOG_DOMAIN, "Unknown request {request:#?}");
             panic!();
