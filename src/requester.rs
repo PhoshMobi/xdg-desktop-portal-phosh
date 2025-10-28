@@ -21,8 +21,8 @@ use crate::{Message, Request};
 const LOG_DOMAIN: &str = "xdpp-requester";
 
 /// A requester is responsible for getting the portal requests from the ASHPD world and passing it
-/// to the GLib world. It gets a `sender` through which it can communicate with the GLib world about
-/// the requests.
+/// to the `GLib` world. It gets a `sender` through which it can communicate with the `GLib` world
+/// about the requests.
 #[async_trait]
 pub trait Requester {
     fn new(sender: Sender<Message>) -> Self;

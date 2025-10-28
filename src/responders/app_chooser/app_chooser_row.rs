@@ -79,9 +79,7 @@ mod imp {
             let name = info.display_name();
             self.obj().set_title(&name);
 
-            let icon = info.icon();
-            if icon.is_some() {
-                let icon = icon.unwrap();
+            if let Some(icon) = info.icon() {
                 self.image.set_from_gicon(&icon);
             }
 

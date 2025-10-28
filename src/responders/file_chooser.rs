@@ -101,10 +101,11 @@ fn convert_filters(
         }
     }
 
-    if current_filter.is_some() && filters.is_empty() {
-        let current_filter = current_filter.unwrap();
-        model.append(&convert_file_filter(current_filter));
-        current_filter_pos = 0;
+    if filters.is_empty() {
+        if let Some(current_filter) = current_filter {
+            model.append(&convert_file_filter(current_filter));
+            current_filter_pos = 0;
+        }
     }
 
     (current_filter_pos, model.into())
