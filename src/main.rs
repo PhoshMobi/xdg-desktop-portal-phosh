@@ -229,13 +229,13 @@ fn main() -> ExitCode {
 
 async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>) -> ashpd::Result<()> {
     let mut builder = ashpd::backend::Builder::new(bin_config::DBUS_NAME)?;
+    let mut flags = RequestNameFlags::AllowReplacement | RequestNameFlags::DoNotQueue;
 
-    builder = if options.replace {
+    if options.replace {
         glib::g_debug!(LOG_DOMAIN, "Replacing existing instance");
-        builder.with_flags(RequestNameFlags::ReplaceExisting.into())
-    } else {
-        builder
-    };
+        flags |= RequestNameFlags::ReplaceExisting;
+    }
+    builder = builder.with_flags(flags);
 
     builder = if bin_config::ACCOUNT {
         glib::g_debug!(LOG_DOMAIN, "Adding interface: Account");
