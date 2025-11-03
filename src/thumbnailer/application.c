@@ -298,7 +298,6 @@ handle_stop_thumbnailing (PtImplThumbnailer *impl, GDBusMethodInvocation *invoca
 typedef struct {
   PtImplThumbnailer     *impl;
   GDBusMethodInvocation *invocation;
-  GFile *directory;
   GFileEnumerator       *enumerator;
 } ThumbnailDirectoryHandle;
 
@@ -306,7 +305,6 @@ typedef struct {
 static void
 thumbnail_directory_handle_free (ThumbnailDirectoryHandle *handle)
 {
-  g_clear_object (&handle->directory);
   g_clear_object (&handle->enumerator);
   g_free (handle);
 }
@@ -346,7 +344,7 @@ on_next_files_ready (GObject *source, GAsyncResult *result, gpointer data)
 
   for (GList *head = list; head; head = head->next) {
     GFileInfo *info = head->data;
-    GFile *file = g_file_get_child (handle->directory, g_file_info_get_name (info));
+    GFile *file = g_file_enumerator_get_child (handle->enumerator, info);
     g_queue_push_tail (self->queue, file);
   }
 
@@ -365,10 +363,11 @@ static void
 on_enumerate_children_ready (GObject *source, GAsyncResult *result, gpointer data)
 {
   PtApplication *self = PT_APPLICATION (g_application_get_default ());
+  GFile *directory = G_FILE (source);
   ThumbnailDirectoryHandle *handle = data;
   g_autoptr (GError) error = NULL;
 
-  handle->enumerator = g_file_enumerate_children_finish (handle->directory, result, &error);
+  handle->enumerator = g_file_enumerate_children_finish (directory, result, &error);
   if (!handle->enumerator) {
     log_error (error, "Failed to enumerate directory: %s", error->message);
     g_dbus_method_invocation_return_error (handle->invocation, error->domain, error->code, "%s",
@@ -389,6 +388,7 @@ handle_thumbnail_directory (PtImplThumbnailer *impl, GDBusMethodInvocation *invo
                             const char *directory, GVariant *options, gpointer data)
 {
   PtApplication *self = data;
+  g_autoptr (GFile) dir = NULL;
   ThumbnailDirectoryHandle *handle = g_new0 (ThumbnailDirectoryHandle, 1);
 
   g_debug ("Handling %s: %s", g_dbus_method_invocation_get_method_name (invocation), directory);
@@ -400,9 +400,9 @@ handle_thumbnail_directory (PtImplThumbnailer *impl, GDBusMethodInvocation *invo
 
   handle->impl = impl;
   handle->invocation = invocation;
-  handle->directory = g_file_new_for_uri (directory);
+  dir = g_file_new_for_uri (directory);
 
-  g_file_enumerate_children_async (handle->directory, G_FILE_ATTRIBUTE_STANDARD_NAME,
+  g_file_enumerate_children_async (dir, G_FILE_ATTRIBUTE_STANDARD_NAME,
                                    G_FILE_QUERY_INFO_NONE, G_PRIORITY_DEFAULT, self->cancel,
                                    on_enumerate_children_ready, handle);
 
