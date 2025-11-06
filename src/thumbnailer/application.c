@@ -28,16 +28,16 @@
  */
 
 struct _PtApplication {
-  GApplication  parent;
+  GApplication       parent;
 
   PtImplThumbnailer *impl;
 
-  GCancellable *cancel;
+  GCancellable      *cancel;
   GnomeDesktopThumbnailFactory *factory;
-  gboolean      hold;
-  GQueue       *queue;
+  gboolean     hold;
+  GQueue      *queue;
 
-  uint len;
+  uint         len;
   GVariantDict thumbnails;
 };
 
