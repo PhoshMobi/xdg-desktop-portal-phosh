@@ -15,10 +15,6 @@ version = "0.12"
 [dependencies.PhoshFileSelector]
 path = "subprojects/pfs"
 
-[dependencies.futures_util]
-package = "futures-util"
-version = "0.3"
-
 [dependencies.gettextrs]
 features = ["gettext-system"]
 package = "gettext-rs"
