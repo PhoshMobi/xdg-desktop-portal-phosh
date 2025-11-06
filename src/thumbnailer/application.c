@@ -9,6 +9,7 @@
 #define G_LOG_DOMAIN "pt-application"
 
 #define CONCURRENCY_LIMIT 3
+#define THUMBNAILING_DONE_BATCH 10
 
 #include "pt-config.h"
 
@@ -29,10 +30,15 @@
 struct _PtApplication {
   GApplication  parent;
 
+  PtImplThumbnailer *impl;
+
   GCancellable *cancel;
   GnomeDesktopThumbnailFactory *factory;
   gboolean      hold;
   GQueue       *queue;
+
+  uint len;
+  GVariantDict thumbnails;
 };
 
 G_DEFINE_TYPE (PtApplication, pt_application, G_TYPE_APPLICATION);
@@ -131,18 +137,48 @@ file_info_free (FileInfo *info)
 
 
 static void
+emit_thumbnailing_done (PtApplication *self)
+{
+  GVariant *thumbnails;
+  uint len;
+
+  if (self->len < THUMBNAILING_DONE_BATCH && g_queue_get_length (self->queue) != 0)
+    return;
+
+  thumbnails = g_variant_dict_end (&self->thumbnails);
+  len = self->len;
+  self->len = 0;
+
+  g_debug ("Emitting ThumbnailingDone for %d files", len);
+  pt_impl_thumbnailer_emit_thumbnailing_done (self->impl,
+                                              thumbnails,
+                                              g_variant_new ("a{sv}", NULL));
+}
+
+
+static void
 on_save_thumbnail_ready (GObject *source, GAsyncResult *result, gpointer data)
 {
   FileInfo *info = data;
   PtApplication *self = PT_APPLICATION (g_application_get_default ());
   g_autoptr (GError) error = NULL;
   gboolean success = FALSE;
+  g_autofree char *thumbnail_path = NULL;
 
   success = gnome_desktop_thumbnail_factory_save_thumbnail_finish (self->factory, result, &error);
-  if (!success)
+  if (!success) {
     log_error (error, "Failed to save thumbnail for %s: %s", info->uri, error->message);
-  else
+  } else {
     g_debug ("Saved thumbnail for %s", info->uri);
+
+    if (self->len == 0)
+      g_variant_dict_init (&self->thumbnails, NULL);
+
+    thumbnail_path = gnome_desktop_thumbnail_factory_lookup (self->factory, info->uri, info->mtime);
+    g_variant_dict_insert (&self->thumbnails, info->uri, "s", thumbnail_path);
+    self->len += 1;
+    emit_thumbnailing_done (self);
+  }
 
   file_info_free (info);
   process_queue (1);
@@ -458,7 +494,8 @@ pt_application_dbus_register (GApplication *application, GDBusConnection *connec
   PtApplication *self = PT_APPLICATION (application);
   GDBusInterfaceSkeleton *interface;
 
-  interface = G_DBUS_INTERFACE_SKELETON (pt_impl_thumbnailer_skeleton_new ());
+  self->impl = pt_impl_thumbnailer_skeleton_new ();
+  interface = G_DBUS_INTERFACE_SKELETON (self->impl);
 
   g_signal_connect (interface, "handle-thumbnail-files", G_CALLBACK (handle_thumbnail_files), self);
   g_signal_connect (interface, "handle-thumbnail-directory",
@@ -498,6 +535,7 @@ pt_application_dispose (GObject *object)
     g_queue_free_full (self->queue, g_object_unref);
     self->queue = NULL;
   }
+  g_variant_dict_clear (&self->thumbnails);
 }
 
 
