@@ -1,3 +1,21 @@
+xdg-desktop-portal-phosh (0.51~rc1) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * pfs: Use local subproject.
+    We can use the subproject until we drop those bits from
+    the C portal.
+    Closes: https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/15
+
+  [ Arun Mani J ]
+  * xdp-phrosh: Add updated lock file.
+    Fixes: dbec4bc ("pfs: Use local subproject")
+  * xdp-phrosh: Clippy cleanups
+  * ci: Lint with Clippy
+  * ci: Check formatting with Rustfmt
+  * tree: Add thumbnailer service and CLI
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 09 Nov 2025 19:25:51 +0100
+
 xdg-desktop-portal-phosh (0.50.0) experimental; urgency=medium
 
   [ Guido Günther ]

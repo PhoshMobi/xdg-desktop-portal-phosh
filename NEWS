@@ -1,3 +1,13 @@
+xdg-desktop-portal-phosh 0.51~rc1
+---------------------------------
+Released November 2025
+* Add a thumbnailer service and CLI. This will later on be used by pfs.
+* Issues fixed:
+    * https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/-/issues/15
+* Contributors:
+    * Arun Mani J
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.50.0
 -------------------------------
 Released September 2025
