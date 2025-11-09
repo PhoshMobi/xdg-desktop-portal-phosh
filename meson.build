@@ -1,7 +1,7 @@
 project(
   'xdg-desktop-portal-phosh',
   'c',
-  version: '0.50.0',
+  version: '0.51.rc1',
   license: 'GPL-3.0-or-later',
   meson_version: '>= 1.0.0',
   default_options: ['warning_level=1', 'buildtype=debugoptimized', 'c_std=gnu11'],
