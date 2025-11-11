@@ -13,5 +13,9 @@
     <method name="StopThumbnailing">
       <arg direction="in" name="options" type="a{sv}"/>
     </method>
+    <signal name="ThumbnailingDone">
+      <arg name="thumbnails" type="a{sv}"/>
+      <arg name="options" type="a{sv}"/>
+    </signal>
   </interface>
 </node>

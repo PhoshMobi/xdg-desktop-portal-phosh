@@ -11,7 +11,6 @@ use std::collections::HashMap;
 use std::process::ExitCode;
 
 use ashpd::zbus::fdo::RequestNameFlags;
-use futures_util::future::pending;
 use gtk::glib;
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc;
@@ -139,11 +138,7 @@ fn main() -> ExitCode {
         #[strong]
         main_loop,
         async move {
-            let result = ashpd_main(&options, sender).await;
-            if let Err(error) = result {
-                glib::g_critical!(LOG_DOMAIN, "ashpd server failed: {error}");
-                main_loop.quit();
-            }
+            ashpd_main(&options, sender, main_loop).await;
         }
     ));
 
@@ -227,15 +222,22 @@ fn main() -> ExitCode {
     ExitCode::SUCCESS
 }
 
-async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>) -> ashpd::Result<()> {
-    let mut builder = ashpd::backend::Builder::new(bin_config::DBUS_NAME)?;
-
-    builder = if options.replace {
-        glib::g_debug!(LOG_DOMAIN, "Replacing existing instance");
-        builder.with_flags(RequestNameFlags::ReplaceExisting.into())
-    } else {
-        builder
+async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>, main_loop: glib::MainLoop) {
+    let mut builder = match ashpd::backend::Builder::new(bin_config::DBUS_NAME) {
+        Ok(builder) => builder,
+        Err(error) => {
+            glib::g_critical!(LOG_DOMAIN, "ashpd server failed: {error}");
+            main_loop.quit();
+            return;
+        }
     };
+    let mut flags = RequestNameFlags::AllowReplacement | RequestNameFlags::DoNotQueue;
+
+    if options.replace {
+        glib::g_debug!(LOG_DOMAIN, "Replacing existing instance");
+        flags |= RequestNameFlags::ReplaceExisting;
+    }
+    builder = builder.with_flags(flags);
 
     builder = if bin_config::ACCOUNT {
         glib::g_debug!(LOG_DOMAIN, "Adding interface: Account");
@@ -258,15 +260,14 @@ async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>) -> ashpd::
         builder
     };
 
-    builder.build().await?;
-
     glib::g_message!(
         LOG_DOMAIN,
         "Running ashpd loop under {}",
         bin_config::DBUS_NAME
     );
 
-    loop {
-        pending::<()>().await;
+    if let Err(error) = builder.build().await {
+        glib::g_critical!(LOG_DOMAIN, "ashpd server failed: {error}");
+        main_loop.quit();
     }
 }

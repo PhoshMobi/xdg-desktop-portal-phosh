@@ -12,6 +12,11 @@ the following interfaces:
 - `org.freedesktop.impl.portal.Account`
 - `org.freedesktop.impl.portal.AppChooser`
 
+This project also contains [`thumbnailer`](/thumbnailer) which builds two executables:
+
+- `phosh-thumbnailer` - A D-Bus service to thumbnail directories and files.
+- `ptcli` - A CLI utility to interact with `phosh-thumbnailer`.
+
 ## License
 
 xdg-desktop-portal-phosh is licensed under the GPL-3.0-or-later license.

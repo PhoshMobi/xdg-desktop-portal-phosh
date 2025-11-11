@@ -1750,7 +1750,6 @@ version = "0.50.0"
 dependencies = [
  "PhoshFileSelector",
  "ashpd",
- "futures-util",
  "gettext-rs",
  "gtk4",
  "libadwaita",
