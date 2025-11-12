@@ -13,6 +13,7 @@ Build-Depends:
  libgnome-bg-4-dev,
  libgnome-desktop-4-dev,
  meson,
+ python3-docutils,
  rustc (>= 1.86),
  systemd-dev,
  xdg-desktop-portal-dev (>= 1.14.0),

@@ -130,6 +130,4 @@ sanity:
 
 package:deb-debian-forky:
   stage: package
-  variables:
-    PHOSH_ADDITIONAL_PKGS: docutils-common
   extends: .phosh-build-debian-package
