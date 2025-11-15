@@ -1,3 +1,23 @@
+xdg-desktop-portal-phosh (0.51.0) experimental; urgency=medium
+
+  [ Arun Mani J ]
+  * thumbnailer: Mention it in `README.md`
+  * xdp-phrosh: Allow replacement
+  * xdp-phrosh: Simplify `main.rs`
+  * thumbnailer: Use `g_file_enumerator_get_child`
+  * thumbnail: Introduce `ThumbnailingDone`
+  * thumbnailer: Uncrustify `application.c`
+
+  [ Guido Günther ]
+  * packaging: Build-depend on python3-docutils.
+    Needed to build the manpages. We can drop it as extra dep
+    from the ci job then.
+  * pfs: Update subproject.
+    We want the thumbnailing code. We'll update to a release once
+    that is out.
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 15 Nov 2025 17:57:03 +0100
+
 xdg-desktop-portal-phosh (0.51~rc1) experimental; urgency=medium
 
   [ Guido Günther ]
