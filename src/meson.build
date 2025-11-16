@@ -108,11 +108,11 @@ cargo_bin = find_program('cargo')
 cargo_opt = ['--manifest-path', meson.project_source_root() / 'Cargo.toml']
 cargo_opt += ['--target-dir', meson.project_build_root() / 'src']
 
-if get_option('buildtype') == 'release'
+if get_option('debug')
+  cargo_target = 'debug'
+else
   cargo_opt += ['--release']
   cargo_target = 'release'
-else
-  cargo_target = 'debug'
 endif
 
 cargo_env = environment()
