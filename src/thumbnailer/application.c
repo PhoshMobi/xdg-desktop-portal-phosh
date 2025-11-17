@@ -121,9 +121,9 @@ get_thumbnail_size (void)
 static void process_queue (uint size);
 
 typedef struct {
-  char  *uri;
-  char  *mime_type;
-  time_t mtime;
+  char   *uri;
+  char   *mime_type;
+  guint64 mtime;
 } FileInfo;
 
 
@@ -238,7 +238,8 @@ start_thumbnailing_file (FileInfo *info)
   PtApplication *self = PT_APPLICATION (g_application_get_default ());
   g_autofree char *thumbnail_uri = NULL;
 
-  g_debug ("To thumbnail file %s (%s; %ld)", info->uri, info->mime_type, info->mtime);
+  g_debug ("To thumbnail file %s (%s; %" G_GUINT64_FORMAT ")",
+           info->uri, info->mime_type, info->mtime);
 
   thumbnail_uri = gnome_desktop_thumbnail_factory_lookup (self->factory, info->uri, info->mtime);
   if (thumbnail_uri) {
