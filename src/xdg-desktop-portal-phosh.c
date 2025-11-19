@@ -23,7 +23,6 @@
 
 #include "xdg-desktop-portal-dbus.h"
 
-#include "pmp-file-chooser.h"
 #include "pmp-request.h"
 #include "pmp-notification.h"
 #include "pmp-settings.h"
@@ -77,10 +76,6 @@ on_bus_acquired (GDBusConnection *connection,
 {
   GError *error = NULL;
 
-  if (!pmp_file_chooser_init (connection, &error)) {
-    g_warning ("error: %s\n", error->message);
-    g_clear_error (&error);
-  }
   if (!pmp_notification_init (connection, &error)) {
     g_warning ("error: %s\n", error->message);
     g_clear_error (&error);

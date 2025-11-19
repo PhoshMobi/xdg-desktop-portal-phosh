@@ -26,8 +26,6 @@ pmp_sources = files(
   'pmp-external-win.h',
   'pmp-fdo-notification.c',
   'pmp-fdo-notification.h',
-  'pmp-file-chooser.c',
-  'pmp-file-chooser.h',
   'pmp-notification.c',
   'pmp-notification.h',
   'pmp-request.c',
