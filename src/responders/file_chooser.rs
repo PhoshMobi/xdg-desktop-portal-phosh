@@ -298,11 +298,17 @@ mod imp {
                 }
                 FileSelectorMode::SaveFiles => {
                     let directory = gio::File::for_uri(&uris[0]);
-                    for file_name in self.files.take() {
-                        let os_str = file_name.as_os_str();
-                        let file_name_str = os_str.to_str().unwrap();
-                        let uri = get_unique_file_uri(file_name_str, &directory);
-                        files = files.uri(uri);
+                    let file_names = self.files.take();
+
+                    if file_names.is_empty() {
+                        files = files.uri(Url::parse(&uris[0]).unwrap());
+                    } else {
+                        for file_name in file_names {
+                            let os_str = file_name.as_os_str();
+                            let file_name_str = os_str.to_str().unwrap();
+                            let uri = get_unique_file_uri(file_name_str, &directory);
+                            files = files.uri(uri);
+                        }
                     }
                 }
             }
