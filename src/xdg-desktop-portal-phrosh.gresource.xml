@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <gresources>
   <gresource prefix="/mobi/phosh/xdpp">
+    <file compressed="true">css/wallpaper_preview.css</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/account_window.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/app_chooser_row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">ui/app_chooser_window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/wallpaper_preview.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/wallpaper_window.ui</file>
   </gresource>
 </gresources>

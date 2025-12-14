@@ -11,8 +11,10 @@ use ashpd::backend::app_chooser::{Choice, ChooserOptions, DesktopID};
 use ashpd::backend::file_chooser::{
     OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
 };
+use ashpd::backend::wallpaper::WallpaperOptions;
 use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
+use ashpd::url::Url;
 use ashpd::{AppID, WindowIdentifierType};
 use tokio::sync::oneshot::Sender;
 
@@ -59,5 +61,11 @@ pub enum Request {
         title: String,
         options: SaveFilesOptions,
         sender: Sender<Result<SelectedFiles>>,
+    },
+    WallpaperWithUri {
+        application: Application,
+        uri: Url,
+        options: WallpaperOptions,
+        sender: Sender<Result<()>>,
     },
 }

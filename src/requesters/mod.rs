@@ -9,7 +9,9 @@
 mod account;
 mod app_chooser;
 mod file_chooser;
+mod wallpaper;
 
 pub use account::Account;
 pub use app_chooser::AppChooser;
 pub use file_chooser::FileChooser;
+pub use wallpaper::Wallpaper;

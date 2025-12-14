@@ -113,6 +113,7 @@ fn message_handler(domain: Option<&str>, level: glib::LogLevel, message: &str) {
     glib::log_default_handler(domain, new_level, Some(message));
 }
 
+#[allow(clippy::too_many_lines)]
 fn main() -> ExitCode {
     xdg_desktop_portal_phosh::i18n_init();
 
@@ -204,6 +205,12 @@ fn main() -> ExitCode {
                             options: _,
                             sender: _,
                         } => Some(Box::new(responders::FileChooser::new())),
+                        Request::WallpaperWithUri {
+                            application: _,
+                            uri: _,
+                            options: _,
+                            sender: _,
+                        } => Some(Box::new(responders::WallpaperWindow::new())),
                     };
 
                     if let Some(responder) = responder {
@@ -256,6 +263,13 @@ async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>, main_loop:
     builder = if bin_config::FILE_CHOOSER {
         glib::g_debug!(LOG_DOMAIN, "Add interface: FileChooser");
         builder.file_chooser(requesters::FileChooser::new(sender.clone()))
+    } else {
+        builder
+    };
+
+    builder = if bin_config::WALLPAPER {
+        glib::g_debug!(LOG_DOMAIN, "Add interface: Wallpaper");
+        builder.wallpaper(requesters::Wallpaper::new(sender.clone()))
     } else {
         builder
     };

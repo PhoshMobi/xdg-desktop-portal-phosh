@@ -12,3 +12,4 @@
 
 pub const GETTEXT_PACKAGE: &str = @GETTEXT_PACKAGE@;
 pub const LOCALE_DIR: &str = @LOCALE_DIR@;
+pub const PORTAL_NAME: &str = @PORTAL_NAME@;
