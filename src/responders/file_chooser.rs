@@ -188,6 +188,7 @@ fn handle_save_file(
     } else {
         let current_folder = gio::File::for_path(glib::home_dir());
         props.push(("current-folder", current_folder.into()));
+        props.push(("filename", options.current_name().unwrap_or("").into()));
     }
 }
 
