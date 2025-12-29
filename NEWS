@@ -1,3 +1,17 @@
+xdg-desktop-portal-phosh 0.52~rc1
+---------------------------------
+Released December 2025
+* New wallpaper portal
+* Update to latest pfs
+* Issues fixed:
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/18
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/19
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/20
+* Contributors:
+    * Achill Gilgenast
+    * Arun Mani J
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.51.0
 -------------------------------
 Released November 2025
