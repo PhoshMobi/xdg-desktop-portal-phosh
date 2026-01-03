@@ -11,4 +11,5 @@ po/phosh-mobile-portal.pot
 src/lib_config.rs
 src/bin_config.rs
 subprojects/pfs
+subprojects/.wraplock
 target/
