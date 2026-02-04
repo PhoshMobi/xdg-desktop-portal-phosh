@@ -12,11 +12,11 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
-use ashpd::url::Url;
 use ashpd::PortalError;
 use gtk::glib::subclass::InitializingObject;
 use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
+use url::Url;
 
 use crate::utils::{get_application_name, gettextf};
 use crate::{Request, Responder};

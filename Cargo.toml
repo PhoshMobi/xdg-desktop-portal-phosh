@@ -29,3 +29,6 @@ version = "0.10"
 features = ["rt-multi-thread"]
 package = "tokio"
 version = "1.46"
+
+[dependencies.url]
+version = "2.5"

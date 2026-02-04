@@ -14,9 +14,9 @@ use ashpd::backend::file_chooser::{
 use ashpd::backend::wallpaper::WallpaperOptions;
 use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
-use ashpd::url::Url;
 use ashpd::{AppID, WindowIdentifierType};
 use tokio::sync::oneshot::Sender;
+use url::Url;
 
 /// Essential information about the external application which does a portal request.
 #[derive(Debug)]

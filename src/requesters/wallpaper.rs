@@ -14,10 +14,10 @@ use ashpd::backend::request::RequestImpl;
 use ashpd::backend::wallpaper::{WallpaperImpl, WallpaperOptions};
 use ashpd::backend::Result;
 use ashpd::desktop::HandleToken;
-use ashpd::url::Url;
 use ashpd::{AppID, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
+use url::Url;
 
 use crate::{Application, Message, Request, Requester};
 

@@ -1754,6 +1754,7 @@ dependencies = [
  "gtk4",
  "libadwaita",
  "tokio",
+ "url",
 ]
 
 [[package]]
