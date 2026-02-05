@@ -22,7 +22,7 @@ package = "gettext-rs"
 version = "0.7"
 
 [dependencies.gtk]
-features = ["v4_18"]
+features = ["v4_20"]
 package = "gtk4"
 version = "0.10"
 

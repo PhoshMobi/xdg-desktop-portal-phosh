@@ -10,7 +10,8 @@ use std::env;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use gettextrs::{bind_textdomain_codeset, bindtextdomain};
-use gtk::gio;
+use gtk::prelude::*;
+use gtk::{gio, glib};
 
 use crate::lib_config::{GETTEXT_PACKAGE, LOCALE_DIR};
 
@@ -54,6 +55,8 @@ pub fn init() {
 
     adw::init().unwrap();
 
+    setup_settings();
+
     gio::resources_register_include_impl(include_bytes!(concat!(
         env!("RESOURCES_DIR"),
         "/",
@@ -62,4 +65,123 @@ pub fn init() {
     .unwrap();
 
     LIB_INITIALIZED.store(true, Ordering::Release);
+}
+
+fn map_high_contrast(variant: &glib::Variant, _type: glib::Type) -> Option<glib::Value> {
+    let high_contrast = if <bool>::from_variant(variant)? {
+        gtk::InterfaceContrast::More
+    } else {
+        gtk::InterfaceContrast::NoPreference
+    };
+    Some(high_contrast.into())
+}
+
+fn map_text_scaling_factor(variant: &glib::Variant, _type: glib::Type) -> Option<glib::Value> {
+    let xft_dpi = <f64>::from_variant(variant)? * 96.0 * 1024.0;
+    #[allow(clippy::cast_possible_truncation)]
+    Some((xft_dpi.round() as i32).into())
+}
+
+type Schema = (
+    &'static str,
+    &'static [(
+        &'static str,
+        &'static str,
+        Option<fn(&glib::Variant, glib::Type) -> Option<glib::Value>>,
+    )],
+);
+// Based on https://gitlab.gnome.org/GNOME/libgxdp/-/merge_requests/8.
+#[rustfmt::skip]
+const SCHEMAS: &[Schema] = &[
+    (
+        "org.gnome.desktop.a11y",
+        &[
+            ("always-show-text-caret", "gtk-keynav-use-caret", None)
+        ],
+    ),
+    (
+        "org.gnome.desktop.a11y.interface",
+        &[
+            ("high-contrast", "gtk-interface-contrast", Some(map_high_contrast)),
+            ("show-status-shapes", "gtk-show-status-shapes", None),
+        ],
+    ),
+    (
+        "org.gnome.desktop.interface",
+        &[
+            ("cursor-blink", "gtk-cursor-blink", None),
+            ("cursor-blink-timeout", "gtk-cursor-blink-timeout", None),
+            ("cursor-size", "gtk-cursor-theme-size", None),
+            ("cursor-theme", "gtk-cursor-theme-name", None),
+            ("enable-animations", "gtk-enable-animations", None),
+            ("font-name", "gtk-font-name", None),
+            ("icon-theme", "gtk-icon-theme-name", None),
+            ("overlay-scrolling", "gtk-overlay-scrolling", None),
+            ("text-scaling-factor", "gtk-xft-dpi", Some(map_text_scaling_factor)),
+        ],
+    ),
+    (
+        "org.gnome.desktop.peripherals.mouse",
+        &[
+            ("double-click", "gtk-double-click-time", None),
+            ("drag-threshold", "gtk-dnd-drag-threshold", None),
+        ],
+    ),
+    (
+        "org.gnome.desktop.privacy",
+        &[
+            ("recent-files-max-age", "gtk-recent-files-max-age", None),
+            ("remember-recent-files", "gtk-recent-files-enabled", None),
+        ],
+    ),
+    (
+        "org.gnome.desktop.sound",
+        &[
+            ("event-sounds", "gtk-enable-event-sounds", None),
+            ("input-feedback-sounds", "gtk-enable-input-feedback-sounds", None),
+        ],
+    ),
+    (
+        "org.gnome.desktop.wm.preferences",
+        &[
+            ("action-double-click-titlebar", "gtk-titlebar-double-click", None),
+            ("action-middle-click-titlebar", "gtk-titlebar-middle-click", None),
+            ("action-right-click-titlebar", "gtk-titlebar-right-click", None),
+            ("button-layout", "gtk-decoration-layout", None),
+        ],
+    ),
+];
+
+fn setup_settings() {
+    let gtk_settings = gtk::Settings::default().unwrap();
+
+    for (schema, values) in SCHEMAS {
+        let settings = gio::Settings::new(schema);
+        for (schema_key, gtk_key, mapping) in *values {
+            let mut builder = settings.bind(schema_key, &gtk_settings, gtk_key).get_only();
+            builder = if let Some(mapping) = mapping {
+                builder.mapping(mapping)
+            } else {
+                builder
+            };
+            builder.build();
+        }
+    }
+
+    // NOTE Add this to SCHEMAS once `gsettings-desktop-schemas` package is out of alpha.
+    let source = gio::SettingsSchemaSource::default().unwrap();
+    let schema = source
+        .lookup("org.gnome.desktop.a11y.interface", true)
+        .unwrap();
+    if schema.has_key("reduced-motion") {
+        let settings = gio::Settings::new("org.gnome.desktop.a11y.interface");
+        settings
+            .bind(
+                "reduced-motion",
+                &gtk_settings,
+                "gtk-interface-reduced-motion",
+            )
+            .get_only()
+            .build();
+    }
 }
