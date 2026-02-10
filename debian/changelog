@@ -1,3 +1,14 @@
+xdg-desktop-portal-phosh (0.53~rc1) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * wallpaper: Silence deprecations.
+    It's totally fine to use in the GTK4 cycle
+
+  [ Arun Mani J ]
+  * subprojects: Update `pfs` to `0e6cab7b`
+
+ -- Guido Günther <agx@sigxcpu.org>  Tue, 10 Feb 2026 18:16:37 +0100
+
 xdg-desktop-portal-phosh (0.52.0) experimental; urgency=medium
 
   * gitignore: Ignore subproject wraplock
