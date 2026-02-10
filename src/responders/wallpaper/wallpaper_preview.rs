@@ -244,11 +244,13 @@ mod imp {
             let (primary_color, style) = get_background_style(true);
             let pixbuf =
                 create_background(&wallpaper, primary_color, style, geo.width(), geo.height());
+            #[allow(deprecated)]
             self.home_pic.set_pixbuf(Some(&pixbuf));
 
             let (primary_color, style) = get_background_style(false);
             let pixbuf =
                 create_background(&wallpaper, primary_color, style, geo.width(), geo.height());
+            #[allow(deprecated)]
             self.lockscreen_pic.set_pixbuf(Some(&pixbuf));
         }
 
