@@ -246,6 +246,15 @@ async fn ashpd_main(options: &Options, sender: mpsc::Sender<Message>, main_loop:
     }
     builder = builder.with_flags(flags);
 
+    builder = builder.with_name_lost(glib::clone!(
+        #[strong]
+        main_loop,
+        move || {
+            glib::g_message!(LOG_DOMAIN, "Quitting main loop as lost name");
+            main_loop.quit();
+        }
+    ));
+
     builder = if bin_config::ACCOUNT {
         glib::g_debug!(LOG_DOMAIN, "Adding interface: Account");
         builder.account(requesters::Account::new(sender.clone()))

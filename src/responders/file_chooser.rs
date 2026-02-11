@@ -14,13 +14,13 @@ use ashpd::backend::file_chooser::{
 };
 use ashpd::backend::Result;
 use ashpd::desktop::file_chooser::{Choice, FileFilter};
-use ashpd::url::Url;
 use ashpd::PortalError;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 use pfs::file_selector::{FileSelector, FileSelectorMode};
 use tokio::sync::oneshot::Sender;
+use url::Url;
 
 use crate::utils::gettextf;
 use crate::{Request, Responder};

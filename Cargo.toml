@@ -9,8 +9,9 @@ package = "libadwaita"
 version = "0.8"
 
 [dependencies.ashpd]
-features = ["backend", "gtk4_wayland", "gtk4_x11"]
-version = "0.12"
+features = ["backend", "gtk4"]
+git = "https://github.com/arun-mani-j/ashpd.git"
+rev = "5f108eb8acb4cecd3c71324445c64cf7f0292fbb"
 
 [dependencies.PhoshFileSelector]
 path = "subprojects/pfs"
@@ -29,3 +30,6 @@ version = "0.10"
 features = ["rt-multi-thread"]
 package = "tokio"
 version = "1.46"
+
+[dependencies.url]
+version = "2.5"

@@ -31,7 +31,7 @@ pub fn gettextf(format: &str, args: &[&str]) -> String {
 #[must_use]
 pub fn get_application_name(application: &Application) -> Option<String> {
     let app_id = application.app_id.as_ref()?;
-    let app_info = app_id.app_info()?;
+    let app_info = gio::DesktopAppInfo::new(&format!("{app_id}.desktop"))?;
     let app_name = app_info.display_name().to_string();
     Some(app_name)
 }
