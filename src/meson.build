@@ -20,8 +20,6 @@ generated_sources = gnome.gdbus_codegen(
 pmp_sources = files(
   'fc-monitor.c',
   'fc-monitor.h',
-  'pmp-external-win.c',
-  'pmp-external-win.h',
   'pmp-fdo-notification.c',
   'pmp-fdo-notification.h',
   'pmp-notification.c',
