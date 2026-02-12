@@ -36,6 +36,7 @@ pmp_sources = files(
 pmp_deps = [
   adwaita_dep,
   fontconfig_dep,
+  gdk_pixbuf_dep,
   glib_dep,
   gio_dep,
   gio_unix_dep,

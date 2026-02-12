@@ -120,6 +120,7 @@ pkgconfig = import('pkgconfig')
 
 adwaita_dep = dependency('libadwaita-1', version: adw_ver_cmp)
 fontconfig_dep = dependency('fontconfig')
+gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0', version: '>= 2.44')
 gio_dep = dependency('gio-2.0', version: glib_ver_cmp)
 gio_unix_dep = dependency('gio-unix-2.0', version: glib_ver_cmp)
 glib_dep = dependency('glib-2.0', version: glib_ver_cmp)
