@@ -34,18 +34,13 @@ pmp_sources = files(
 )
 
 pmp_deps = [
-  adwaita_dep,
   fontconfig_dep,
   gdk_pixbuf_dep,
   glib_dep,
   gio_dep,
   gio_unix_dep,
   gsettings_desktop_schemas_dep,
-  gtk_dep,
-  gtk_wayland_dep,
-  gnome_bg_dep,
   gnome_desktop_dep,
-  libpfs_dep,
   xdg_desktop_portal_dep,
 ]
 
