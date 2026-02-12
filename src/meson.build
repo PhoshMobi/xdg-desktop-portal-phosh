@@ -17,8 +17,6 @@ generated_sources = gnome.gdbus_codegen(
   namespace: 'PmpImpl',
 )
 
-generated_sources += gnome.compile_resources('pmp-resources', 'pmp.gresources.xml', c_name: 'pmp')
-
 pmp_sources = files(
   'fc-monitor.c',
   'fc-monitor.h',
@@ -34,12 +32,6 @@ pmp_sources = files(
   'pmp-settings.h',
   'pmp-utils.c',
   'pmp-utils.h',
-  'pmp-wallpaper-dialog.c',
-  'pmp-wallpaper-dialog.h',
-  'pmp-wallpaper-preview.c',
-  'pmp-wallpaper-preview.h',
-  'pmp-wallpaper.c',
-  'pmp-wallpaper.h',
   'xdg-desktop-portal-phosh.c',
 )
 
