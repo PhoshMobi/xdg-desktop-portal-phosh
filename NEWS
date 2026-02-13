@@ -1,7 +1,18 @@
-xdg-desktop-portal-phosh 0.53~rc1
----------------------------------
+xdg-desktop-portal-phosh 0.53.0
+-------------------------------
 Released February 2026
+* Update to newer ASHPD
+* Use a temporary ASHPD fork until our fixes made it into a release
+* Bind `GtkSettings` manually for upcoming GTK changes
+* Drop C implementations of file chooser and wallpaper portal
+* Drop Adwaita and GTK dependencies from C portal
 * Fix compilation with latest libadwaita-rs
+* Issues fixed:
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/12
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/13
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/14
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/17
+    * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/22
 * Contributors:
     * Arun Mani J
     * Guido Günther

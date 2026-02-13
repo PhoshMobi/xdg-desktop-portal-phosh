@@ -1,3 +1,51 @@
+xdg-desktop-portal-phosh (0.53.0) experimental; urgency=medium
+
+  [ Arun Mani J ]
+  * xdp-phrosh: Add `url` as dependency.
+    The ASHPD will not re-export it.
+  * xdp-phrosh/utils: Build `AppInfo` using `gio`
+    ASHPD will remove `AppID::app_info` method.
+  * xdp-phrosh: Switch to temporary fork of ASHPD.
+    The latest release 0.13-alpha of ASHPD uses alpha versions of GLib (0.22.0-alpha),
+    GTK (0.11.0-alpha) etc. which we can not switch to because it contains some breaking changes with no
+    workarounds yet. For example, `DesktopAppInfo` is now part of `gio-unix` package which is not
+    released yet.
+    This temporary fork applies our patches on top of ASHPD 0.12.1.
+    We will switch back once Rust bindings of GLib, GTK etc. and ASHPD are out of alpha.
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/12
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/13
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/22
+  * xdp-phrosh: Quit on name lost.
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/17
+  * xdp-phrosh: Manually bind to `GSettings`
+    The GTK Wayland backend in 4.22 will no longer consult GSettings, and instead fall right back to
+    defaults if it can't use portals. Therefore, portal backends using GTK need to connect GTK settings
+    to GSettings themselves.
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/14
+
+  [ Guido Günther ]
+  * treewide: Drop C filechooser.
+    We have the Rust implementation
+  * pmp/wallpaper: Drop C implementation.
+    We have a Rust based one nowadays
+  * pmp/settings: Vendor adw_accent_color_rgba.
+    No need to depend on libadwaita and gdk for just that going through all the portal init
+    complications.
+  * pmp: Drpo external-win.
+    Not needed when we don't have an GUI portals in C anymore
+  * pmp/notification: Use gdk-pixbuf directly.
+    Avoids the GTK and GDK dependencies
+  * pmp: Don't init gtk and libadwaita.
+    This gets us out of the portal avoidance business for this portal
+  * build: Drop gtk and libadwaita dependencies from C portal.
+    No longer needed and gets us out of the portal avoidance business.
+    The remaining bits are used by the thumbnailer which is fine as it
+    runs out of process.
+    We turn the pfs dependency into a subproject as we currently need
+    it until there is a crate published.
+
+ -- Guido Günther <agx@sigxcpu.org>  Fri, 13 Feb 2026 15:39:13 +0100
+
 xdg-desktop-portal-phosh (0.53~rc1) experimental; urgency=medium
 
   [ Guido Günther ]
