@@ -15,18 +15,15 @@
 
 #include "pmp-config.h"
 
-#include <adwaita.h>
-#include <gtk/gtk.h>
-
 #include <gio/gio.h>
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 
 #include "xdg-desktop-portal-dbus.h"
 
 #include "pmp-request.h"
 #include "pmp-notification.h"
 #include "pmp-settings.h"
-#include "pmp-wallpaper.h"
 
 static GMainLoop *loop = NULL;
 static GHashTable *outstanding_handles = NULL;
@@ -51,9 +48,9 @@ message_handler (const char    *log_domain,
 {
   /* Make this look like normal console output */
   if (log_level & G_LOG_LEVEL_DEBUG)
-    printf ("XDP: %s\n", message);
+    g_printf ("XDP: %s\n", message);
   else
-    printf ("%s: %s\n", g_get_prgname (), message);
+    g_printf ("%s: %s\n", g_get_prgname (), message);
 }
 
 static void
@@ -84,10 +81,6 @@ on_bus_acquired (GDBusConnection *connection,
     g_warning ("error: %s\n", error->message);
     g_clear_error (&error);
   }
-  if (!pmp_wallpaper_init (connection, &error)) {
-    g_warning ("error: %s\n", error->message);
-    g_clear_error (&error);
-  }
 }
 
 static void
@@ -104,33 +97,6 @@ on_name_lost (GDBusConnection *connection,
               gpointer         user_data)
 {
   g_main_loop_quit (loop);
-}
-
-
-static gboolean
-init_gtk (GError **error)
-{
-  /* Avoid pointless and confusing recursion */
-#if GTK_CHECK_VERSION (4, 17, 1)
-  gtk_disable_portals ();
-#else
-  g_unsetenv ("GTK_USE_PORTAL");
-#endif
-
-  /* Don't let adwaita use portals, we're the one */
-  if (!g_setenv ("ADW_DISABLE_PORTAL", "1", TRUE)) {
-    g_set_error (error, G_IO_ERROR, g_io_error_from_errno (errno),
-                 "Failed to set ADW_DISABLE_PORTAL: %s", g_strerror (errno));
-    return FALSE;
-  }
-
-  if (!gtk_init_check ()) {
-    g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                 "Failed to initialize GTK");
-    return FALSE;
-  }
-
-  return TRUE;
 }
 
 
@@ -173,11 +139,6 @@ main (int argc, char *argv[])
     return 0;
   }
 
-  if (!init_gtk (&error)) {
-    g_printerr ("Failed to init GUI bits: %s", error->message);
-    return 1;
-  }
-
   g_set_printerr_handler (printerr_handler);
 
   if (opt_verbose)
@@ -205,7 +166,6 @@ main (int argc, char *argv[])
                              NULL,
                              NULL);
 
-  adw_init ();
   g_main_loop_run (loop);
 
   g_bus_unown_name (owner_id);

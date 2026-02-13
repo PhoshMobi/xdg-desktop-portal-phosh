@@ -11,7 +11,6 @@
 
 #include "pmp-config.h"
 
-#include <adwaita.h>
 #include <time.h>
 #include <string.h>
 #include <glib/gi18n.h>
@@ -30,6 +29,10 @@ static int fontconfig_serial;
 static gboolean enable_animations;
 
 static void sync_animations_enabled (PmpImplSettings *impl);
+
+typedef struct {
+  double r, g, b;
+} PmpRgb;
 
 typedef struct {
   GSettingsSchema *schema;
@@ -80,46 +83,65 @@ namespace_matches (const char         *namespace,
   return FALSE;
 }
 
+
+static PmpRgb
+pmp_accent_color_to_rgb (GDesktopAccentColor color)
+{
+  PmpRgb rgb = { .r = 0x35, .g = 0x84, .b = 0xe4 };
+
+  switch (color) {
+  case G_DESKTOP_ACCENT_COLOR_BLUE:
+    rgb = (PmpRgb) { .r = 0x35, .g = 0x84, .b = 0xe4 };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_TEAL:
+    rgb = (PmpRgb) { .r = 0x21, .g = 0x90, .b = 0xa4 };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_GREEN:
+    rgb = (PmpRgb) { .r = 0x3a, .g = 0x94, .b = 0x4a };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_YELLOW:
+    rgb = (PmpRgb) { .r = 0xc8, .g = 0x88, .b = 0x00 };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_ORANGE:
+    rgb = (PmpRgb) { .r = 0xed, .g = 0x5b, .b = 0x00 };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_RED:
+    rgb = (PmpRgb) { .r = 0xe6, .g = 0x2d, .b = 0x42 };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_PINK:
+    rgb = (PmpRgb) { .r = 0xd5, .g = 0x61, .b = 0x99 };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_PURPLE:
+    rgb = (PmpRgb) { .r = 0x91, .g = 0x41, .b = 0xac };
+    break;
+  case G_DESKTOP_ACCENT_COLOR_SLATE:
+    rgb = (PmpRgb) { .r = 0x6f, .g = 0x83, .b = 0x96 };
+    break;
+  default:
+    g_warning ("Invalid accent color %d", color);
+    rgb = (PmpRgb) { .r = 0x35, .g = 0x84, .b = 0xe4 };
+  }
+
+  /* Normalize to [0.0..1.0] */
+  rgb.r /= 255.0;
+  rgb.g /= 255.0;
+  rgb.b /= 255.0;
+
+  return rgb;
+}
+
+
 static GVariant *
 get_accent_color (void)
 {
   SettingsBundle *bundle = g_hash_table_lookup (settings_hash, "org.gnome.desktop.interface");
-  AdwAccentColor color;
-  GdkRGBA color_rgba;
+  GDesktopAccentColor color;
+  PmpRgb rgb;
 
-  switch (g_settings_get_enum (bundle->settings, "accent-color")) {
-  case G_DESKTOP_ACCENT_COLOR_TEAL:
-    color = ADW_ACCENT_COLOR_TEAL;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_GREEN:
-    color = ADW_ACCENT_COLOR_GREEN;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_YELLOW:
-    color = ADW_ACCENT_COLOR_YELLOW;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_ORANGE:
-    color = ADW_ACCENT_COLOR_ORANGE;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_RED:
-    color = ADW_ACCENT_COLOR_RED;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_PINK:
-    color = ADW_ACCENT_COLOR_PINK;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_PURPLE:
-    color = ADW_ACCENT_COLOR_PURPLE;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_SLATE:
-    color = ADW_ACCENT_COLOR_SLATE;
-    break;
-  case G_DESKTOP_ACCENT_COLOR_BLUE:
-  default:
-    color = ADW_ACCENT_COLOR_BLUE;
-  }
+  color = g_settings_get_enum (bundle->settings, "accent-color");
+  rgb = pmp_accent_color_to_rgb (color);
 
-  adw_accent_color_to_rgba (color, &color_rgba);
-
-  return g_variant_new ("(ddd)", color_rgba.red, color_rgba.green, color_rgba.blue);
+  return g_variant_new ("(ddd)", rgb.r, rgb.g, rgb.b);
 }
 
 static GVariant *

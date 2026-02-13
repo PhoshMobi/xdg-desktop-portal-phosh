@@ -12,7 +12,6 @@ pmp_dbus_name = 'org.freedesktop.impl.portal.desktop.phosh'
 pmp_portals = [
   'org.freedesktop.impl.portal.Notification',
   'org.freedesktop.impl.portal.Settings',
-  'org.freedesktop.impl.portal.Wallpaper',
 ]
 
 phrosh_exe_name = 'xdg-desktop-portal-phrosh'
@@ -47,10 +46,6 @@ glib_ver_cmp = '>=@0@'.format(glib_ver)
 gtk_ver = '4.12'
 gtk_ver_str = 'GDK_VERSION_@0@'.format(gtk_ver.replace('.', '_'))
 gtk_ver_cmp = '>=@0@'.format(gtk_ver)
-
-adw_ver = '1.6'
-adw_ver_str = 'ADW_VERSION_@0@'.format(adw_ver.replace('.', '_'))
-adw_ver_cmp = '>=@0@'.format(adw_ver)
 
 root_inc = include_directories('.')
 
@@ -108,9 +103,6 @@ add_project_arguments(
     '-DGLIB_VERSION_MIN_REQUIRED=@0@'.format(glib_ver_str),
     '-DGLIB_VERSION_MAX_ALLOWED=@0@'.format(glib_ver_str),
     '-DGDK_VERSION_MIN_REQUIRED=@0@'.format(gtk_ver_str),
-    #'-DGDK_VERSION_MAX_ALLOWED=@0@'.format(gtk_ver_str),
-    '-DADW_VERSION_MIN_REQUIRED=@0@'.format(adw_ver_str),
-    '-DADW_VERSION_MAX_ALLOWED=@0@'.format(adw_ver_str),
   ],
   language: 'c',
 )
@@ -119,20 +111,17 @@ gnome = import('gnome')
 i18n = import('i18n')
 pkgconfig = import('pkgconfig')
 
-adwaita_dep = dependency('libadwaita-1', version: adw_ver_cmp)
 fontconfig_dep = dependency('fontconfig')
+gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0', version: '>= 2.44')
 gio_dep = dependency('gio-2.0', version: glib_ver_cmp)
 gio_unix_dep = dependency('gio-unix-2.0', version: glib_ver_cmp)
 glib_dep = dependency('glib-2.0', version: glib_ver_cmp)
-gnome_bg_dep = dependency('gnome-bg-4', version: '>=43')
 gnome_desktop_dep = dependency('gnome-desktop-4', version: '>=43')
 gsettings_desktop_schemas_dep = dependency('gsettings-desktop-schemas', version: '>= 47')
 gtk_dep = dependency('gtk4', version: gtk_ver_cmp)
-gtk_wayland_dep = dependency('gtk4-wayland', version: gtk_ver_cmp)
-libpfs_dep = dependency(
-  'libpfs-0',
-  version: '>= 0',
-  fallback: ['pfs', 'pfs_dep'],
+libpfs_dep = subproject(
+  'pfs',
+  required: true,
   default_options: ['examples=false', 'shared-lib=false'],
 )
 xdg_desktop_portal_dep = dependency('xdg-desktop-portal', version: '>= 1.19.1')

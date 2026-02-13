@@ -18,6 +18,8 @@
 #include <gio/gio.h>
 #include <gio/gunixfdlist.h>
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "xdg-desktop-portal-dbus.h"
 
 #include "pmp-notification.h"

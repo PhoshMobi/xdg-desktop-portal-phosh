@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<gresources>
-  <gresource prefix='/mobi/phosh/portal'>
-    <file>pmp-wallpaper-dialog.ui</file>
-    <file>pmp-wallpaper-preview.ui</file>
-    <file>pmp-wallpaper-preview.css</file>
-  </gresource>
-</gresources>
