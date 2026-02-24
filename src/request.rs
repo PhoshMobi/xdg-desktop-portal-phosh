@@ -15,7 +15,6 @@ use ashpd::desktop::file_chooser::{
 use ashpd::desktop::wallpaper::WallpaperOptions;
 use ashpd::{AppID, Uri, WindowIdentifierType};
 use tokio::sync::oneshot::Sender;
-use url::Url;
 
 /// Essential information about the external application which does a portal request.
 #[derive(Debug)]

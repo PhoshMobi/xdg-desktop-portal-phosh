@@ -16,7 +16,6 @@ use ashpd::{PortalError, Uri};
 use gtk::glib::subclass::InitializingObject;
 use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
-use url::Url;
 
 use crate::utils::{get_application_name, gettextf};
 use crate::{Request, Responder};

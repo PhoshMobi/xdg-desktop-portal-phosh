@@ -18,7 +18,6 @@ use ashpd::desktop::HandleToken;
 use ashpd::{AppID, Uri, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
-use url::Url;
 
 use crate::{Application, Message, Request, Requester};
 
