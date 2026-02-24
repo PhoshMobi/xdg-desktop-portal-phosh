@@ -9,12 +9,11 @@
 use std::cell::Cell;
 use std::path::PathBuf;
 
-use ashpd::backend::file_chooser::{
-    OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
-};
 use ashpd::backend::Result;
-use ashpd::desktop::file_chooser::{Choice, FileFilter};
-use ashpd::PortalError;
+use ashpd::desktop::file_chooser::{
+    Choice, FileFilter, OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
+};
+use ashpd::{PortalError, Uri};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
@@ -57,7 +56,7 @@ fn split_ext(file_name: &str) -> (&str, &str) {
     (prefix, suffix)
 }
 
-fn get_unique_file_uri(original: &str, directory: &gio::File) -> Url {
+fn get_unique_file_uri(original: &str, directory: &gio::File) -> Uri {
     let (prefix, suffix) = split_ext(original);
     let mut file = directory.child(original);
     let mut count = 2;
@@ -69,7 +68,7 @@ fn get_unique_file_uri(original: &str, directory: &gio::File) -> Url {
     }
 
     let uri = file.uri();
-    Url::parse(&uri).unwrap()
+    Uri::parse(&uri).unwrap()
 }
 
 fn convert_file_filter(filter: &FileFilter) -> gtk::FileFilter {
@@ -280,8 +279,8 @@ mod imp {
             match mode {
                 FileSelectorMode::OpenFile | FileSelectorMode::SaveFile => {
                     for uri in uris {
-                        let url = Url::parse(&uri).unwrap();
-                        files = files.uri(url);
+                        let uri = Uri::parse(&uri).unwrap();
+                        files = files.uri(uri);
                     }
 
                     let current_filter_pos: u32 = window.property("current-filter");
@@ -302,7 +301,7 @@ mod imp {
                     let file_names = self.files.take();
 
                     if file_names.is_empty() {
-                        files = files.uri(Url::parse(&uris[0]).unwrap());
+                        files = files.uri(Uri::parse(&uris[0]).unwrap());
                     } else {
                         for file_name in file_names {
                             let os_str = file_name.as_os_str();

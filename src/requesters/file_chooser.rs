@@ -10,11 +10,12 @@ use std::collections::HashMap;
 use std::sync::RwLock;
 
 use ashpd::async_trait::async_trait;
-use ashpd::backend::file_chooser::{
-    FileChooserImpl, OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
-};
+use ashpd::backend::file_chooser::FileChooserImpl;
 use ashpd::backend::request::RequestImpl;
 use ashpd::backend::Result;
+use ashpd::desktop::file_chooser::{
+    OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
+};
 use ashpd::desktop::HandleToken;
 use ashpd::{AppID, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;

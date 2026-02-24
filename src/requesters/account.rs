@@ -10,10 +10,10 @@ use std::collections::HashMap;
 use std::sync::RwLock;
 
 use ashpd::async_trait::async_trait;
-use ashpd::backend::account::{AccountImpl, UserInformationOptions};
+use ashpd::backend::account::AccountImpl;
 use ashpd::backend::request::RequestImpl;
 use ashpd::backend::Result;
-use ashpd::desktop::account::UserInformation;
+use ashpd::desktop::account::{UserInformation, UserInformationOptions};
 use ashpd::desktop::HandleToken;
 use ashpd::{AppID, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;

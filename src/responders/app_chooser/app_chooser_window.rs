@@ -147,7 +147,7 @@ mod imp {
             let app_id = AppID::from_str(&app_id_str);
 
             if let Ok(app_id) = app_id {
-                let choice = Choice::new(app_id);
+                let choice = Choice::new(app_id.into());
                 self.send_response(Ok(choice));
             } else {
                 glib::g_critical!(LOG_DOMAIN, "Invalid app-id `{app_id_str}` on selected row");
@@ -238,7 +238,7 @@ impl Responder for AppChooserWindow {
                 prefs_desc = gettextf("Choose an application to open {}.", &[&target]);
                 status_desc = gettextf("No application found to open {}, but you can search Software to find suitable applications.", &[&target]);
             } else if let Some(uri) = uri {
-                let target = ellipsize_middle(uri.as_ref(), MAX_LOCATION_LENGTH);
+                let target = ellipsize_middle(uri.as_str(), MAX_LOCATION_LENGTH);
                 prefs_desc = gettextf("Choose an application to open the URI {}.", &[&target]);
                 status_desc = gettextf("No application found to open the URI {}, but you can search Software to find suitable applications.", &[&target]);
             } else {

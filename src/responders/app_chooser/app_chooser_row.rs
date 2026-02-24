@@ -12,7 +12,7 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gtk::glib::subclass::InitializingObject;
 use gtk::glib::Properties;
-use gtk::{gio, glib, CompositeTemplate, TemplateChild};
+use gtk::{glib, CompositeTemplate, TemplateChild};
 
 /*
  * `AppChooserRow` is used by `AppChooserWindow` to display an application representing given
@@ -69,7 +69,7 @@ mod imp {
                 return;
             }
 
-            let info = gio::DesktopAppInfo::new(&format!("{app_id}.desktop"));
+            let info = gio_unix::DesktopAppInfo::new(&format!("{app_id}.desktop"));
             if info.is_none() {
                 glib::g_critical!(LOG_DOMAIN, "app-id `{app_id}` has no app-info");
                 return;
