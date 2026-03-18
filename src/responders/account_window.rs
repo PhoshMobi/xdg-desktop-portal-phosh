@@ -17,7 +17,7 @@ use gtk::glib::subclass::InitializingObject;
 use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
-use crate::utils::{get_application_name, gettextf};
+use crate::utils::{get_application_name, gettextf, present_and_set_transient};
 use crate::{Request, Responder};
 
 /*
@@ -213,13 +213,7 @@ impl Responder for AccountWindow {
 
             imp.sender.set(Some(sender));
 
-            if let Some(identifier) = application.window_identifier {
-                identifier.set_parent_of(self);
-            } else {
-                glib::g_warning!(LOG_DOMAIN, "Application does not have window identifier");
-            }
-
-            self.present();
+            present_and_set_transient(self, application.window_identifier);
         } else {
             glib::g_critical!(LOG_DOMAIN, "Unknown request {request:#?}");
             panic!();

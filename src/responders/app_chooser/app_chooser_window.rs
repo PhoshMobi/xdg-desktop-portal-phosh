@@ -19,7 +19,7 @@ use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
 
 use super::AppChooserRow;
-use crate::utils::gettextf;
+use crate::utils::{gettextf, present_and_set_transient};
 use crate::{Request, Responder};
 
 /*
@@ -254,12 +254,8 @@ impl Responder for AppChooserWindow {
             imp.update_choices(choices);
             imp.sender.set(Some(sender));
 
-            if let Some(identifier) = application.window_identifier {
-                identifier.set_parent_of(self);
-            }
+            present_and_set_transient(self, application.window_identifier);
             self.set_modal(options.modal().unwrap_or(false));
-
-            self.present();
         } else if let Request::AppChooserUpdateChoices { choices, sender } = request {
             let imp = self.imp();
             imp.update_choices(choices);
