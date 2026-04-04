@@ -1,0 +1,98 @@
+# Japanese translation for phosh-mobile-portal.
+# Copyright (C) 2026 The Phosh Developers
+# This file is distributed under the same license as the phosh-mobile-portal package.
+# Ryo Nakano <ryonakaknock3@gmail.com>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: phosh-mobile-portal\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-13 04:32+0900\n"
+"PO-Revision-Date: 2026-04-04 14:54+0900\n"
+"Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/xdg-desktop-portal-phrosh.desktop.in.in:3
+msgid "Portal"
+msgstr "ポータル"
+
+#: src/pmp-settings.c:321
+msgid "Requested setting not found"
+msgstr "要求された設定が見つかりませんでした"
+
+#: src/ui/account_window.ui:12
+msgid "Share Details?"
+msgstr "詳細を共有しますか?"
+
+#: src/ui/account_window.ui:17 src/ui/app_chooser_window.ui:17
+#: src/ui/wallpaper_window.ui:17
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/ui/account_window.ui:23
+msgid "Share"
+msgstr "共有"
+
+#: src/ui/account_window.ui:86
+msgid "Reason"
+msgstr "理由"
+
+#: src/ui/account_window.ui:91
+msgid "Username"
+msgstr "ユーザー名"
+
+#: src/ui/account_window.ui:96
+msgid "Name"
+msgstr "名前"
+
+#: src/ui/account_window.ui:107
+msgid "Choose profile picture"
+msgstr "プロフィール画像を選択"
+
+#: src/ui/account_window.ui:111
+msgid "Images"
+msgstr "画像"
+
+#: src/ui/app_chooser_window.ui:12
+msgid "Open With…"
+msgstr "次で開く…"
+
+#: src/ui/app_chooser_window.ui:23
+msgid "Open"
+msgstr "開く"
+
+#: src/ui/app_chooser_window.ui:67
+msgid "No Apps Found"
+msgstr "アプリが見つかりません"
+
+#: src/ui/app_chooser_window.ui:70
+msgid "Open Software"
+msgstr "“ソフトウェア”を開く"
+
+#: src/ui/wallpaper_window.ui:12
+msgid "Change Wallpaper?"
+msgstr "壁紙を変更しますか?"
+
+#: src/ui/wallpaper_window.ui:23
+msgid "Change"
+msgstr "変更"
+
+#: src/ui/wallpaper_window.ui:47
+msgid "Set on"
+msgstr "次に設定"
+
+#: src/ui/wallpaper_window.ui:51
+msgid "Lockscreen"
+msgstr "ロック画面"
+
+#: src/ui/wallpaper_window.ui:52
+msgid "Background"
+msgstr "背景"
+
+#: src/ui/wallpaper_window.ui:53
+msgid "Both"
+msgstr "両方"
