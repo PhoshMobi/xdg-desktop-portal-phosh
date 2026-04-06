@@ -51,6 +51,7 @@ variables:
   script:
     - !reference [.phosh-prepare-apt]
     - eatmydata apt-get -y build-dep .
+    - eatmydata apt-get -y install ca-certificates
     - 'echo "Build opts: ${BUILD_OPTS}"'
     - meson ${BUILD_OPTS} . _build
     - meson compile -C _build
@@ -77,7 +78,7 @@ run-rustfmt:
   image: ${DEBIAN_IMAGE}
   needs: []
   script:
-    - apt-get update && apt-get install rustup -y
+    - apt-get update && apt-get install ca-certificates rustup -y
     - rustup default stable
     # Our rustfmt.toml uses nightly features
     - rustup toolchain install nightly
