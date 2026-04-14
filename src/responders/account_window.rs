@@ -12,11 +12,10 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use ashpd::backend::Result;
 use ashpd::desktop::account::UserInformation;
-use ashpd::PortalError;
+use ashpd::{PortalError, Uri};
 use gtk::glib::subclass::InitializingObject;
 use gtk::{gdk, gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
-use url::Url;
 
 use crate::utils::{get_application_name, gettextf};
 use crate::{Request, Responder};
@@ -109,7 +108,7 @@ mod imp {
             let info = UserInformation::new(
                 &self.username_row.text(),
                 &self.name_row.text(),
-                Url::parse(&file.uri()).unwrap(),
+                Uri::parse(&file.uri()).unwrap(),
             );
             self.send_response(Ok(info));
         }

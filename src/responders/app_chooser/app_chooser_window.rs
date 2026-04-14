@@ -8,13 +8,12 @@
 
 use std::cell::{Cell, RefCell};
 use std::ffi::OsStr;
-use std::str::FromStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use ashpd::backend::app_chooser::{Choice, DesktopID};
 use ashpd::backend::Result;
-use ashpd::{AppID, PortalError};
+use ashpd::PortalError;
 use gtk::glib::subclass::InitializingObject;
 use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
@@ -144,16 +143,9 @@ mod imp {
             let row = row.unwrap();
 
             let app_id_str = row.dynamic_cast_ref::<AppChooserRow>().unwrap().app_id();
-            let app_id = AppID::from_str(&app_id_str);
-
-            if let Ok(app_id) = app_id {
-                let choice = Choice::new(app_id);
-                self.send_response(Ok(choice));
-            } else {
-                glib::g_critical!(LOG_DOMAIN, "Invalid app-id `{app_id_str}` on selected row");
-                let error = PortalError::Failed(String::from("Internal error"));
-                self.send_response(Err(error));
-            }
+            let app_id = DesktopID::from(app_id_str);
+            let choice = Choice::new(app_id);
+            self.send_response(Ok(choice));
         }
 
         fn send_response(&self, response: Result<Choice>) {
@@ -238,7 +230,7 @@ impl Responder for AppChooserWindow {
                 prefs_desc = gettextf("Choose an application to open {}.", &[&target]);
                 status_desc = gettextf("No application found to open {}, but you can search Software to find suitable applications.", &[&target]);
             } else if let Some(uri) = uri {
-                let target = ellipsize_middle(uri.as_ref(), MAX_LOCATION_LENGTH);
+                let target = ellipsize_middle(uri.as_str(), MAX_LOCATION_LENGTH);
                 prefs_desc = gettextf("Choose an application to open the URI {}.", &[&target]);
                 status_desc = gettextf("No application found to open the URI {}, but you can search Software to find suitable applications.", &[&target]);
             } else {

@@ -6,17 +6,15 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
-use ashpd::backend::account::UserInformationOptions;
 use ashpd::backend::app_chooser::{Choice, ChooserOptions, DesktopID};
-use ashpd::backend::file_chooser::{
+use ashpd::backend::Result;
+use ashpd::desktop::account::{UserInformation, UserInformationOptions};
+use ashpd::desktop::file_chooser::{
     OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
 };
-use ashpd::backend::wallpaper::WallpaperOptions;
-use ashpd::backend::Result;
-use ashpd::desktop::account::UserInformation;
-use ashpd::{AppID, WindowIdentifierType};
+use ashpd::desktop::wallpaper::WallpaperOptions;
+use ashpd::{AppID, Uri, WindowIdentifierType};
 use tokio::sync::oneshot::Sender;
-use url::Url;
 
 /// Essential information about the external application which does a portal request.
 #[derive(Debug)]
@@ -64,7 +62,7 @@ pub enum Request {
     },
     WallpaperWithUri {
         application: Application,
-        uri: Url,
+        uri: Uri,
         options: WallpaperOptions,
         sender: Sender<Result<()>>,
     },

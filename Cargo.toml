@@ -1,17 +1,17 @@
 [package]
 name = "xdg-desktop-portal-phosh"
-version = "0.50.0"
 edition = "2021"
 
 [dependencies.adw]
 features = ["v1_5"]
 package = "libadwaita"
-version = "0.8"
+version = "0.9"
 
 [dependencies.ashpd]
-features = ["backend", "gtk4"]
-git = "https://github.com/arun-mani-j/ashpd.git"
-rev = "5f108eb8acb4cecd3c71324445c64cf7f0292fbb"
+features = ["account", "backend", "file_chooser", "gtk4", "wallpaper"]
+git = "https://github.com/agx/ashpd"
+rev = "b906065a6d53ce83e3a4d30220681145795c0afc"
+#version = "0.13"
 
 [dependencies.PhoshFileSelector]
 path = "subprojects/pfs"
@@ -21,15 +21,15 @@ features = ["gettext-system"]
 package = "gettext-rs"
 version = "0.7"
 
+[dependencies.gio-unix]
+version = "0.22"
+
 [dependencies.gtk]
 features = ["v4_20"]
 package = "gtk4"
-version = "0.10"
+version = "0.11"
 
 [dependencies.tokio]
 features = ["rt-multi-thread"]
 package = "tokio"
 version = "1.46"
-
-[dependencies.url]
-version = "2.5"

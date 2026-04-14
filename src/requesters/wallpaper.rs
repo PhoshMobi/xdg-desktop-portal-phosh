@@ -11,13 +11,13 @@ use std::sync::RwLock;
 
 use ashpd::async_trait::async_trait;
 use ashpd::backend::request::RequestImpl;
-use ashpd::backend::wallpaper::{WallpaperImpl, WallpaperOptions};
+use ashpd::backend::wallpaper::WallpaperImpl;
 use ashpd::backend::Result;
+use ashpd::desktop::wallpaper::WallpaperOptions;
 use ashpd::desktop::HandleToken;
-use ashpd::{AppID, WindowIdentifierType};
+use ashpd::{AppID, Uri, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
-use url::Url;
 
 use crate::{Application, Message, Request, Requester};
 
@@ -61,7 +61,7 @@ impl WallpaperImpl for Wallpaper {
         token: HandleToken,
         app_id: Option<AppID>,
         window_identifier: Option<WindowIdentifierType>,
-        uri: Url,
+        uri: Uri,
         options: WallpaperOptions,
     ) -> Result<()> {
         let (sender, receiver) = oneshot::channel();
