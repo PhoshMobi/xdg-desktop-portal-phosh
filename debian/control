@@ -26,6 +26,7 @@ Architecture: linux-any
 Depends:
  dbus-user-session | dbus-x11,
  gsettings-desktop-schemas (>= 47),
+ pfs-common,
  xdg-desktop-portal (>= 1.17.0),
  ${misc:Depends},
  ${shlibs:Depends},
