@@ -9,9 +9,7 @@ version = "0.9"
 
 [dependencies.ashpd]
 features = ["account", "backend", "file_chooser", "gtk4", "wallpaper"]
-git = "https://github.com/agx/ashpd"
-rev = "b906065a6d53ce83e3a4d30220681145795c0afc"
-#version = "0.13"
+version = "0.13"
 
 [dependencies.PhoshFileSelector]
 path = "subprojects/pfs"
