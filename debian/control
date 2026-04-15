@@ -3,15 +3,15 @@ Section: gnome
 Priority: optional
 Maintainer: Guido Günther <agx@sigxcpu.org>
 Build-Depends:
- cargo,
  debhelper-compat (= 13),
+ cargo,
  gsettings-desktop-schemas-dev (>= 47),
- libfontconfig-dev,
  libadwaita-1-dev (>= 1.6),
+ libfontconfig-dev,
  libglib2.0-dev (>= 2.74),
- libgtk-4-dev (>= 4.12),
  libgnome-bg-4-dev,
  libgnome-desktop-4-dev,
+ libgtk-4-dev (>= 4.12),
  meson,
  python3-docutils,
  rustc (>= 1.86),
@@ -33,9 +33,9 @@ Depends:
 Provides:
  xdg-desktop-portal-backend (= 1.14.0),
 Breaks:
- phosh (<< 0.44~)
+ phosh (<< 0.44~),
 Replaces:
- phosh (<< 0.44~)
+ phosh (<< 0.44~),
 Multi-Arch: foreign
 Description: Phosh portal backend for xdg-desktop-portal
  xdg-desktop-portal-phosh provides a GTK and Adwaita based implementation for
