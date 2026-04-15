@@ -1,3 +1,29 @@
+xdg-desktop-portal-phosh (0.54.0) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * ci: Install certificates.
+    Seems to no longer be part of the minimal image. This unbreaks CI.
+  * tree: Use ashpd 0.13 crate.
+    All needed changes made it into 0.3.10.
+  * packaging: Use pfs i18n from pfs-common
+  * packaging: Wrap-and-sort
+
+  [ Ryo Nakano ]
+  * po: Add missing de to LINGUAS
+  * po: Fix warnings when updating de.po.
+  * po: Add Japanese translation
+
+  [ Arun Mani J ]
+  * tree: Update to ASHPD 0.13.
+  * tree: Drop unused `url` dependency
+  * tree: Drop version from `Cargo.toml`
+    `meson.build` contains the package's version leaving this value
+    redundant and often outdated.
+  * app_chooser: Directly convert app ID to `DesktopID`
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/26
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 15 Apr 2026 09:38:04 +0200
+
 xdg-desktop-portal-phosh (0.53.0) experimental; urgency=medium
 
   [ Arun Mani J ]
