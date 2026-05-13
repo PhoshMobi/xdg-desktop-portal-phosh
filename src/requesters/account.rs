@@ -15,7 +15,7 @@ use ashpd::backend::request::RequestImpl;
 use ashpd::backend::Result;
 use ashpd::desktop::account::{UserInformation, UserInformationOptions};
 use ashpd::desktop::HandleToken;
-use ashpd::{AppID, WindowIdentifierType};
+use ashpd::{MaybeAppID, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
 
@@ -59,7 +59,7 @@ impl AccountImpl for Account {
     async fn get_user_information(
         &self,
         token: HandleToken,
-        app_id: Option<AppID>,
+        app_id: Option<MaybeAppID>,
         window_identifier: Option<WindowIdentifierType>,
         options: UserInformationOptions,
     ) -> Result<UserInformation> {

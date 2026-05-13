@@ -6,20 +6,20 @@
  * Author: Arun Mani J <arun.mani@tether.to>
  */
 
-use ashpd::backend::app_chooser::{Choice, ChooserOptions, DesktopID};
+use ashpd::backend::app_chooser::{Choice, ChooserOptions};
 use ashpd::backend::Result;
 use ashpd::desktop::account::{UserInformation, UserInformationOptions};
 use ashpd::desktop::file_chooser::{
     OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
 };
 use ashpd::desktop::wallpaper::WallpaperOptions;
-use ashpd::{AppID, Uri, WindowIdentifierType};
+use ashpd::{MaybeAppID, Uri, WindowIdentifierType};
 use tokio::sync::oneshot::Sender;
 
 /// Essential information about the external application which does a portal request.
 #[derive(Debug)]
 pub struct Application {
-    pub app_id: Option<AppID>,
+    pub app_id: Option<MaybeAppID>,
     pub window_identifier: Option<WindowIdentifierType>,
 }
 
@@ -34,12 +34,12 @@ pub enum Request {
     },
     AppChooserChooseApplication {
         application: Application,
-        choices: Vec<DesktopID>,
+        choices: Vec<MaybeAppID>,
         options: ChooserOptions,
         sender: Sender<Result<Choice>>,
     },
     AppChooserUpdateChoices {
-        choices: Vec<DesktopID>,
+        choices: Vec<MaybeAppID>,
         sender: Sender<Result<()>>,
     },
     FileChooserOpenFile {

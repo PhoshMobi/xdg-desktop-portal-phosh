@@ -11,9 +11,9 @@ use std::ffi::OsStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use ashpd::backend::app_chooser::{Choice, DesktopID};
+use ashpd::backend::app_chooser::Choice;
 use ashpd::backend::Result;
-use ashpd::PortalError;
+use ashpd::{MaybeAppID, PortalError};
 use gtk::glib::subclass::InitializingObject;
 use gtk::{gio, glib, CompositeTemplate, TemplateChild};
 use tokio::sync::oneshot::Sender;
@@ -143,7 +143,7 @@ mod imp {
             let row = row.unwrap();
 
             let app_id_str = row.dynamic_cast_ref::<AppChooserRow>().unwrap().app_id();
-            let app_id = DesktopID::from(app_id_str);
+            let app_id = MaybeAppID::from(app_id_str);
             let choice = Choice::new(app_id);
             self.send_response(Ok(choice));
         }
@@ -160,7 +160,7 @@ mod imp {
             self.obj().close();
         }
 
-        pub fn update_choices(&self, choices: Vec<DesktopID>) {
+        pub fn update_choices(&self, choices: Vec<MaybeAppID>) {
             self.list_box.remove_all();
 
             let last_app_id = self.last_choice.borrow();
