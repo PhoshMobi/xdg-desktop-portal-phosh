@@ -44,13 +44,13 @@ A backend implementation of XDG Desktop Portal for Phosh environment in Rust.
   -v, --verbose\t\tPrint debug information.
   --version\t\tPrint version information and exit.
 
-XDG Desktop Portal allow Flatpak apps, and other desktop containment frameworks, to interact with
+XDG Desktop Portal allows Flatpak apps, and other desktop containment frameworks, to interact with
 the system in a secure and well defined way.
 {} provides D-Bus interfaces to be used by XDG Desktop Portal.
 Please see https://flatpak.github.io/xdg-desktop-portal/docs/index.html for more details about
 portals and their purpose.
 
-Please report issues at https://gitlab.gnome.org/guidog/xdg-desktop-portal-phosh/issues.";
+Please report issues at https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues.";
 
 struct Options {
     pub replace: bool,
