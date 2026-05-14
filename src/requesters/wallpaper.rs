@@ -15,7 +15,7 @@ use ashpd::backend::wallpaper::WallpaperImpl;
 use ashpd::backend::Result;
 use ashpd::desktop::wallpaper::WallpaperOptions;
 use ashpd::desktop::HandleToken;
-use ashpd::{AppID, Uri, WindowIdentifierType};
+use ashpd::{MaybeAppID, Uri, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
 
@@ -59,7 +59,7 @@ impl WallpaperImpl for Wallpaper {
     async fn with_uri(
         &self,
         token: HandleToken,
-        app_id: Option<AppID>,
+        app_id: Option<MaybeAppID>,
         window_identifier: Option<WindowIdentifierType>,
         uri: Uri,
         options: WallpaperOptions,

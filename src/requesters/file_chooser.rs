@@ -17,7 +17,7 @@ use ashpd::desktop::file_chooser::{
     OpenFileOptions, SaveFileOptions, SaveFilesOptions, SelectedFiles,
 };
 use ashpd::desktop::HandleToken;
-use ashpd::{AppID, WindowIdentifierType};
+use ashpd::{MaybeAppID, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
 
@@ -61,7 +61,7 @@ impl FileChooserImpl for FileChooser {
     async fn open_file(
         &self,
         token: HandleToken,
-        app_id: Option<AppID>,
+        app_id: Option<MaybeAppID>,
         window_identifier: Option<WindowIdentifierType>,
         title: &str,
         options: OpenFileOptions,
@@ -84,7 +84,7 @@ impl FileChooserImpl for FileChooser {
     async fn save_file(
         &self,
         token: HandleToken,
-        app_id: Option<AppID>,
+        app_id: Option<MaybeAppID>,
         window_identifier: Option<WindowIdentifierType>,
         title: &str,
         options: SaveFileOptions,
@@ -107,7 +107,7 @@ impl FileChooserImpl for FileChooser {
     async fn save_files(
         &self,
         token: HandleToken,
-        app_id: Option<AppID>,
+        app_id: Option<MaybeAppID>,
         window_identifier: Option<WindowIdentifierType>,
         title: &str,
         options: SaveFilesOptions,

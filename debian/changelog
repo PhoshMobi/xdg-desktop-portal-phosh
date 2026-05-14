@@ -1,3 +1,10 @@
+xdg-desktop-portal-phosh (0.55~rc1) experimental; urgency=medium
+
+  * tree: Update to pfs 0.1.0
+  * build: Switch back to ashpd 0.13
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 13 May 2026 14:58:27 +0200
+
 xdg-desktop-portal-phosh (0.54.0) experimental; urgency=medium
 
   [ Guido Günther ]

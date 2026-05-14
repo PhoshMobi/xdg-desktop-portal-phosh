@@ -1,3 +1,11 @@
+xdg-desktop-portal-phosh 0.55~rc1
+---------------------------------
+Released May 2026
+* Update to latest pfs
+    * Support adding and using bookmarks
+* Contributors:
+    * Guido Günther
+
 xdg-desktop-portal-phosh 0.54.0
 -------------------------------
 Released April 2026

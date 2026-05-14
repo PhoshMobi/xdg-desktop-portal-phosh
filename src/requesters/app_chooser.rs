@@ -10,11 +10,11 @@ use std::collections::HashMap;
 use std::sync::RwLock;
 
 use ashpd::async_trait::async_trait;
-use ashpd::backend::app_chooser::{AppChooserImpl, Choice, ChooserOptions, DesktopID};
+use ashpd::backend::app_chooser::{AppChooserImpl, Choice, ChooserOptions};
 use ashpd::backend::request::RequestImpl;
 use ashpd::backend::Result;
 use ashpd::desktop::HandleToken;
-use ashpd::{AppID, WindowIdentifierType};
+use ashpd::{MaybeAppID, WindowIdentifierType};
 use tokio::sync::mpsc::Sender;
 use tokio::sync::oneshot;
 
@@ -58,9 +58,9 @@ impl AppChooserImpl for AppChooser {
     async fn choose_application(
         &self,
         token: HandleToken,
-        app_id: Option<AppID>,
+        app_id: Option<MaybeAppID>,
         window_identifier: Option<WindowIdentifierType>,
-        choices: Vec<DesktopID>,
+        choices: Vec<MaybeAppID>,
         options: ChooserOptions,
     ) -> Result<Choice> {
         let (sender, receiver) = oneshot::channel();
@@ -78,7 +78,7 @@ impl AppChooserImpl for AppChooser {
         return result;
     }
 
-    async fn update_choices(&self, handle: HandleToken, choices: Vec<DesktopID>) -> Result<()> {
+    async fn update_choices(&self, handle: HandleToken, choices: Vec<MaybeAppID>) -> Result<()> {
         let (sender, receiver) = oneshot::channel();
         let request = Request::AppChooserUpdateChoices { choices, sender };
         let result = self.update_request(&handle, request, receiver).await;
