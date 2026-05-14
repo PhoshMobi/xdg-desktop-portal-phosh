@@ -89,7 +89,7 @@ fn handle_cli() -> Result<Options, ExitCode> {
                 options.verbose = true;
             }
             "--version" => {
-                println!(env!("CARGO_PKG_VERSION"));
+                println!("{}", bin_config::VERSION);
                 return Err(ExitCode::SUCCESS);
             }
             arg => {
