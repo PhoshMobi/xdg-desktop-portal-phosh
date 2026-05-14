@@ -69,6 +69,7 @@ conf.set_quoted('GETTEXT_PACKAGE', 'phosh-mobile-portal')
 conf.set_quoted('LOCALE_DIR', get_option('prefix') / get_option('localedir'))
 conf.set_quoted('DBUS_NAME', phrosh_dbus_name)
 conf.set_quoted('PORTAL_NAME', phrosh_exe_name)
+conf.set_quoted('VERSION', meson.project_version())
 
 configure_file(input: 'lib_config.rs.in', output: 'lib_config.rs', configuration: conf)
 

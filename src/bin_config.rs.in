@@ -17,3 +17,4 @@ pub const ACCOUNT: bool = true;
 pub const APP_CHOOSER: bool = true;
 pub const FILE_CHOOSER: bool = true;
 pub const WALLPAPER: bool = true;
+pub const VERSION: &str = @VERSION@;
