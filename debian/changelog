@@ -1,3 +1,12 @@
+xdg-desktop-portal-phosh (0.55.0) experimental; urgency=medium
+
+  [ Arun Mani J ]
+  * tree: Print version from Meson.
+    Fixes: 3c3c29e tree: Drop version from `Cargo.toml`.
+  * main: Fix typo and update link in help
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 17 May 2026 09:39:58 +0200
+
 xdg-desktop-portal-phosh (0.55~rc1) experimental; urgency=medium
 
   * tree: Update to pfs 0.1.0
