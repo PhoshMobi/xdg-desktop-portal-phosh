@@ -9,7 +9,7 @@
 use std::env;
 use std::sync::atomic::{AtomicBool, Ordering};
 
-use gettextrs::{bind_textdomain_codeset, bindtextdomain};
+use gettextrs::{bind_textdomain_codeset, bindtextdomain, gettext};
 use gtk::prelude::*;
 use gtk::{gio, glib};
 
@@ -63,6 +63,9 @@ pub fn init() {
         "xdg-desktop-portal-phrosh.gresource"
     )))
     .unwrap();
+
+    glib::set_prgname(Some("xdg-desktop-portal-phrosh"));
+    glib::set_application_name(&gettext("XDG Desktop Portal Phosh"));
 
     LIB_INITIALIZED.store(true, Ordering::Release);
 }
