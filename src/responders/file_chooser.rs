@@ -20,7 +20,7 @@ use gtk::{gio, glib};
 use pfs::file_selector::{FileSelector, FileSelectorMode};
 use tokio::sync::oneshot::Sender;
 
-use crate::utils::gettextf;
+use crate::utils::{gettextf, present_and_set_transient};
 use crate::{Request, Responder};
 
 /*
@@ -418,14 +418,8 @@ impl Responder for FileChooser {
             ),
         );
 
-        if let Some(identifier) = application.window_identifier {
-            identifier.set_parent_of(&window);
-        } else {
-            glib::g_warning!(LOG_DOMAIN, "Application does not have window identifier");
-        }
+        present_and_set_transient(&window, application.window_identifier);
         window.set_modal(modal);
-
-        window.present();
 
         imp.mode.set(Some(mode));
         imp.filters.set(filters);

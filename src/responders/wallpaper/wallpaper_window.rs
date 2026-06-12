@@ -19,7 +19,7 @@ use tokio::sync::oneshot::Sender;
 
 use super::WallpaperPreview;
 use crate::lib_config::PORTAL_NAME;
-use crate::utils::{get_application_name, gettextf};
+use crate::utils::{get_application_name, gettextf, present_and_set_transient};
 use crate::{Request, Responder};
 
 /*
@@ -299,16 +299,9 @@ impl Responder for WallpaperWindow {
 
             *imp.uri.borrow_mut() = uri.to_string();
             imp.sender.set(Some(sender));
-
-            if let Some(identifier) = application.window_identifier {
-                identifier.set_parent_of(self);
-            } else {
-                glib::g_warning!(LOG_DOMAIN, "Application does not have window identifier");
-            }
-
             imp.load_previews();
 
-            self.present();
+            present_and_set_transient(self, application.window_identifier);
         } else {
             glib::g_critical!(LOG_DOMAIN, "Unknown request {request:#?}");
             panic!();
