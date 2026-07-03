@@ -1,3 +1,20 @@
+xdg-desktop-portal-phosh (0.56.0) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * packaging: Fix repo URL
+  * pfs: Update to 0.1.1.
+    Fixes initial bookmark icon state
+
+  [ Arun Mani J ]
+  * init: Set application and program details.
+    Closes: https://gitlab.gnome.org/World/Phosh/pfs/-/work_items/27
+  * utils: Add `present_and_set_transient`
+  * responders: Set transient after presenting.
+    Otherwise Phoc does not maximize them as expected.
+    Closes: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/issues/23
+
+ -- Guido Günther <agx@sigxcpu.org>  Thu, 02 Jul 2026 17:37:02 +0200
+
 xdg-desktop-portal-phosh (0.55.0) experimental; urgency=medium
 
   [ Arun Mani J ]
