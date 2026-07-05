@@ -1,3 +1,9 @@
+xdg-desktop-portal-phosh (0.56.1) experimental; urgency=medium
+
+  * Update pfs subproject
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 05 Jul 2026 13:16:29 +0200
+
 xdg-desktop-portal-phosh (0.56.0) experimental; urgency=medium
 
   [ Guido Günther ]
