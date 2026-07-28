@@ -1,0 +1,96 @@
+# Polish translation for phosh-mobile-portal.
+# Copyright (C) 2026 The Phosh Developers
+# This file is distributed under the same license as the phosh-mobile-portal package.
+# nicole mikołajczyk <git@mkljczk.pl>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-12 07:09+0200\n"
+"PO-Revision-Date: 2026-07-28 19:47+0200\n"
+"Last-Translator: nicole mikołajczyk <git@mkljczk.pl>\n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: data/xdg-desktop-portal-phrosh.desktop.in.in:3
+msgid "Portal"
+msgstr "Portal"
+
+#: src/ui/account_window.ui:12
+msgid "Share Details?"
+msgstr "Udostępnić szczegóły?"
+
+#: src/ui/account_window.ui:17 src/ui/app_chooser_window.ui:17
+#: src/ui/wallpaper_window.ui:17
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: src/ui/account_window.ui:23
+msgid "Share"
+msgstr "Udostępnij"
+
+#: src/ui/account_window.ui:86
+msgid "Reason"
+msgstr "Powód"
+
+#: src/ui/account_window.ui:91
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: src/ui/account_window.ui:96
+msgid "Name"
+msgstr "Nazwa"
+
+#: src/ui/account_window.ui:107
+msgid "Choose profile picture"
+msgstr "Wybierz awatar"
+
+#: src/ui/account_window.ui:111
+msgid "Images"
+msgstr "Obrazy"
+
+#: src/ui/app_chooser_window.ui:12
+msgid "Open With…"
+msgstr "Otwórz używając…"
+
+#: src/ui/app_chooser_window.ui:23
+msgid "Open"
+msgstr "Otwórz"
+
+#: src/ui/app_chooser_window.ui:67
+msgid "No Apps Found"
+msgstr "Nie znaleziono programów"
+
+#: src/ui/app_chooser_window.ui:70
+msgid "Open Software"
+msgstr "Otwórz Oprogramowanie"
+
+#: src/ui/wallpaper_window.ui:12
+msgid "Change Wallpaper?"
+msgstr "Zmienić tapetę?"
+
+#: src/ui/wallpaper_window.ui:23
+msgid "Change"
+msgstr "Zmień"
+
+#: src/ui/wallpaper_window.ui:47
+msgid "Set on"
+msgstr "Ustaw na"
+
+#: src/ui/wallpaper_window.ui:51
+msgid "Lockscreen"
+msgstr "Ekranie blokady"
+
+#: src/ui/wallpaper_window.ui:52
+msgid "Background"
+msgstr "Tapecie"
+
+#: src/ui/wallpaper_window.ui:53
+msgid "Both"
+msgstr "Obu"
