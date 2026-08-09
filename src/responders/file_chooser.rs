@@ -134,6 +134,7 @@ fn handle_open_file(
     }
 
     props.push(("directory", options.directory().unwrap_or(false).into()));
+    props.push(("multiple", options.multiple().unwrap_or(false).into()));
 
     let (current_filter, file_filters) =
         convert_filters(options.current_filter(), options.filters());
