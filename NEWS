@@ -1,3 +1,14 @@
+xdg-desktop-portal-phosh 0.57.0
+-------------------------------
+Released August 2026
+* filechooser portal: Allow top open multiple files at once if the
+  app requests it.
+* Contributors:
+    * Arun Mani J
+    * Guido Günther
+* UI translations:
+    * nicole mikołajczyk (pl)
+
 xdg-desktop-portal-phosh 0.56.1
 -------------------------------
 Released July 2026
