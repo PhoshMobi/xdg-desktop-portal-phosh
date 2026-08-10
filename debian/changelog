@@ -1,3 +1,19 @@
+xdg-desktop-portal-phosh (0.57.0) experimental; urgency=medium
+
+  [ Guido Günther ]
+  * ci: Update shared scripts to bb29803
+  * pmp-request: Drop G_GNUC_CONST from get_type()
+    First call has side effects, see
+    https://gitlab.gnome.org/GNOME/glib/-/merge_requests/5223
+    for details.
+  * file-chooser: Allow to open multiple files.
+    We update to pfs 0.1.2 for that.
+
+  [ nicole mikołajczyk ]
+  * po: Add Polish translation
+
+ -- Guido Günther <agx@sigxcpu.org>  Sun, 09 Aug 2026 14:00:18 +0200
+
 xdg-desktop-portal-phosh (0.56.1) experimental; urgency=medium
 
   * Update pfs subproject
