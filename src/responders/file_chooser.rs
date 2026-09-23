@@ -138,8 +138,8 @@ fn handle_open_file(
 
     let (current_filter, file_filters) =
         convert_filters(options.current_filter(), options.filters());
-    props.push(("current_filter", current_filter.into()));
     props.push(("filters", file_filters.into()));
+    props.push(("current_filter", current_filter.into()));
     filters.extend(options.filters().iter().map(std::borrow::ToOwned::to_owned));
 
     let choices = convert_choices(options.choices());
