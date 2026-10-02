@@ -1,6 +1,7 @@
 xdg-desktop-portal-phosh 0.58.0
 -------------------------------
 Released September 2026
+* Fix filtering
 * Issues fixed:
     * https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/work_items/28
 * Contributors:
