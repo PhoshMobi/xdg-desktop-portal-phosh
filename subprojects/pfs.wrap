@@ -1,5 +1,5 @@
 [wrap-git]
 directory=pfs
 url=https://gitlab.gnome.org/World/Phosh/pfs.git
-revision=v0.1.2
+revision=v0.2.1
 depth=1
