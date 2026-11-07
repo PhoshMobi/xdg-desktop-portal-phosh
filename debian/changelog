@@ -1,3 +1,11 @@
+xdg-desktop-portal-phosh (0.59~rc1) experimental; urgency=medium
+
+  * doc: Update NEWS
+  * pfs: Update to 0.2.1
+  * build: Update dependencies.
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 07 Nov 2026 16:46:18 +0100
+
 xdg-desktop-portal-phosh (0.58.0) experimental; urgency=medium
 
   * build: Update dependencies
