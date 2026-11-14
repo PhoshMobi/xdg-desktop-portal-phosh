@@ -1,3 +1,9 @@
+xdg-desktop-portal-phosh (0.59.0) experimental; urgency=medium
+
+  * No changes over rc1
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 14 Nov 2026 15:49:47 +0100
+
 xdg-desktop-portal-phosh (0.59~rc1) experimental; urgency=medium
 
   * doc: Update NEWS
