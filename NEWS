@@ -1,12 +1,6 @@
 xdg-desktop-portal-phosh 0.59.0
 -------------------------------
 Released November 2026
-
-
-
-xdg-desktop-portal-phosh 0.59~rc1
----------------------------------
-Released November 2026
 * Update to pfs 0.2.1
   - Allow ot handle mounts
   - Ease sorting via keyboard shortcuts
